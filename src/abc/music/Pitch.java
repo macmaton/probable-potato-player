@@ -3,18 +3,20 @@ package abc.music;
 /**
  * Immutable datatype representing a pitch
  * basenote: in the range A-G (octave of middle C) or a-g (octave above middle C), or z for a rest
- * modifier: an integer representation of number of sharps or flats (semitones up or down from the basenote). a positive number is sharps, a negative flats, zero is natural.
+ * accidental: whether the note is marked as natural,sharp, or flat.  double flats and sharps are allowed.
  * octave: number of octaves above or below the basenote.
  */
 public class Pitch implements Music {
+	
+	enum Accidental {NATURAL, SHARP, DOUBLESHARP, FLAT, DOUBLEFLAT, NONE};
 
 	private final int octave;
-	private final int modifier;
+	private final Accidental accidental;
 	private final BaseNote basenote;
 
-	public Pitch(BaseNote basenote, int octave, int accidental) {
+	public Pitch(BaseNote basenote, int octave, Accidental accidental) {
 		this.basenote = basenote;
-		this.modifier = accidental;
+		this.accidental = accidental;
 		this.octave = octave;
 	}
 	
@@ -22,18 +24,24 @@ public class Pitch implements Music {
 		return octave;
 	}
 
-	public int getAccidental() {
-		return modifier;
+	public Accidental getAccidental() {
+		return accidental;
 	}
 
 	public BaseNote getBasenote() {
 		return basenote;
 	}
+	
+//	public int getModifier(Key key) {
+//		TODO: provide pitch modifier (#/b) based on accidental and key
+//	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof NoteLength) {
-			return this.toString().equals(obj.toString());
+		if (obj == null) {return false;}
+		if (obj instanceof Pitch) {
+			Pitch that = (Pitch) obj;
+			return this.toString().equals(that.toString());
 		} else {
 			return false;
 		}
@@ -63,15 +71,13 @@ public class Pitch implements Music {
 				}
 			}
 
-			if (this.modifier != 0) {
-				if (this.modifier > 0) {
-					accidental = "^";
-				} else if (this.modifier < 0) {
-					accidental = "_";
-				}
-				for (int i = 1; i < Math.abs(this.modifier); i++) {
-					accidental += accidental;
-				}
+			switch(this.accidental) {
+			case NATURAL: accidental = "=";
+			case SHARP: accidental = "^";
+			case DOUBLESHARP: accidental = "^^";
+			case FLAT: accidental = "_";
+			case DOUBLEFLAT: accidental = "__";
+			case NONE: accidental = "";
 			}
 
 			return accidental + basenote + octave;

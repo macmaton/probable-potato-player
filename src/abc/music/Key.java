@@ -1,7 +1,6 @@
 package abc.music;
 
 public class Key implements Music {
-	//TODO: representation of Key
 	private final BaseNote key;
 	private final int modifier;
 	private final boolean minor;
@@ -14,8 +13,10 @@ public class Key implements Music {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof NoteLength) {
-			return this.toString().equals(obj.toString());
+		if (obj == null) {return false;}
+		if(obj instanceof Key) {
+			Key that = (Key) obj;
+			return this.toString().equals(that.toString());
 		} else {
 			return false;
 		}

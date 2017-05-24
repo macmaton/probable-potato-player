@@ -27,6 +27,7 @@ public class NoteLength implements Music {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
 		if(obj instanceof NoteLength) {
 			return this.toString().equals(obj.toString());
 		} else {

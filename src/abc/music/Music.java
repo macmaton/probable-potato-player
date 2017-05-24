@@ -17,6 +17,7 @@ import abc.parser.HeaderParser;
 
 /**
  * An immutable data type representing a piece of music in abc notation
+ * preserves transcription (ex, if a courtesy accidental is provided, it will be retained)
  * header - provides information about piece
  * body - contains transcription of music
  * limited implementation based on Spring 2016 version of MIT OCW 6.005

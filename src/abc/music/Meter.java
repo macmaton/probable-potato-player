@@ -28,8 +28,10 @@ public class Meter implements Music {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof NoteLength) {
-			return this.toString().equals(obj.toString());
+		if (obj == null) {return false;}
+		if(obj instanceof Meter) {
+			Meter that = (Meter) obj;
+			return this.toString().equals(that.toString());
 		} else {
 			return false;
 		}

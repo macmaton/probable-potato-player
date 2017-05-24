@@ -26,11 +26,25 @@ public class Header {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof NoteLength) {
-			return this.toString().equals(obj.toString());
+		if (obj == null) {return false;}
+		if(obj instanceof Header) {
+			Header that = (Header) obj;
+			return this.toString().equals(that.toString());
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
 	}
 
 }

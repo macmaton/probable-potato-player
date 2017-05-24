@@ -13,8 +13,10 @@ public class Composer implements Music {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof NoteLength) {
-			return this.toString().equals(obj.toString());
+		if (obj == null) {return false;}
+		if(obj instanceof Composer) {
+			Composer that = (Composer) obj;
+			return this.toString().equals(that.toString());
 		} else {
 			return false;
 		}

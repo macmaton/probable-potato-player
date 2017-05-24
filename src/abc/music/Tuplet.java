@@ -16,8 +16,10 @@ public class Tuplet implements Music {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof NoteLength) {
-			return this.toString().equals(obj.toString());
+		if (obj == null) {return false;}
+		if(obj instanceof Tuplet) {
+			Tuplet that = (Tuplet) obj;
+			return this.toString().equals(that.toString());
 		} else {
 			return false;
 		}

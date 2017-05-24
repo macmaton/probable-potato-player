@@ -16,8 +16,10 @@ public class DefaultNoteLength implements Music {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof NoteLength) {
-			return this.toString().equals(obj.toString());
+		if (obj == null) {return false;}
+		if(obj instanceof DefaultNoteLength) {
+			DefaultNoteLength that = (DefaultNoteLength) obj;
+			return this.toString().equals(that.toString());
 		} else {
 			return false;
 		}
