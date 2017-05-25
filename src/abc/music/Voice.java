@@ -1,14 +1,20 @@
 package abc.music;
 
+/**
+ * An immutable data type representing a voice field in abc notation,
+ * V: name, where the name of the voice may be an arbitrary string.
+ * Voice names may not be null.
+ */
 public class Voice implements Music {
-	private final String voice;
+	private final String name;
 	
 	public Voice(String name) {
-		voice = name;
+		this.name = name;
+		checkRep();
 	}
 	
-	public String getVoice() {
-		return voice;
+	public String getName() {
+		return name;
 	}
 
 	@Override
@@ -24,12 +30,15 @@ public class Voice implements Music {
 
 	@Override
 	public int hashCode() {
-		return voice.hashCode();
+		return name.hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return "V: " + voice;
+		return "V: " + name;
 	}
-
+	
+	private void checkRep() {
+		assert name != null;
+	}
 }

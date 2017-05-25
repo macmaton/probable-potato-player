@@ -2,14 +2,14 @@ package abc.music;
 
 public class Tempo implements Music {
 	int beatsPerMinute;
-	NoteLength beatLength;
+	NoteLengthTest beatLength;
 	
 	public Tempo(DefaultNoteLength beatLength) {
 		beatsPerMinute = 100;
 		this.beatLength = beatLength.getDefaultNoteLength();
 	}
 	
-	public Tempo(int beatsPerMinute, NoteLength beatLength) {
+	public Tempo(int beatsPerMinute, NoteLengthTest beatLength) {
 		this.beatsPerMinute = beatsPerMinute;
 		this.beatLength = beatLength;
 	}

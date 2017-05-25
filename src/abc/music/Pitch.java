@@ -18,6 +18,7 @@ public class Pitch implements Music {
 		this.basenote = basenote;
 		this.accidental = accidental;
 		this.octave = octave;
+		checkRep();
 	}
 	
 	public int getOctave() {
@@ -41,7 +42,7 @@ public class Pitch implements Music {
 		if (obj == null) {return false;}
 		if (obj instanceof Pitch) {
 			Pitch that = (Pitch) obj;
-			return this.toString().equals(that.toString());
+			return this.basenote.equals(that.basenote) && this.accidental.equals(that.accidental) && this.octave == that.octave;
 		} else {
 			return false;
 		}
@@ -49,12 +50,13 @@ public class Pitch implements Music {
 
 	@Override
 	public int hashCode() {
-		return this.toString().hashCode();
+		return this.basenote.hashCode() + this.accidental.hashCode()*7 + this.octave*13;
 	}
 
 	@Override
 	public String toString() {
 		String octave = "";
+		String octaveSymbol = "";
 		String accidental = "";
 		String basenote = this.basenote.toString();
 		if(this.basenote.equals(BaseNote.z)) {
@@ -62,25 +64,40 @@ public class Pitch implements Music {
 		} else {
 			if (this.octave != 0) {
 				if (this.octave > 0) {
-					octave = "'";
+					octaveSymbol = "'";
 				} else if (this.octave < 0) {
-					octave = ",";
+					octaveSymbol = ",";
 				}
-				for (int i = 1; i < Math.abs(this.octave); i++) {
-					octave += octave;
+				for (int i = 0; i < Math.abs(this.octave); i++) {
+					octave += octaveSymbol;
 				}
 			}
 
 			switch(this.accidental) {
 			case NATURAL: accidental = "=";
+				break;
 			case SHARP: accidental = "^";
+				break;
 			case DOUBLESHARP: accidental = "^^";
+				break;
 			case FLAT: accidental = "_";
+				break;
 			case DOUBLEFLAT: accidental = "__";
+				break;
 			case NONE: accidental = "";
+				break;
 			}
 
 			return accidental + basenote + octave;
+		}
+	}
+	
+	private void checkRep() {
+		assert accidental != null;
+		assert basenote != null;
+		if(basenote == BaseNote.z) {
+			assert accidental == Accidental.NONE;
+			assert octave == 0;
 		}
 	}
 }
