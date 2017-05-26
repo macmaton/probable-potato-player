@@ -8,9 +8,9 @@ package abc.music;
  */
 public class Pitch implements Music {
 	
-	enum Accidental {NATURAL, SHARP, DOUBLESHARP, FLAT, DOUBLEFLAT, NONE};
+	enum Accidental {NATURAL, SHARP, DOUBLESHARP, FLAT, DOUBLEFLAT, NONE}
 
-	private final int octave;
+    private final int octave;
 	private final Accidental accidental;
 	private final BaseNote basenote;
 

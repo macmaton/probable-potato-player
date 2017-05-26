@@ -24,7 +24,7 @@ public class NoteLength implements Music {
 	}
 	
 	public double getNoteLength() {
-		if(isSpecified == false) {
+		if(!isSpecified) {
 			return 1.0;
 		} else if (numerator == null && denominator == null) {
 			return 0.5;

@@ -49,11 +49,7 @@ public class Tempo implements Music {
 		if (obj == null) {return false;}
 		if(obj instanceof Tempo) {
 			Tempo that = (Tempo) obj;
-			if(this.beatLength.equals(that.beatLength) && this.beatsPerMinute == that.beatsPerMinute && this.isSpecified == that.isSpecified) {
-				return true;
-			} else {
-				return false;
-			}
+            return this.beatLength.equals(that.beatLength) && this.beatsPerMinute == that.beatsPerMinute && this.isSpecified == that.isSpecified;
 		} else {
 			return false;
 		}

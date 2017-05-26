@@ -24,9 +24,9 @@ import abc.parser.HeaderParser;
  */
 public interface Music {
 	
-	enum BaseNote {C, D, E, F, G, A, B, c, d, e, f, g, a, b, z};
-	
-	public static ParseTree parse(String fileName) {
+	enum BaseNote {C, D, E, F, G, A, B, c, d, e, f, g, a, b, z}
+
+    public static ParseTree parse(String fileName) {
 		File file = new File(fileName);
 		FileInputStream fis;
 		ANTLRInputStream stream = null;

@@ -28,11 +28,7 @@ public class Key implements Music {
 		if (obj == null) {return false;}
 		if(obj instanceof Key) {
 			Key that = (Key) obj;
-			if (this.basenote.equals(that.basenote) && this.modifier == that.modifier && this.minor == that.minor) {
-				return true;
-			} else {
-				return false;
-			}
+            return this.basenote.equals(that.basenote) && this.modifier == that.modifier && this.minor == that.minor;
 		} else {
 			return false;
 		}

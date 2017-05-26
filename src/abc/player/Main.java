@@ -22,6 +22,6 @@ public class Main {
 
     public static void main(String[] args) {
         // CALL play() HERE USING ARGS
-    	Music.getBodyParseTree("/home/margaret/workspace/abcplayer/sample_abc/invention.abc");
+    	Music.getBodyParseTree("/home/margaret/workspace/abcplayer/sample_abc/little_night_music.abc");
     }
 }
