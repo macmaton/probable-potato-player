@@ -1,17 +1,47 @@
 package abc.music;
 
+/**
+ * An immutable data type representing a tempo field in abc notation,
+ * Q: beatLength = beatsPerMinute where beatsPerMinute is a positive non-zero integer
+ */
 public class Tempo implements Music {
-	int beatsPerMinute;
-	NoteLengthTest beatLength;
+	private final int beatsPerMinute;
+	private final NoteLength beatLength;
+	private final boolean isSpecified;
 	
-	public Tempo(DefaultNoteLength beatLength) {
-		beatsPerMinute = 100;
-		this.beatLength = beatLength.getDefaultNoteLength();
-	}
-	
-	public Tempo(int beatsPerMinute, NoteLengthTest beatLength) {
+	/**
+	 * The tempo provided in the header of a file in abc notation
+	 * @param beatsPerMinute	a positive non-zero number of beats in a minute
+	 * @param beatLength		the length of note that is counted for one beat
+	 */
+	public Tempo(int beatsPerMinute, NoteLength beatLength) {
 		this.beatsPerMinute = beatsPerMinute;
 		this.beatLength = beatLength;
+		isSpecified = false;
+		checkRep();
+	}
+	
+	/**
+	 * The default tempo used when a tempo is not provided in the header of a file in abc notation
+	 * @param defaultNoteLength	the default note length L for the piece, used to determine the tempo
+	 */
+	public Tempo(DefaultNoteLength defaultNoteLength) {
+		this.beatsPerMinute = 100;
+		this.beatLength = defaultNoteLength.getDefaultNoteLength();
+		isSpecified = true;
+		checkRep();
+	}
+	
+	public int getBeatsPerMinute() {
+		return beatsPerMinute;
+	}
+	
+	public NoteLength getBeatLength() {
+		return beatLength;
+	}
+	
+	public boolean isSpecified() {
+		return isSpecified;
 	}
 
 	@Override
@@ -19,7 +49,11 @@ public class Tempo implements Music {
 		if (obj == null) {return false;}
 		if(obj instanceof Tempo) {
 			Tempo that = (Tempo) obj;
-			return this.toString().equals(that.toString());
+			if(this.beatLength.equals(that.beatLength) && this.beatsPerMinute == that.beatsPerMinute && this.isSpecified == that.isSpecified) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -27,12 +61,20 @@ public class Tempo implements Music {
 
 	@Override
 	public int hashCode() {
-		return this.toString().hashCode();
+		return beatsPerMinute + beatLength.hashCode()*29 + Boolean.hashCode(isSpecified)*31;
 	}
 
 	@Override
 	public String toString() {
-		return "Q: " + beatLength.toString() + "=" + String.valueOf(beatsPerMinute);
+		if(isSpecified) {
+			return "";
+		} else {
+			return "Q: " + beatLength.toString() + "=" + beatsPerMinute;
+		}
 	}
-
+	
+	private void checkRep() {
+		assert beatsPerMinute >= 1;
+		assert beatLength != null;
+	}
 }

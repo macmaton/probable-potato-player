@@ -1,10 +1,15 @@
 package abc.music;
 
+/**
+ * An immutable data type representing a voice field in abc notation,
+ * T: title, where the title may be an arbitrary string (not null).
+ */
 public class Title implements Music {
 	private final String title;
 	
 	public Title(String title) {
 		this.title = title;
+		checkRep();
 	}
 
 	public String getTitle() {
@@ -29,9 +34,10 @@ public class Title implements Music {
 
 	@Override
 	public String toString() {
-		return title;
+		return "T: " + title;
 	}
 	
-	
-
+	private void checkRep() {
+		assert title != null;
+	}
 }

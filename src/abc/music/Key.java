@@ -1,14 +1,26 @@
 package abc.music;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Key implements Music {
-	private final BaseNote key;
+	private final BaseNote basenote;
 	private final int modifier;
 	private final boolean minor;
 	
-	public Key(BaseNote key, int modifier, boolean minor) {
-		this.key = key;
+	//TODO: refactor to use an enum for possible keys?
+	
+	/**
+	 * The key of a piece in abc notation
+	 * @param basenote
+	 * @param modifier	int number of sharps (positive) or flats (negative)
+	 * @param minor		boolean - true if minor
+	 */
+	public Key(BaseNote basenote, int modifier, boolean minor) {
+		this.basenote = basenote;
 		this.modifier = modifier;
 		this.minor = minor;
+		checkRep();
 	}
 
 	@Override
@@ -16,7 +28,11 @@ public class Key implements Music {
 		if (obj == null) {return false;}
 		if(obj instanceof Key) {
 			Key that = (Key) obj;
-			return this.toString().equals(that.toString());
+			if (this.basenote.equals(that.basenote) && this.modifier == that.modifier && this.minor == that.minor) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -29,7 +45,7 @@ public class Key implements Music {
 
 	@Override
 	public String toString() {
-		String basenote = key.toString();
+		String basenote = this.basenote.toString();
 		String modifier = "";
 		String minor = "";
 		if(this.modifier != 0) {
@@ -46,4 +62,8 @@ public class Key implements Music {
 		return basenote + modifier + minor;
 	}
 
+	private void checkRep() {
+		List<BaseNote> keyNotes = Arrays.asList(BaseNote.A, BaseNote.B, BaseNote.C, BaseNote.D, BaseNote.E, BaseNote.F, BaseNote.G);
+		assert keyNotes.contains(basenote);
+	}
 }

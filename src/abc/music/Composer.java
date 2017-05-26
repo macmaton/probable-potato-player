@@ -2,9 +2,11 @@ package abc.music;
 
 public class Composer implements Music {
 	private final String composer;
+	private final boolean isSpecified;
 	
 	public Composer(String name) {
 		composer = name;
+		isSpecified = true;
 	}
 	
 	public String getComposer() {
@@ -29,6 +31,6 @@ public class Composer implements Music {
 
 	@Override
 	public String toString() {
-		return "V: " + composer;
+		return "C: " + composer;
 	}
 }

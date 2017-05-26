@@ -6,11 +6,29 @@ package abc.music;
  */
 public class Meter implements Music {
 	private final int beatsPerMeasure;
-	private final int noteValue; //denominator of length of note that gets the beat
+	private final int noteValue;
+	private final boolean isSpecified;
 	
+	/**
+	 * The meter in abc notation M: beatsPerMeasure/noteValue
+	 * @param beatsPerMeasure
+	 * @param noteValue
+	 */
 	public Meter(int beatsPerMeasure, int noteValue) {
 		this.beatsPerMeasure = beatsPerMeasure;
 		this.noteValue = noteValue;
+		this.isSpecified = true;
+		checkRep();
+	}
+	
+	/**
+	 * The meter when not specified in the header of the piece in abc notation.  Default values are used for beatsPerMeasure and noteValue.
+	 */
+	public Meter() {
+		this.beatsPerMeasure = 4;
+		this.noteValue = 4;
+		this.isSpecified = false;
+		checkRep();
 	}
 	
 	public int getBeatsPerMeasure() {
@@ -31,7 +49,7 @@ public class Meter implements Music {
 		if (obj == null) {return false;}
 		if(obj instanceof Meter) {
 			Meter that = (Meter) obj;
-			return this.toString().equals(that.toString());
+			return this.beatsPerMeasure == that.beatsPerMeasure && this.noteValue == that.noteValue && this.isSpecified == that.isSpecified;
 		} else {
 			return false;
 		}
@@ -44,9 +62,15 @@ public class Meter implements Music {
 
 	@Override
 	public String toString() {
-		return "M: " + beatsPerMeasure + "/" + noteValue;
+		if(isSpecified) {
+			return "M: " + beatsPerMeasure + "/" + noteValue;
+		} else {
+			return "";
+		}
 	}
 	
-	
-
+	private void checkRep() {
+		assert beatsPerMeasure > 0;
+		assert noteValue > 0;
+	}
 }

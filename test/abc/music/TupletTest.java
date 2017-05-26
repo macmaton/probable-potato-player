@@ -25,7 +25,6 @@ public class TupletTest {
 		setup();
 		//TODO: test case
 //		assert t1.hashCode() == t2.hashCode();
-//		assert !(t1.hashCode() == t3.hashCode());
 	}
 	
 	@Test
@@ -38,7 +37,7 @@ public class TupletTest {
 //	@Test(expected=AssertionError.class)
 //	public void testInitialize() {
 //		//TODO: test case
-//		//Tuplet t4 = new Tuplet();
+//		//t1 = new Tuplet();
 //	}
 
 }

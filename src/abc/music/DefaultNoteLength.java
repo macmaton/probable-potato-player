@@ -1,17 +1,23 @@
 package abc.music;
 
 /**
- * Immutable representation of the default note length for a piece, the length of a note without a specified note length
+ * Immutable representation of the default note length for a piece
  */
 public class DefaultNoteLength implements Music {
-	private final NoteLengthTest defaultNoteLength;
+	private final NoteLength defaultNoteLength;
+	private final boolean isSpecified;
 	
-	public DefaultNoteLength(NoteLengthTest defaultNoteLength) {
+	public DefaultNoteLength(NoteLength defaultNoteLength, boolean isSpecified) {
 		this.defaultNoteLength = defaultNoteLength;
+		this.isSpecified = isSpecified;
 	}
 	
-	public NoteLengthTest getDefaultNoteLength() {
+	public NoteLength getDefaultNoteLength() {
 		return defaultNoteLength;
+	}
+	
+	public boolean isSpecified() {
+		return isSpecified;
 	}
 
 	@Override
@@ -32,6 +38,10 @@ public class DefaultNoteLength implements Music {
 
 	@Override
 	public String toString() {
-		return "L: " + defaultNoteLength.toString();
+		if (isSpecified) {
+			return "L: " + defaultNoteLength.toString();
+		} else {
+			return "";
+		}
 	}
 }

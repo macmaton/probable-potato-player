@@ -6,37 +6,35 @@ public class TitleTest {
 	Title t1;
 	Title t2;
 	Title t3;
+	Title t4;
 	
 	public void setup() {
-		//TODO: test setup
+		t1 = new Title("Fur Elise");
+		t2 = new Title("Fur Elise");
+		t3 = new Title("Concerto No. 5 in D minor");
 	}
 	
 	@Test
 	public void testEquals() {		
 		setup();
-		//TODO: test case
-//		assert t1.equals(t2);
-//		assert !(t2.equals(t3));
+		assert t1.equals(t2);
+		assert !(t2.equals(t3));
 	}
 	
 	@Test
 	public void testHashCode() {
 		setup();
-		//TODO: test case
-//		assert t1.hashCode() == t2.hashCode();
-//		assert !(t1.hashCode() == t3.hashCode());
+		assert t1.hashCode() == t2.hashCode();
 	}
 	
 	@Test
 	public void testToString() {
 		setup();
-		//TODO: test case
-//		assert t1.toString().equals("");
+		assert t3.toString().equals("T: Concerto No. 5 in D minor");
 	}
 	
-//	@Test(expected=AssertionError.class)
-//	public void testInitialize() {
-//		//TODO: test case
-//		//Title t4 = new Title();
-//	}
+	@Test(expected=AssertionError.class)
+	public void testInitialize() {
+		t1 = new Title(null);
+	}
 }

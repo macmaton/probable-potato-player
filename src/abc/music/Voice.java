@@ -37,7 +37,7 @@ public class Voice implements Music {
 	public String toString() {
 		return "V: " + name;
 	}
-	
+
 	private void checkRep() {
 		assert name != null;
 	}
