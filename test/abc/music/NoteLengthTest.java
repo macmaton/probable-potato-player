@@ -12,6 +12,7 @@ public class NoteLengthTest {
     private NoteLength n7;
     private NoteLength n8;
     private NoteLength n9;
+    private NoteLength n10;
 
     public void setup() {
         n1 = new NoteLength(1, 3, true);
@@ -23,6 +24,7 @@ public class NoteLengthTest {
         n7 = new NoteLength(1, 3, true);
         n8 = new NoteLength(1, 1, false);
         n9 = new NoteLength(3, 1, true);
+        n10 = new NoteLength();
     }
 
     @Test
@@ -33,6 +35,7 @@ public class NoteLengthTest {
         assert !n5.equals(n6);
         assert n1.equals(n7);
         assert n6.equals(n8);
+        assert n8.equals(n10);
     }
 
     @Test
@@ -40,6 +43,7 @@ public class NoteLengthTest {
         setup();
         assert n1.hashCode() == n7.hashCode();
         assert n6.hashCode() == n8.hashCode();
+        assert n8.hashCode() == n10.hashCode();
     }
 
     @Test
@@ -53,6 +57,7 @@ public class NoteLengthTest {
         assert n6.toString().equals("");
         assert n8.toString().equals("");
         assert n9.toString().equals("3");
+        assert n10.toString().equals("");
     }
 
     @Test(expected = AssertionError.class)

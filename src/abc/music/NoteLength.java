@@ -25,6 +25,16 @@ public class NoteLength implements Music {
         checkRep();
     }
 
+    /**
+     * A note length when not specified in abc notation.
+     */
+    public NoteLength() {
+        this.numerator = 1;
+        this.denominator = 1;
+        this.isSpecified = false;
+        checkRep();
+    }
+
     public double getNoteLength() {
         if (!isSpecified) {
             return 1.0;
