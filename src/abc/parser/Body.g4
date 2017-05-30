@@ -12,7 +12,7 @@ element: noteelement WHITESPACE? | tupletelement WHITESPACE | BARLINE WHITESPACE
 noteelement: note | multinote;
 note: noterest notelength;
 noterest: pitch | REST;
-pitch: ACCIDENTAL? basenote octave?;
+pitch: ACCIDENTAL? basenote octave*;
 octave: '\'' | ',';
 notelength: (DIGIT+)? ('/' (DIGIT+)?)?;
 notelengthstrict: DIGIT+ '/' DIGIT+;
@@ -35,6 +35,6 @@ BARLINE : '|' | '||' | '[|' | '|]' | ':|' | '|:';
 NTHREPEAT: '[1' | '[2';
 REST: 'z';
 DIGIT: [0-9];
-NEWLINE: '\n' | '\r''\n'? | EOF;
+NEWLINE: '\n' | '\r''\n'? | '\r' | EOF;
 WHITESPACE: ' ' | '\t';
 CHAR: ~[NEWLINE];

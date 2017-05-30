@@ -5,31 +5,36 @@ package abc.music;
  * denoted by X: in the first line of the file
  */
 public class Index implements Music {
-	private final int index;
-	
-	public Index(int index) {
-		this.index = index;
-	}
+    private final Integer index;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {return false;}
-		if(obj instanceof Index) {
-			Index that = (Index) obj;
-			return this.toString().equals(that.toString());
-		} else {
-			return false;
-		}
-	}
+    public Index(Integer index) {
+        this.index = index;
+    }
 
-	@Override
-	public int hashCode() {
-		return this.toString().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return this.index * 43;
+    }
 
-	@Override
-	public String toString() {
-		return "X: " + String.valueOf(index);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof Index) {
+            Index that = (Index) obj;
+            return this.index.equals(that.index);
+        } else {
+            return false;
+        }
+    }
 
+    @Override
+    public String toString() {
+        if (index != null) {
+            return "X: " + index.toString();
+        } else {
+            return "X: ";
+        }
+    }
 }

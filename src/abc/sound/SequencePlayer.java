@@ -1,18 +1,7 @@
 package abc.sound;
 
+import javax.sound.midi.*;
 import java.text.MessageFormat;
-
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MetaEventListener;
-import javax.sound.midi.MetaMessage;
-import javax.sound.midi.MidiEvent;
-import javax.sound.midi.MidiMessage;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.Sequencer;
-import javax.sound.midi.ShortMessage;
-import javax.sound.midi.Track;
 
 /**
  * Schedules and plays a sequence of notes at given time steps (or "ticks").
@@ -37,17 +26,11 @@ public class SequencePlayer {
      *   beatsPerMinute is positive
      */
 
-    private void checkRep() {
-        assert sequencer != null : "sequencer should be non-null";
-        assert track != null : "track should be non-null";
-        assert beatsPerMinute >= 0 : "should be positive number of beats per minute";
-    }
-
     /**
      * Make a new MIDI sequence player.
-     * 
+     *
      * @param beatsPerMinute the number of beats per minute
-     * @param ticksPerBeat the number of ticks per beat; every note plays for an integer number of ticks
+     * @param ticksPerBeat   the number of ticks per beat; every note plays for an integer number of ticks
      * @throws MidiUnavailableException
      * @throws InvalidMidiDataException
      */
@@ -66,116 +49,6 @@ public class SequencePlayer {
         sequencer.setSequence(sequence);
 
         checkRep();
-    }
-
-    /**
-     * Schedule a note to be played starting at startTick for the duration of numTicks.
-     *
-     * @param note the pitch value for the note to be played; must be a valid note
-     * @param startTick the starting tick; must be >= 0
-     * @param numTicks the number of ticks for which this note should be played; must be >= 0
-     */
-    public void addNote(int note, int startTick, int numTicks) {
-        try {
-            // schedule two events in the track, one for starting a note and
-            // the other for ending the note.
-            addMidiNoteEvent(ShortMessage.NOTE_ON, note, startTick);
-            addMidiNoteEvent(ShortMessage.NOTE_OFF, note, startTick + numTicks);
-        } catch (InvalidMidiDataException imde) {
-            String msg = MessageFormat.format("Cannot add note with the pitch {0} at tick {1} " +
-                                              "for duration {2}", note, startTick, numTicks);
-            throw new RuntimeException(msg, imde);
-        }
-    }
-
-    /**
-     * Schedule a MIDI note event.
-     * 
-     * @param eventType valid MidiMessage type in ShortMessage
-     * @param note valid pitch value
-     * @param tick tick >= 0
-     * @throws InvalidMidiDataException
-     */
-    private void addMidiNoteEvent(int eventType, int note, int tick) throws InvalidMidiDataException {
-        ShortMessage msg = new ShortMessage(eventType, DEFAULT_CHANNEL, note, DEFAULT_VELOCITY);
-        this.track.add(new MidiEvent(msg, tick));
-    }
-
-    /**
-     * Open the MIDI sequencer and play the scheduled music.
-     * 
-     * @throws MidiUnavailableException if the sequencer cannot be opened
-     */
-    public void play() throws MidiUnavailableException {
-        sequencer.open();
-        sequencer.setTempoInBPM(this.beatsPerMinute);
-
-        sequencer.addMetaEventListener(new MetaEventListener() {
-            public void meta(MetaMessage meta) {
-                if (meta.getType() == META_END_OF_TRACK) {
-                    // allow the sequencer to finish
-                    try { Thread.sleep(1000); } catch (InterruptedException ie) { }
-                    // stop & close the sequencer
-                    sequencer.stop();
-                    sequencer.close();
-                }
-            }
-        });
-
-        // start playing!
-        sequencer.start();
-    }
-
-    /**
-     * @return a string that displays the entire track information as a
-     *         sequence of MIDI events, where each event is either turning on
-     *         or off a note at a certain tick, or the end of the track
-     */
-    @Override
-    public String toString() {
-        String trackInfo = "";
-
-        for (int i = 0; i < track.size(); i++) {
-            final MidiEvent e = track.get(i);
-            final MidiMessage msg = e.getMessage();
-            final String msgString;
-
-            if (msg instanceof ShortMessage) {
-                final ShortMessage smg = (ShortMessage) msg;
-                final int command = smg.getCommand();
-                final String commandName;
-
-                if (command == ShortMessage.NOTE_OFF) {
-                    commandName = "NOTE_OFF";
-                } else if (command == ShortMessage.NOTE_ON) {
-                    commandName = "NOTE_ON ";
-                } else {
-                    commandName = "Unknown command " + command;
-                }
-
-                msgString = "Event: " + commandName + " Pitch: " + smg.getData1() + " ";
-
-            } else if (msg instanceof MetaMessage) {
-                final MetaMessage mmg = (MetaMessage) msg;
-                final int type = mmg.getType();
-                final String typeName;
-
-                if (type == META_END_OF_TRACK) {
-                    typeName = "END_OF_TRACK";
-                } else {
-                    typeName = "Unknown type " + type;
-                }
-
-                msgString = "Meta event: " + typeName;
-
-            } else {
-                msgString = "Unknown event";
-            }
-
-            trackInfo += msgString + " Tick: " + e.getTick() + "\n";
-        }
-
-        return trackInfo;
     }
 
     /**
@@ -226,5 +99,123 @@ public class SequencePlayer {
         } catch (InvalidMidiDataException imde) {
             imde.printStackTrace();
         }
+    }
+
+    private void checkRep() {
+        assert sequencer != null : "sequencer should be non-null";
+        assert track != null : "track should be non-null";
+        assert beatsPerMinute >= 0 : "should be positive number of beats per minute";
+    }
+
+    /**
+     * Schedule a note to be played starting at startTick for the duration of numTicks.
+     *
+     * @param note      the pitch value for the note to be played; must be a valid note
+     * @param startTick the starting tick; must be >= 0
+     * @param numTicks  the number of ticks for which this note should be played; must be >= 0
+     */
+    public void addNote(int note, int startTick, int numTicks) {
+        try {
+            // schedule two events in the track, one for starting a note and
+            // the other for ending the note.
+            addMidiNoteEvent(ShortMessage.NOTE_ON, note, startTick);
+            addMidiNoteEvent(ShortMessage.NOTE_OFF, note, startTick + numTicks);
+        } catch (InvalidMidiDataException imde) {
+            String msg = MessageFormat.format("Cannot add note with the pitch {0} at tick {1} " +
+                    "for duration {2}", note, startTick, numTicks);
+            throw new RuntimeException(msg, imde);
+        }
+    }
+
+    /**
+     * Schedule a MIDI note event.
+     *
+     * @param eventType valid MidiMessage type in ShortMessage
+     * @param note      valid pitch value
+     * @param tick      tick >= 0
+     * @throws InvalidMidiDataException
+     */
+    private void addMidiNoteEvent(int eventType, int note, int tick) throws InvalidMidiDataException {
+        ShortMessage msg = new ShortMessage(eventType, DEFAULT_CHANNEL, note, DEFAULT_VELOCITY);
+        this.track.add(new MidiEvent(msg, tick));
+    }
+
+    /**
+     * Open the MIDI sequencer and play the scheduled music.
+     *
+     * @throws MidiUnavailableException if the sequencer cannot be opened
+     */
+    public void play() throws MidiUnavailableException {
+        sequencer.open();
+        sequencer.setTempoInBPM(this.beatsPerMinute);
+
+        sequencer.addMetaEventListener(new MetaEventListener() {
+            public void meta(MetaMessage meta) {
+                if (meta.getType() == META_END_OF_TRACK) {
+                    // allow the sequencer to finish
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ie) {
+                    }
+                    // stop & close the sequencer
+                    sequencer.stop();
+                    sequencer.close();
+                }
+            }
+        });
+
+        // start playing!
+        sequencer.start();
+    }
+
+    /**
+     * @return a string that displays the entire track information as a sequence of MIDI events, where each event is
+     * either turning on or off a note at a certain tick, or the end of the track
+     */
+    @Override
+    public String toString() {
+        String trackInfo = "";
+
+        for (int i = 0; i < track.size(); i++) {
+            final MidiEvent e = track.get(i);
+            final MidiMessage msg = e.getMessage();
+            final String msgString;
+
+            if (msg instanceof ShortMessage) {
+                final ShortMessage smg = (ShortMessage) msg;
+                final int command = smg.getCommand();
+                final String commandName;
+
+                if (command == ShortMessage.NOTE_OFF) {
+                    commandName = "NOTE_OFF";
+                } else if (command == ShortMessage.NOTE_ON) {
+                    commandName = "NOTE_ON ";
+                } else {
+                    commandName = "Unknown command " + command;
+                }
+
+                msgString = "Event: " + commandName + " Pitch: " + smg.getData1() + " ";
+
+            } else if (msg instanceof MetaMessage) {
+                final MetaMessage mmg = (MetaMessage) msg;
+                final int type = mmg.getType();
+                final String typeName;
+
+                if (type == META_END_OF_TRACK) {
+                    typeName = "END_OF_TRACK";
+                } else {
+                    typeName = "Unknown type " + type;
+                }
+
+                msgString = "Meta event: " + typeName;
+
+            } else {
+                msgString = "Unknown event";
+            }
+
+            trackInfo += msgString + " Tick: " + e.getTick() + "\n";
+        }
+
+        return trackInfo;
     }
 }

@@ -2,10 +2,9 @@ package abc.music;
 
 import org.junit.Test;
 
-public class TupletTest {
-    Tuplet t1;
-    Tuplet t2;
-    Tuplet t3;
+public class HeaderTest {
+    Header h1;
+    Header h2;    Header h3;
 
     public void setup() {
         //TODO: test setup
@@ -38,5 +37,4 @@ public class TupletTest {
 //		//TODO: test case
 //		//t1 = new Tuplet();
 //	}
-
 }

@@ -5,72 +5,75 @@ package abc.music;
  * M: beatsPerMeasure/noteValue
  */
 public class Meter implements Music {
-	private final int beatsPerMeasure;
-	private final int noteValue;
-	private final boolean isSpecified;
-	
-	/**
-	 * The meter in abc notation M: beatsPerMeasure/noteValue
-	 * @param beatsPerMeasure
-	 * @param noteValue
-	 */
-	public Meter(int beatsPerMeasure, int noteValue) {
-		this.beatsPerMeasure = beatsPerMeasure;
-		this.noteValue = noteValue;
-		this.isSpecified = true;
-		checkRep();
-	}
-	
-	/**
-	 * The meter when not specified in the header of the piece in abc notation.  Default values are used for beatsPerMeasure and noteValue.
-	 */
-	public Meter() {
-		this.beatsPerMeasure = 4;
-		this.noteValue = 4;
-		this.isSpecified = false;
-		checkRep();
-	}
-	
-	public int getBeatsPerMeasure() {
-		return beatsPerMeasure;
-	}
-	
-	public int getNoteValue() {
-		return noteValue;
-	}
-	
-	public double getMeterDecimal() {
-		double result = (double)beatsPerMeasure/(double)noteValue;
-		return result;
-	}
+    private final int beatsPerMeasure;
+    private final int noteValue;
+    private final boolean isSpecified;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {return false;}
-		if(obj instanceof Meter) {
-			Meter that = (Meter) obj;
-			return this.beatsPerMeasure == that.beatsPerMeasure && this.noteValue == that.noteValue && this.isSpecified == that.isSpecified;
-		} else {
-			return false;
-		}
-	}
+    /**
+     * The meter in abc notation M: beatsPerMeasure/noteValue
+     *
+     * @param beatsPerMeasure positive non-zero integer
+     * @param noteValue positive non-zero integer
+     */
+    public Meter(int beatsPerMeasure, int noteValue) {
+        this.beatsPerMeasure = beatsPerMeasure;
+        this.noteValue = noteValue;
+        this.isSpecified = true;
+        checkRep();
+    }
 
-	@Override
-	public int hashCode() {
-		return this.toString().hashCode();
-	}
+    /**
+     * The meter when not specified in the header of the piece in abc notation.  Default values are used for
+     * beatsPerMeasure and noteValue.
+     */
+    public Meter() {
+        this.beatsPerMeasure = 4;
+        this.noteValue = 4;
+        this.isSpecified = false;
+        checkRep();
+    }
 
-	@Override
-	public String toString() {
-		if(isSpecified) {
-			return "M: " + beatsPerMeasure + "/" + noteValue;
-		} else {
-			return "";
-		}
-	}
-	
-	private void checkRep() {
-		assert beatsPerMeasure > 0;
-		assert noteValue > 0;
-	}
+    public int getBeatsPerMeasure() {
+        return beatsPerMeasure;
+    }
+
+    public int getNoteValue() {
+        return noteValue;
+    }
+
+    public double getMeterDecimal() {
+        return (double) beatsPerMeasure / (double) noteValue;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof Meter) {
+            Meter that = (Meter) obj;
+            return this.beatsPerMeasure == that.beatsPerMeasure && this.noteValue == that.noteValue && this.isSpecified == that.isSpecified;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (isSpecified) {
+            return "M: " + beatsPerMeasure + "/" + noteValue;
+        } else {
+            return "";
+        }
+    }
+
+    private void checkRep() {
+        assert beatsPerMeasure > 0;
+        assert noteValue > 0;
+    }
 }

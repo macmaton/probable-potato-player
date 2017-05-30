@@ -1,18 +1,16 @@
 package abc.sound;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
-import org.junit.Test;
-
 public class SequencePlayerTest {
-    
+
     @Test
     public void test() throws MidiUnavailableException, InvalidMidiDataException {
         SequencePlayer player = new SequencePlayer(140, 12);
-        
+
         //C C C3/4 D/4 E | E3/4 D/4 E3/4 F/4 G2 | (3c/2c/2c/2 (3G/2G/2G/2 (3E/2E/2E/2 (3C/2C/2C/2 | G3/4 F/4 E3/4 D/4 C2
         player.addNote(new Pitch('C').toMidiNote(), 0, 12);
         player.addNote(new Pitch('C').toMidiNote(), 12, 12);
@@ -41,11 +39,11 @@ public class SequencePlayerTest {
         player.addNote(new Pitch('E').toMidiNote(), 156, 9);
         player.addNote(new Pitch('D').toMidiNote(), 165, 3);
         player.addNote(new Pitch('C').toMidiNote(), 168, 24);
-        
+
         System.out.println(player);
-        
+
         player.play();
     }
-    
+
 
 }
