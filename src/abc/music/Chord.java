@@ -1,7 +1,7 @@
 package abc.music;
 
 /**
- * From https://ocw.mit.edu/ans7870/6/6.005/s16/projects/abcplayer/spec/
+ * Adapted from https://ocw.mit.edu/ans7870/6/6.005/s16/projects/abcplayer/spec/
  *
  * One or more notes may be played simultaneously in a chord. In abc, a chord is denoted by a group of notes between
  * square brackets ( [ and ] ):
@@ -11,8 +11,31 @@ package abc.music;
  * first note specified in the chord. For example, in [C2E4]G2 , there would first be an E note and a C note playing together, and then an E note and a G note playing together.
  *
  * A chord may not contain any rests or tuplets.
+ *
+ * The chord forms a syntactic grouping, to which the same prefixes and postfixes can be attached as to an ordinary
+ * note (except for accidentals which should be attached to individual notes within the chord and decorations which
+ * may be attached to individual notes within the chord.  When both inside and outside the chord length modifiers are
+ * used, they should be multiplied. Example: [C2E2G2]3 has the same meaning as [CEG]6.
  */
-public class Chord {
-    //TODO: rep
+public class Chord implements TupletElement {
+    private final Note[] notes;
+    private final NoteLength length;
 
+    public Chord(Note[] notes, NoteLength length) {
+        this.notes = notes;
+        this.length = length;
+    }
+
+    @Override
+    public String toString() {
+        String result = "[";
+        for (Note n : notes) {
+            result = result + n.toString();
+        }
+        result = result + "]";
+        if(length != null) {
+            result = result + length.toString();
+        }
+        return result;
+    }
 }

@@ -51,7 +51,7 @@ public class TupletTest {
     @Test
     public void testGetNotes() {
         setup();
-        t1.getNotes()[0] = new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength());
+        t1.getElements()[0] = new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength());
         assert t1.equals(t2);
     }
 }

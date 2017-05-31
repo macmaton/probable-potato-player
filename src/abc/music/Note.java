@@ -5,19 +5,19 @@ package abc.music;
  * A note consists of a pitch or rest and a length (duration).
  * Neither pitch nor note may be null.
  */
-public class Note {
-    private Pitch noteorrest;
+public class Note implements TupletElement {
+    private Pitch noteOrRest;
     private NoteLength length;
 
-    public Note(Pitch noteorrest, NoteLength length) {
-        this.noteorrest = noteorrest;
+    public Note(Pitch noteOrRest, NoteLength length) {
+        this.noteOrRest = noteOrRest;
         this.length = length;
         checkRep();
     }
 
     @Override
     public int hashCode() {
-        return this.noteorrest.hashCode() + this.length.hashCode();
+        return this.noteOrRest.hashCode() + this.length.hashCode();
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Note {
         }
         if (obj instanceof Note) {
             Note that = (Note) obj;
-            return this.noteorrest.equals(that.noteorrest) && this.length.equals(that.length);
+            return this.noteOrRest.equals(that.noteOrRest) && this.length.equals(that.length);
         } else {
             return false;
         }
@@ -35,11 +35,11 @@ public class Note {
 
     @Override
     public String toString() {
-        return noteorrest.toString() + length.toString();
+        return noteOrRest.toString() + length.toString();
     }
 
     private void checkRep() {
-        assert !(noteorrest == null);
+        assert !(noteOrRest == null);
         assert !(length == null);
     }
 }
