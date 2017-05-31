@@ -20,7 +20,7 @@ import java.util.Arrays;
  *  In the case of a triplet, you should play each note or chord for 2/3 of the original duration. For a duplet, 3/2
  *  of the original durations. And for a quadruplet, 3/4 of the original durations.
  */
-public class Tuplet implements Music {
+public class Tuplet {
     private final int spec;
     private final Note[] notes;
 

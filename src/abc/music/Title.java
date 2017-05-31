@@ -4,7 +4,7 @@ package abc.music;
  * An immutable data type representing a voice field in abc notation,
  * T: title, where the title may be an arbitrary string (not null).
  */
-public class Title implements Music {
+public class Title {
     private final String title;
 
     public Title(String title) {

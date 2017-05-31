@@ -15,15 +15,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * An immutable data type representing a piece of music in abc notation
+ * Builds immutable data type representing a piece of music in abc notation
  * preserves transcription (ex, if a courtesy accidental is provided, it will be retained)
  * header - provides information about piece
  * body - contains transcription of music
  * limited implementation based on Spring 2016 version of MIT OCW 6.005
  */
-public interface Music {
+public class Music {
 
-    static ParseTree parse(String fileName) {
+    enum BaseNote {C, D, E, F, G, A, B, c, d, e, f, g, a, b, z}
+
+    public static ParseTree parse(String fileName) {
         File file = new File(fileName);
         FileInputStream fis;
         ANTLRInputStream stream = null;
@@ -47,13 +49,13 @@ public interface Music {
         return root;
     }
 
-    static ParseTree getHeaderParseTree(String fileName) {
+    public static ParseTree getHeaderParseTree(String fileName) {
         ParseTree root = parse(fileName);
         ParseTree header = root.getChild(0);
         return header;
     }
 
-    static ParseTree getBodyParseTree(String fileName) {
+    public static ParseTree getBodyParseTree(String fileName) {
         ParseTree root = parse(fileName);
         ANTLRInputStream stream = new ANTLRInputStream(root.getChild(1).getText());
 
@@ -70,31 +72,29 @@ public interface Music {
         return body;
     }
 
-    /**
-     * @return hash code value consistent with the equals() definition of structural equality, such that for all
-     * e1,e2:Music, e1.equals(e2) implies e1.hashCode() == e2.hashCode()
-     */
-    @Override
-    public int hashCode();
-
-//	public static Music buildAST(ParseTree tree) {
-//		
-//		
-//	}
-
-    /**
-     * @param thatObject any object
-     * @return true if and only if this and thatObject are structurally-equal Music.
-     */
-    @Override
-    public boolean equals(Object thatObject);
-
-    /**
-     * @return a parsable representation in abc notation, such that for all e:Music, e.equals(Music.parse(e.toString())).
-     */
-    @Override
-    public String toString();
-
-    enum BaseNote {C, D, E, F, G, A, B, c, d, e, f, g, a, b, z}
-
+//    /**
+//     * @return hash code value consistent with the equals() definition of structural equality, such that for all
+//     * e1,e2:Music, e1.equals(e2) implies e1.hashCode() == e2.hashCode()
+//     */
+//    @Override
+//    public int hashCode();
+//
+////	public static Music buildAST(ParseTree tree) {
+////
+////
+////	}
+//
+//    /**
+//     * @param thatObject any object
+//     * @return true if and only if this and thatObject are structurally-equal Music.
+//     */
+//    @Override
+//    public boolean equals(Object thatObject);
+//
+//    /**
+//     * @return a parsable representation in abc notation, such that for all e:Music, e.equals(Music.parse(e.toString())).
+//     */
+//    @Override
+//    public String toString();
+//
 }

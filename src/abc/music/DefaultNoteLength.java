@@ -3,7 +3,7 @@ package abc.music;
 /**
  * Immutable representation of the default note length for a piece
  */
-public class DefaultNoteLength implements Music {
+public class DefaultNoteLength {
     private final int numerator;
     private final int denominator;
     private final Boolean isSpecified;

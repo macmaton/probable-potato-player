@@ -4,7 +4,7 @@ package abc.music;
  * represents the index number of a piece in abc notation
  * denoted by X: in the first line of the file
  */
-public class Index implements Music {
+public class Index {
     private final Integer index;
 
     public Index(Integer index) {

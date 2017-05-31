@@ -1,6 +1,6 @@
 package abc.music;
 
-public class Line implements Music {
+public class Line {
     //TODO: representation of Line
 
     @Override

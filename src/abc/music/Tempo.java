@@ -4,7 +4,7 @@ package abc.music;
  * An immutable data type representing a tempo field in abc notation,
  * Q: beatLength = beatsPerMinute where beatsPerMinute is a positive non-zero integer
  */
-public class Tempo implements Music {
+public class Tempo {
     private final int beatsPerMinute;
     private final NoteLength beatLength;
     private final boolean isSpecified;

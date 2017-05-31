@@ -5,7 +5,7 @@ package abc.music;
  * A note consists of a pitch or rest and a length (duration).
  * Neither pitch nor note may be null.
  */
-public class Note implements Music {
+public class Note {
     private Pitch noteorrest;
     private NoteLength length;
 

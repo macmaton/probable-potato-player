@@ -1,9 +1,11 @@
 package abc.music;
 
+import abc.music.Music.BaseNote;
+
 import java.util.Arrays;
 import java.util.List;
 
-public class Key implements Music {
+public class Key {
     private final BaseNote basenote;
     private final int modifier;
     private final boolean minor;

@@ -12,7 +12,7 @@ package abc.music;
  *
  * A chord may not contain any rests or tuplets.
  */
-public class Chord implements Music {
+public class Chord {
     //TODO: rep
 
 }

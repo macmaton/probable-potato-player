@@ -1,12 +1,14 @@
 package abc.music;
 
+import abc.music.Music.BaseNote;
+
 /**
  * Immutable datatype representing a pitch
  * basenote: in the range A-G (octave of middle C) or a-g (octave above middle C), or z for a rest
  * accidental: whether the note is marked as natural,sharp, or flat.  double flats and sharps are allowed.
  * octave: number of octaves above or below the basenote.
  */
-public class Pitch implements Music {
+public class Pitch {
 
     private final int octave;
     private final Accidental accidental;
@@ -27,7 +29,7 @@ public class Pitch implements Music {
         return accidental;
     }
 
-    public BaseNote getBasenote() {
+    public BaseNote getBaseNote() {
         return basenote;
     }
 

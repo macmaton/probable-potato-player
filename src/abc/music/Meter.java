@@ -4,7 +4,7 @@ package abc.music;
  * Immutable data type to represent the meter of a piece in abc notation
  * M: beatsPerMeasure/noteValue
  */
-public class Meter implements Music {
+public class Meter {
     private final int beatsPerMeasure;
     private final int noteValue;
     private final boolean isSpecified;

@@ -1,6 +1,6 @@
 package abc.music;
 
-public class Composer implements Music {
+public class Composer {
     private final String composer;
     private final boolean isSpecified;
 

@@ -5,7 +5,7 @@ package abc.music;
  * hasMultiplier represents whether the noteLength is explicitly given and may not be null.
  * Numerator and denominator are nullable.  Default values are provided for when either is null.
  */
-public class NoteLength implements Music {
+public class NoteLength {
     private final Integer numerator;
     private final Integer denominator;
     private final Boolean isSpecified; //whether a fractional multiplicative factor is provided
