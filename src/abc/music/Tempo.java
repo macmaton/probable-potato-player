@@ -56,7 +56,10 @@ public class Tempo {
 
     @Override
     public int hashCode() {
-        return beatsPerMinute + beatLength.hashCode() * 29 + Boolean.hashCode(isSpecified) * 31;
+        int result = beatsPerMinute;
+        result = 31 * result + beatLength.hashCode();
+        result = 31 * result + (isSpecified ? 1 : 0);
+        return result;
     }
 
     @Override

@@ -24,24 +24,15 @@ public class Header {
         //TODO: default values when not provided
     }
 
-    @Override
-    public int hashCode() {
-        // TODO Auto-generated method stub
-        return super.hashCode();
-    }
+//    @Override
+//    public boolean equals() {
+//        TODO
+//    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof Header) {
-            Header that = (Header) obj;
-            return this.toString().equals(that.toString());
-        } else {
-            return false;
-        }
-    }
+//    @Override
+//    public int hashCode() {
+//        TODO
+//    }
 
     @Override
     public String toString() {

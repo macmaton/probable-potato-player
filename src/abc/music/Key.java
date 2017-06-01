@@ -28,7 +28,10 @@ public class Key {
 
     @Override
     public int hashCode() {
-        return this.toString().hashCode();
+        int result = basenote.hashCode();
+        result = 31 * result + modifier;
+        result = 31 * result + (minor ? 1 : 0);
+        return result;
     }
 
     @Override

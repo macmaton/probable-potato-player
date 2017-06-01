@@ -13,7 +13,7 @@ public class Index {
 
     @Override
     public int hashCode() {
-        return this.index * 43;
+        return index != null ? index.hashCode() : 0;
     }
 
     @Override

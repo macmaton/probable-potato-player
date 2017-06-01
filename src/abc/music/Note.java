@@ -17,7 +17,9 @@ public class Note implements TupletElement {
 
     @Override
     public int hashCode() {
-        return this.noteOrRest.hashCode() + this.length.hashCode();
+        int result = noteOrRest.hashCode();
+        result = 31 * result + length.hashCode();
+        return result;
     }
 
     @Override

@@ -28,7 +28,9 @@ public class Composer {
 
     @Override
     public int hashCode() {
-        return composer.hashCode();
+        int result = composer.hashCode();
+        result = 31 * result + (isSpecified ? 1 : 0);
+        return result;
     }
 
     @Override

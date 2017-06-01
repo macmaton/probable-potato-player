@@ -60,7 +60,7 @@ public class NoteLengthTest {
         assert n10.toString().equals("");
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testInitialize() {
         n1 = new NoteLength(1, 3, false);
     }

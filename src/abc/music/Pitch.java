@@ -35,7 +35,10 @@ public class Pitch {
 
     @Override
     public int hashCode() {
-        return this.basenote.hashCode() + this.accidental.hashCode() * 7 + this.octave * 13;
+        int result = octave;
+        result = 31 * result + (accidental != null ? accidental.hashCode() : 0);
+        result = 31 * result + basenote.hashCode();
+        return result;
     }
 
 //	public int getModifier(Key key) {

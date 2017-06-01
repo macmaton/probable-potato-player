@@ -21,4 +21,31 @@ public class Section implements BodyElement {
         result.append("]");
         return result.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof Section) {
+            Section that = (Section) obj;
+            if (this.elements.length == that.elements.length) {
+                for (int i = 0; i < elements.length; i++) {
+                    if (!this.elements[i].equals(that.elements[i])) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(elements);
+    }
 }

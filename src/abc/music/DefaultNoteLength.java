@@ -46,7 +46,10 @@ public class DefaultNoteLength {
 
     @Override
     public int hashCode() {
-        return numerator * 13 + denominator * 17 + isSpecified.hashCode() * 23;
+        int result = numerator;
+        result = 31 * result + denominator;
+        result = 31 * result + isSpecified.hashCode();
+        return result;
     }
 
     @Override

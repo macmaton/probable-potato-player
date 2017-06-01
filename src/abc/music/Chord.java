@@ -1,5 +1,7 @@
 package abc.music;
 
+import java.util.Arrays;
+
 /**
  * Adapted from https://ocw.mit.edu/ans7870/6/6.005/s16/projects/abcplayer/spec/
  *
@@ -36,6 +38,18 @@ public class Chord implements TupletElement {
         if(length != null) {
             result = result + length.toString();
         }
+        return result;
+    }
+
+//    @Override
+//    public boolean equals() {
+//        TODO
+//    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(notes);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
         return result;
     }
 }

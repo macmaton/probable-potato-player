@@ -41,13 +41,6 @@ public class TupletTest {
 		assert t3.toString().equals("(2AB");
     }
 
-	@Test(expected=AssertionError.class)
-	public void testInitialize() {
-		t1 = new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-                NoteLength())
-                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength())});
-	}
-
     @Test
     public void testGetNotes() {
         setup();

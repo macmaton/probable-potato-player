@@ -1,5 +1,7 @@
 package abc.music;
 
+import java.util.Arrays;
+
 /**
  * Created by margaret on 5/31/17.
  */
@@ -17,5 +19,15 @@ public class Measure {
             result.append(e.toString() + " ");
         }
         return result.toString();
+    }
+
+//    @Override
+//    public boolean equals() {
+//        TODO
+//    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(elements);
     }
 }

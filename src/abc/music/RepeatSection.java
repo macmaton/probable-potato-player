@@ -1,5 +1,7 @@
 package abc.music;
 
+import java.util.Arrays;
+
 public class RepeatSection implements BodyElement {
     private final Line[] repeatedLines;
     private final Line[] endings;
@@ -21,5 +23,45 @@ public class RepeatSection implements BodyElement {
             }
         }
         return result.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof RepeatSection) {
+            RepeatSection that = (RepeatSection) obj;
+            if (this.repeatedLines.length == that.repeatedLines.length) {
+                for (int i = 0; i < repeatedLines.length; i++) {
+                    if (!this.repeatedLines[i].equals(that.repeatedLines[i])) {
+                        return false;
+                    }
+                }
+                if (this.endings == null && that.endings == null) {
+                    return true;
+                } else if (this.endings.length == that.endings.length) {
+                    for (int i = 0; i < endings.length; i++) {
+                        if (!this.endings[i].equals(that.endings[i])) {
+                            return false;
+                        }
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(repeatedLines);
+        result = 31 * result + Arrays.hashCode(endings);
+        return result;
     }
 }

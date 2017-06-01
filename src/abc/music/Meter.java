@@ -47,7 +47,10 @@ public class Meter {
 
     @Override
     public int hashCode() {
-        return this.toString().hashCode();
+        int result = beatsPerMeasure;
+        result = 31 * result + noteValue;
+        result = 31 * result + (isSpecified ? 1 : 0);
+        return result;
     }
 
     @Override

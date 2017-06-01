@@ -7,16 +7,18 @@ package abc.music;
 public class Body {
     //TODO: representation of Body
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof Body) {
-            Body that = (Body) obj;
-            return this.toString().equals(that.toString());
-        } else {
-            return false;
-        }
-    }
+//    @Override
+//    public boolean equals() {
+//        TODO
+//    }
+
+//    @Override
+//    public int hashCode() {
+//        TODO
+//    }
+
+//    @Override
+//    public String toString() {
+//        TODO
+//    }
 }

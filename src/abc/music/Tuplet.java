@@ -44,11 +44,9 @@ public class Tuplet implements MeasureElement {
 
     @Override
     public int hashCode() {
-        int hashCode = spec;
-        for (int i = 0; i < elements.length; i++) {
-            hashCode += (7^i) * elements[i].hashCode();
-        }
-        return hashCode;
+        int result = spec;
+        result = 31 * result + Arrays.hashCode(elements);
+        return result;
     }
 
     @Override
@@ -81,6 +79,6 @@ public class Tuplet implements MeasureElement {
     }
 
     private void checkRep() {
-
+        assert elements != null;
     }
 }

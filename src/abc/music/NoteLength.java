@@ -19,8 +19,17 @@ public class NoteLength {
      *                    empty string and getNoteLength() returns 1.0
      */
     public NoteLength(Integer numerator, Integer denominator, boolean isSpecified) {
-        this.numerator = numerator;
-        this.denominator = denominator;
+        if (!isSpecified) {
+            if ((numerator == null && denominator == null) ||numerator.equals(denominator)) {
+                this.numerator = 1;
+                this.denominator = 1;
+            } else {
+                throw new IllegalArgumentException("If isSpecified is false, the default note length will be used");
+            }
+        } else {
+            this.numerator = numerator;
+            this.denominator = denominator;
+        }
         this.isSpecified = isSpecified;
         checkRep();
     }
@@ -75,11 +84,10 @@ public class NoteLength {
 
     @Override
     public int hashCode() {
-        if (!isSpecified) {
-            return (11 + 17 + isSpecified.hashCode() * 23);
-        } else {
-            return (numerator.hashCode() * 11 + denominator.hashCode() * 17 + isSpecified.hashCode() * 23);
-        }
+        int result = numerator != null ? numerator.hashCode() : 0;
+        result = 31 * result + (denominator != null ? denominator.hashCode() : 0);
+        result = 31 * result + isSpecified.hashCode();
+        return result;
     }
 
     @Override
@@ -93,8 +101,6 @@ public class NoteLength {
             boolean denominatorCheck;
             if (this.isSpecified != that.isSpecified) {
                 return false;
-            } else if (!this.isSpecified() && !that.isSpecified()) {
-                return true;
             }
             if (this.numerator == null && that.numerator == null) {
                 numeratorCheck = true;
