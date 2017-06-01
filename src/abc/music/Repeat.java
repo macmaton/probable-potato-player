@@ -2,13 +2,21 @@ package abc.music;
 
 import java.util.Arrays;
 
-public class RepeatSection implements BodyElement {
+public class Repeat implements BodyElement {
     private final Line[] repeatedLines;
     private final Line[] endings;
 
-    public RepeatSection(Line[] repeatedLines, Line[] endings) {
+    public Repeat(Line[] repeatedLines, Line[] endings) {
         this.repeatedLines = repeatedLines;
         this.endings = endings;
+    }
+
+    public Line[] getRepeatedLines() {
+        return Arrays.copyOf(repeatedLines, repeatedLines.length);
+    }
+
+    public Line[] getEndings() {
+        return Arrays.copyOf(endings, endings.length);
     }
 
     public String toString() {
@@ -30,8 +38,8 @@ public class RepeatSection implements BodyElement {
         if (obj == null) {
             return false;
         }
-        if (obj instanceof RepeatSection) {
-            RepeatSection that = (RepeatSection) obj;
+        if (obj instanceof Repeat) {
+            Repeat that = (Repeat) obj;
             if (this.repeatedLines.length == that.repeatedLines.length) {
                 for (int i = 0; i < repeatedLines.length; i++) {
                     if (!this.repeatedLines[i].equals(that.repeatedLines[i])) {

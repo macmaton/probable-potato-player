@@ -28,6 +28,14 @@ public class Chord implements TupletElement {
         this.length = length;
     }
 
+    public NoteLength getLength() {
+        return length;
+    }
+
+    public Note[] getNotes() {
+        return Arrays.copyOf(notes, notes.length);
+    }
+
     @Override
     public String toString() {
         String result = "[";
@@ -41,10 +49,30 @@ public class Chord implements TupletElement {
         return result;
     }
 
-//    @Override
-//    public boolean equals() {
-//        TODO
-//    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof Chord) {
+            Chord that = (Chord) obj;
+            if (!this.length.equals(that.length)) {
+                return false;
+            }
+            if(this.notes.length == that.notes.length) {
+                for (int i = 0; i < notes.length; i++) {
+                    if (!this.notes[i].equals(that.notes[i])) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 
     @Override
     public int hashCode() {

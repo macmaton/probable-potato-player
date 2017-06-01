@@ -20,7 +20,7 @@ public class NoteLength {
      */
     public NoteLength(Integer numerator, Integer denominator, boolean isSpecified) {
         if (!isSpecified) {
-            if ((numerator == null && denominator == null) ||numerator.equals(denominator)) {
+            if ((numerator == null && denominator == null) || (numerator != null && numerator.equals(denominator))) {
                 this.numerator = 1;
                 this.denominator = 1;
             } else {
