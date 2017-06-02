@@ -6,11 +6,25 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Key {
+
+    enum Keys {
+        //keys with no sharps or flats
+        CMAJOR, AMINOR,
+        //major keys with sharp key signatures
+        GMAJOR, DMAJOR, AMAJOR, EMAJOR, BMAJOR, FSHARPMAJOR, CSHARPMAJOR,
+        //minor keys with sharp key signatures
+        EMINOR, BMINOR, FSHARPMINOR, CSHARPMINOR, GSHARPMINOR, DSHARPMINOR, ASHARPMINOR,
+        //major keys with flat key signatures
+        FMAJOR, BFLATMAJOR, EFLATMAJOR, AFLATMAJOR, DFLATMAJOR, GFLATMAJOR, CFLATMAJOR,
+        //minor keys with flat key signatures
+        DMINOR, GMINOR, CMINOR, FMINOR, BFLATMINOR, EFLATMINOR, AFLATMINOR
+    }
+
     private final BaseNote basenote;
     private final int modifier;
     private final boolean minor;
 
-    //TODO: refactor to use an enum for possible keys?
+    //TODO: refactor to use an enum for possible keys? or use enums for flat/sharp and major/minor
 
     /**
      * The key of a piece in abc notation
