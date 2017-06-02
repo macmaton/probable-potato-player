@@ -7,19 +7,16 @@ public class Section implements BodyElement {
 
     public Section(BodyElement[] elements) {
         this.elements = elements;
+        checkRep();
     }
 
     public BodyElement[] getElements() {
         return Arrays.copyOf(elements, elements.length);
     }
 
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        for(BodyElement e : elements) {
-            result.append(e.toString() + "|");
-        }
-        result.append("]");
-        return result.toString();
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(elements);
     }
 
     @Override
@@ -44,8 +41,17 @@ public class Section implements BodyElement {
         }
     }
 
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(elements);
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (BodyElement e : elements) {
+            result.append(e.toString()).append("|");
+        }
+        result.append("]");
+        return result.toString();
+    }
+
+    private void checkRep() {
+        assert this.elements != null;
+        assert this.elements.length != 0;
     }
 }

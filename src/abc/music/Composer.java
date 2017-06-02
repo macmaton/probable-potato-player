@@ -6,6 +6,7 @@ public class Composer {
 
     /**
      * A composer where the composer's name is provided in the abc file
+     *
      * @param name of the composer of the piece
      */
     public Composer(String name) {
@@ -48,7 +49,7 @@ public class Composer {
 
     @Override
     public String toString() {
-        if(!isSpecified) {
+        if (!isSpecified) {
             return "";
         } else {
             return "C: " + composer;

@@ -8,20 +8,16 @@ public class Measure {
 
     public Measure(MeasureElement[] elements) {
         this.elements = elements;
+        checkRep();
     }
 
     public MeasureElement[] getElements() {
         return Arrays.copyOf(elements, elements.length);
     }
 
-    //TODO: toString adds leading and ending spaces as well as spaces between elements.
-    // Should there be more sophisticated logic regarding String format for Measures?
-    public String toString() {
-        StringBuilder result = new StringBuilder(" ");
-        for (MeasureElement e : elements) {
-            result.append(e.toString() + " ");
-        }
-        return result.toString();
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(elements);
     }
 
     @Override
@@ -46,12 +42,18 @@ public class Measure {
         }
     }
 
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(elements);
+    //TODO: toString adds leading and ending spaces as well as spaces between elements.
+    // Should there be more sophisticated logic regarding String format for Measures?
+    public String toString() {
+        StringBuilder result = new StringBuilder(" ");
+        for (MeasureElement e : elements) {
+            result.append(e.toString()).append(" ");
+        }
+        return result.toString();
     }
 
     private void checkRep() {
-        assert elements != null;
+        assert this.elements != null;
+        assert this.elements.length != 0;
     }
 }

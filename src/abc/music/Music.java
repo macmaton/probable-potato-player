@@ -11,7 +11,6 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -23,8 +22,6 @@ import java.io.IOException;
  */
 public class Music {
 
-    enum BaseNote {C, D, E, F, G, A, B, c, d, e, f, g, a, b, z}
-
     public static ParseTree parse(String fileName) {
         File file = new File(fileName);
         FileInputStream fis;
@@ -32,8 +29,6 @@ public class Music {
         try {
             fis = new FileInputStream(file);
             stream = new ANTLRInputStream(fis);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,6 +66,8 @@ public class Music {
 
         return body;
     }
+
+    enum BaseNote {C, D, E, F, G, A, B, c, d, e, f, g, a, b, z}
 
 //    /**
 //     * @return hash code value consistent with the equals() definition of structural equality, such that for all

@@ -8,7 +8,7 @@ public class RepeatTest {
     Repeat r3;
 
     public void setup() {
-        r1 = new Repeat(new Line[]{new Line(new Voice("V1"), new Measure[]{
+        r1 = new Repeat(new Line[]{new Line(new Measure[]{
                 new Measure(new MeasureElement[]{
                         new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                                 NoteLength())
@@ -29,7 +29,7 @@ public class RepeatTest {
                                 NoteLength())
                                 , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
                                 Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})})},
-                new Line[]{new Line(new Voice("V1"), new Measure[]{
+                new Line[]{new Line(new Measure[]{
                         new Measure(new MeasureElement[]{
                                 new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                                         NoteLength())
@@ -56,7 +56,7 @@ public class RepeatTest {
                                 new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()),
                                 new Note(new
                                         Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})});
-        r2 = new Repeat(new Line[]{new Line(new Voice("V1"), new Measure[]{
+        r2 = new Repeat(new Line[]{new Line(new Measure[]{
                 new Measure(new MeasureElement[]{
                         new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                                 NoteLength())
@@ -77,7 +77,7 @@ public class RepeatTest {
                                 NoteLength())
                                 , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
                                 Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})})},
-                new Line[]{new Line(new Voice("V1"), new Measure[]{
+                new Line[]{new Line(new Measure[]{
                         new Measure(new MeasureElement[]{
                                 new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                                         NoteLength())
@@ -104,7 +104,7 @@ public class RepeatTest {
                                 new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()),
                                 new Note(new
                                         Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})});
-        r3 = new Repeat(new Line[]{new Line(null, new Measure[]{
+        r3 = new Repeat(new Line[]{new Line(new Measure[]{
                 new Measure(new MeasureElement[]{
                         new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                                 NoteLength())
@@ -131,7 +131,7 @@ public class RepeatTest {
                         new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()),
                         new Note(new
                                 Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})},
-                new Line[]{new Line(null, new Measure[]{
+                new Line[]{new Line(new Measure[]{
                         new Measure(new MeasureElement[]{
                                 new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                                         NoteLength())

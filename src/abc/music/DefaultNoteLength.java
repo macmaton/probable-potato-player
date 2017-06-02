@@ -24,7 +24,6 @@ public class DefaultNoteLength {
             this.numerator = 1;
             this.denominator = 8;
         }
-
         checkRep();
     }
 

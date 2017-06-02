@@ -13,7 +13,7 @@ public class Meter {
      * The meter in abc notation M: beatsPerMeasure/noteValue
      *
      * @param beatsPerMeasure positive non-zero integer
-     * @param noteValue positive non-zero integer
+     * @param noteValue       positive non-zero integer
      */
     public Meter(int beatsPerMeasure, int noteValue) {
         this.beatsPerMeasure = beatsPerMeasure;

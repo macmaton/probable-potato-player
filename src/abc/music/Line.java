@@ -7,6 +7,7 @@ public class Line implements BodyElement {
 
     public Line(Measure[] measures) {
         this.measures = measures;
+        checkRep();
     }
 
     public Measure[] getMeasures() {
@@ -14,15 +15,8 @@ public class Line implements BodyElement {
     }
 
     @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder("");
-        for (int i = 0; i < measures.length; i++) {
-            result.append(measures[i].toString());
-            if (i < measures.length-1) {
-                result.append("|");
-            }
-        }
-        return result.toString();
+    public int hashCode() {
+        return Arrays.hashCode(measures);
     }
 
     @Override
@@ -32,23 +26,35 @@ public class Line implements BodyElement {
         }
         if (obj instanceof Line) {
             Line that = (Line) obj;
-                if (this.measures.length == that.measures.length) {
-                    for (int i = 0; i < measures.length; i++) {
-                        if (!this.measures[i].equals(that.measures[i])) {
-                            return false;
-                        }
+            if (this.measures.length == that.measures.length) {
+                for (int i = 0; i < measures.length; i++) {
+                    if (!this.measures[i].equals(that.measures[i])) {
+                        return false;
                     }
-                    return true;
-                } else {
-                    return false;
                 }
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
     }
 
     @Override
-    public int hashCode() {
-        return Arrays.hashCode(measures);
+    public String toString() {
+        StringBuilder result = new StringBuilder("");
+        for (int i = 0; i < measures.length; i++) {
+            result.append(measures[i].toString());
+            if (i < measures.length - 1) {
+                result.append("|");
+            }
+        }
+        return result.toString();
+    }
+
+    public void checkRep() {
+        assert this.measures != null;
+        assert this.measures.length != 0;
     }
 }

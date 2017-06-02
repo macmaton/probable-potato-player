@@ -8,7 +8,7 @@ public class LineTest {
     Line l3;
 
     public void setup() {
-        l1 = new Line(new Voice("V1"), new Measure[]{
+        l1 = new Line(new Measure[]{
                 new Measure(new MeasureElement[]{
                         new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                                 NoteLength())
@@ -29,7 +29,7 @@ public class LineTest {
                                 NoteLength())
                                 , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
                                 Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})});
-        l2 = new Line(new Voice("V1"), new Measure[]{
+        l2 = new Line(new Measure[]{
                 new Measure(new MeasureElement[]{
                         new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                                 NoteLength())
@@ -50,7 +50,7 @@ public class LineTest {
                                 NoteLength())
                                 , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
                                 Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})});
-        l3 = new Line(new Voice("V3"), new Measure[]{
+        l3 = new Line(new Measure[]{
                 new Measure(new MeasureElement[]{
                         new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                                 NoteLength())
@@ -95,8 +95,8 @@ public class LineTest {
     @Test
     public void testToString() {
         setup();
-        assert l1.toString().equals("V: V1\n [ABC] z (3ABC | [ABC] z (3ABC ");
-        assert l3.toString().equals("V: V3\n [ABC] z (3ABC | [ABC] z (3ABC | A B C ");
+        assert l1.toString().equals(" [ABC] z (3ABC | [ABC] z (3ABC ");
+        assert l3.toString().equals(" [ABC] z (3ABC | [ABC] z (3ABC | A B C ");
     }
 
     @Test

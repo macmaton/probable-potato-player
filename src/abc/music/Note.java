@@ -6,12 +6,17 @@ package abc.music;
  * Neither pitch nor note may be null.
  */
 public class Note implements TupletElement {
-    private Pitch noteOrRest;
-    private NoteLength length;
+    private final Pitch noteOrRest;
+    private final NoteLength length;
 
     public Note(Pitch noteOrRest, NoteLength length) {
         this.noteOrRest = noteOrRest;
         this.length = length;
+        checkRep();
+    }
+
+    public Note(Pitch noteOrRest) {
+        this(noteOrRest, new NoteLength());
         checkRep();
     }
 

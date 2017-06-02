@@ -21,6 +21,20 @@ public class Pitch {
         checkRep();
     }
 
+    public Pitch(BaseNote basenote, int octave) {
+        this(basenote, octave, Accidental.NONE);
+        checkRep();
+    }
+
+    public Pitch(BaseNote basenote, Accidental accidental) {
+        this(basenote, 0, accidental);
+        checkRep();
+    }
+
+    public Pitch(BaseNote basenote) {
+        this(basenote, 0, Accidental.NONE);
+    }
+
     public int getOctave() {
         return octave;
     }
@@ -60,7 +74,7 @@ public class Pitch {
 
     @Override
     public String toString() {
-        String octave = "";
+        StringBuilder octave = new StringBuilder();
         String octaveSymbol = "";
         String accidental = "";
         String basenote = this.basenote.toString();
@@ -74,7 +88,7 @@ public class Pitch {
                     octaveSymbol = ",";
                 }
                 for (int i = 0; i < Math.abs(this.octave); i++) {
-                    octave += octaveSymbol;
+                    octave.append(octaveSymbol);
                 }
             }
 

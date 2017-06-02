@@ -9,6 +9,12 @@ public class Repeat implements BodyElement {
     public Repeat(Line[] repeatedLines, Line[] endings) {
         this.repeatedLines = repeatedLines;
         this.endings = endings;
+        checkRep();
+    }
+
+    public Repeat(Line[] repeatedLines) {
+        this(repeatedLines, new Line[0]);
+        checkRep();
     }
 
     public Line[] getRepeatedLines() {
@@ -19,18 +25,11 @@ public class Repeat implements BodyElement {
         return Arrays.copyOf(endings, endings.length);
     }
 
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        for (Line r : repeatedLines) {
-            result.append(r);
-        }
-        if (endings != null) {
-            result.append("|[1" + endings[0].toString() + ":|");
-            for(int i = 1; i < endings.length; i++) {
-                result.append("[" + (i+1) + endings[i].toString());
-            }
-        }
-        return result.toString();
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(repeatedLines);
+        result = 31 * result + Arrays.hashCode(endings);
+        return result;
     }
 
     @Override
@@ -46,9 +45,7 @@ public class Repeat implements BodyElement {
                         return false;
                     }
                 }
-                if (this.endings == null && that.endings == null) {
-                    return true;
-                } else if (this.endings.length == that.endings.length) {
+                if (this.endings.length == that.endings.length) {
                     for (int i = 0; i < endings.length; i++) {
                         if (!this.endings[i].equals(that.endings[i])) {
                             return false;
@@ -66,10 +63,22 @@ public class Repeat implements BodyElement {
         }
     }
 
-    @Override
-    public int hashCode() {
-        int result = Arrays.hashCode(repeatedLines);
-        result = 31 * result + Arrays.hashCode(endings);
-        return result;
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Line r : repeatedLines) {
+            result.append(r);
+        }
+        if (endings.length != 0) {
+            result.append("|[1").append(endings[0].toString()).append(":|");
+            for (int i = 1; i < endings.length; i++) {
+                result.append("[").append(i + 1).append(endings[i].toString());
+            }
+        }
+        return result.toString();
+    }
+
+    private void checkRep() {
+        assert this.repeatedLines.length != 0;
+        assert this.endings != null;
     }
 }
