@@ -1,6 +1,5 @@
 package abc.music;
 
-import abc.music.Music.BaseNote;
 import org.junit.Test;
 
 public class KeyTest {
@@ -9,9 +8,9 @@ public class KeyTest {
     private Key k3;
 
     public void setup() {
-        k1 = new Key(BaseNote.B, -1, true);
-        k2 = new Key(BaseNote.B, -1, true);
-        k3 = new Key(BaseNote.G, 0, false);
+        k1 = new Key(Key.Keys.BFLATMINOR);
+        k2 = new Key(Key.Keys.BFLATMINOR);
+        k3 = new Key(Key.Keys.GMAJOR);
     }
 
     @Test
@@ -30,12 +29,9 @@ public class KeyTest {
     @Test
     public void testToString() {
         setup();
-        assert k1.toString().equals("Bbm");
-        assert k3.toString().equals("G");
+        assert k1.toString().equals("K: Bbm");
+        assert k3.toString().equals("K: G");
     }
 
-	@Test(expected=AssertionError.class)
-	public void testInitialize() {
-		k1 = new Key(BaseNote.a, 0, false);
-	}
+    //TODO: test that flats/sharps are being correctly assigned (esp flats)
 }

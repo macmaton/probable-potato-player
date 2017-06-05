@@ -1,28 +1,36 @@
 package abc.music;
 
+import java.util.Objects;
+
 /**
  * An immutable data type representing a note in abc notation,
  * A note consists of a pitch or rest and a length (duration).
  * Neither pitch nor note may be null.
  */
 public class Note implements TupletElement {
-    private final Pitch noteOrRest;
+    private final Pitch pitch;
     private final NoteLength length;
 
-    public Note(Pitch noteOrRest, NoteLength length) {
-        this.noteOrRest = noteOrRest;
+    public Note(Pitch pitch, NoteLength length) {
+        Objects.requireNonNull(pitch, "pitch must not be null");
+        Objects.requireNonNull(length, "if length is not provided, use Note(Pitch pitch)");
+        this.pitch = pitch;
         this.length = length;
         checkRep();
     }
 
-    public Note(Pitch noteOrRest) {
-        this(noteOrRest, new NoteLength());
+    /**
+     * A Note where length is unspecified
+     * @param pitch non-null pitch
+     */
+    public Note(Pitch pitch) {
+        this(pitch, new NoteLength());
         checkRep();
     }
 
     @Override
     public int hashCode() {
-        int result = noteOrRest.hashCode();
+        int result = pitch.hashCode();
         result = 31 * result + length.hashCode();
         return result;
     }
@@ -34,7 +42,7 @@ public class Note implements TupletElement {
         }
         if (obj instanceof Note) {
             Note that = (Note) obj;
-            return this.noteOrRest.equals(that.noteOrRest) && this.length.equals(that.length);
+            return this.pitch.equals(that.pitch) && this.length.equals(that.length);
         } else {
             return false;
         }
@@ -42,11 +50,11 @@ public class Note implements TupletElement {
 
     @Override
     public String toString() {
-        return noteOrRest.toString() + length.toString();
+        return pitch.toString() + length.toString();
     }
 
     private void checkRep() {
-        assert !(noteOrRest == null);
+        assert !(pitch == null);
         assert !(length == null);
     }
 }

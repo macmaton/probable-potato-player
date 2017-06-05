@@ -20,12 +20,11 @@ public class PitchTest {
         p1 = new Pitch(BaseNote.C, 0, Accidental.NONE);
         p2 = new Pitch(BaseNote.C, 0, Accidental.NONE);
         p3 = new Pitch(BaseNote.C, -1, Accidental.NONE);
-        p4 = new Pitch(BaseNote.c, 0, Accidental.NONE);
-        p5 = new Pitch(BaseNote.c, 2, Accidental.SHARP);
-        p6 = new Pitch(BaseNote.a, 1, Accidental.DOUBLESHARP);
+        p4 = new Pitch(BaseNote.C, 1, Accidental.NONE);
+        p5 = new Pitch(BaseNote.C, 3, Accidental.SHARP);
+        p6 = new Pitch(BaseNote.A, 2, Accidental.DOUBLESHARP);
         p7 = new Pitch(BaseNote.D, -1, Accidental.DOUBLEFLAT);
         p8 = new Pitch(BaseNote.G, -3, Accidental.FLAT);
-        rest = new Pitch(BaseNote.z, 0, Accidental.NONE);
     }
 
     @Test
@@ -53,14 +52,12 @@ public class PitchTest {
         assert p6.toString().equals("^^a'");
         assert p7.toString().equals("__D,");
         assert p8.toString().equals("_G,,,");
-        assert rest.toString().equals("z");
     }
 
     @Test(expected = AssertionError.class)
     public void testInitialize() {
         p1 = new Pitch(BaseNote.A, 0, null);
         p2 = new Pitch(null, 0, Accidental.FLAT);
-        rest = new Pitch(BaseNote.z, -1, Accidental.NONE);
     }
 
 }

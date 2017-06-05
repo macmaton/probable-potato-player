@@ -13,7 +13,7 @@ public class MeasureTest {
                         NoteLength())
                         , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
                         Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-                new Note(new Pitch(Music.BaseNote.z, 0, Pitch.Accidental.NONE), new NoteLength()),
+                new Rest(),
                 new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                         NoteLength())
                         , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
@@ -23,7 +23,7 @@ public class MeasureTest {
                         NoteLength())
                         , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
                         Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-                new Note(new Pitch(Music.BaseNote.z, 0, Pitch.Accidental.NONE), new NoteLength()),
+                new Rest(),
                 new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                         NoteLength())
                         , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
@@ -59,7 +59,7 @@ public class MeasureTest {
     @Test
     public void testGetElements() {
         setup();
-        m1.getElements()[0] = new Note(new Pitch(Music.BaseNote.z, 0, Pitch.Accidental.NONE), new NoteLength());
+        m1.getElements()[0] = new Rest();
         assert m1.equals(m2);
     }
 }

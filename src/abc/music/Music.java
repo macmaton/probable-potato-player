@@ -22,6 +22,11 @@ import java.io.IOException;
  */
 public class Music {
 
+    /**
+     * The octave that includes middle C
+     */
+    enum BaseNote {A, B, C, D, E, F, G}
+
     public static ParseTree parse(String fileName) {
         File file = new File(fileName);
         FileInputStream fis;
@@ -66,32 +71,4 @@ public class Music {
 
         return body;
     }
-
-    enum BaseNote {C, D, E, F, G, A, B, c, d, e, f, g, a, b, z}
-
-//    /**
-//     * @return hash code value consistent with the equals() definition of structural equality, such that for all
-//     * e1,e2:Music, e1.equals(e2) implies e1.hashCode() == e2.hashCode()
-//     */
-//    @Override
-//    public int hashCode();
-//
-////	public static Music buildAST(ParseTree tree) {
-////
-////
-////	}
-//
-//    /**
-//     * @param thatObject any object
-//     * @return true if and only if this and thatObject are structurally-equal Music.
-//     */
-//    @Override
-//    public boolean equals(Object thatObject);
-//
-//    /**
-//     * @return a parsable representation in abc notation, such that for all e:Music, e.equals(Music.parse(e.toString())).
-//     */
-//    @Override
-//    public String toString();
-//
 }

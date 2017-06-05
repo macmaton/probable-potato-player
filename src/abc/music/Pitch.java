@@ -4,7 +4,7 @@ import abc.music.Music.BaseNote;
 
 /**
  * Immutable datatype representing a pitch
- * basenote: in the range A-G (octave of middle C) or a-g (octave above middle C), or z for a rest
+ * basenote: in the range A-G (octave of middle C)
  * accidental: whether the note is marked as natural,sharp, or flat.  double flats and sharps are allowed.
  * octave: number of octaves above or below the basenote.
  */
@@ -14,6 +14,11 @@ public class Pitch {
     private final Accidental accidental;
     private final BaseNote basenote;
 
+    /**
+     * @param basenote in the range A-G (octave of middle C)
+     * @param octave whether the note is marked as natural,sharp, or flat.  double flats and sharps are allowed.
+     * @param accidental number of octaves above or below the basenote.
+     */
     public Pitch(BaseNote basenote, int octave, Accidental accidental) {
         this.basenote = basenote;
         this.accidental = accidental;
@@ -76,18 +81,20 @@ public class Pitch {
     public String toString() {
         StringBuilder octave = new StringBuilder();
         String octaveSymbol = "";
+        int octaveSymbols = this.octave;
         String accidental = "";
         String basenote = this.basenote.toString();
-        if (this.basenote.equals(BaseNote.z)) {
-            return basenote;
-        } else {
-            if (this.octave != 0) {
-                if (this.octave > 0) {
+        if (this.octave == 1) {
+            basenote = basenote.toLowerCase();
+            octaveSymbols -= 1;
+        }
+            if (octaveSymbols != 0) {
+                if (octaveSymbols > 0) {
                     octaveSymbol = "'";
-                } else if (this.octave < 0) {
+                } else if (octaveSymbols < 0) {
                     octaveSymbol = ",";
                 }
-                for (int i = 0; i < Math.abs(this.octave); i++) {
+                for (int i = 0; i < Math.abs(octaveSymbols); i++) {
                     octave.append(octaveSymbol);
                 }
             }
@@ -114,16 +121,11 @@ public class Pitch {
             }
 
             return accidental + basenote + octave;
-        }
     }
 
     private void checkRep() {
         assert accidental != null;
         assert basenote != null;
-        if (basenote == BaseNote.z) {
-            assert accidental == Accidental.NONE;
-            assert octave == 0;
-        }
     }
 
     enum Accidental {NATURAL, SHARP, DOUBLESHARP, FLAT, DOUBLEFLAT, NONE}

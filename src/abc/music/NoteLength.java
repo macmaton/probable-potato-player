@@ -9,6 +9,7 @@ public class NoteLength {
     private final Integer numerator;
     private final Integer denominator;
     private final Boolean isSpecified; //whether a fractional multiplicative factor is provided
+    //TODO: consider simplifying to remove preservation of original notation
 
     /**
      * A note length in abc notation
@@ -148,7 +149,6 @@ public class NoteLength {
     }
 
     private void checkRep() {
-        assert isSpecified != null;
         if (!isSpecified) {
             assert (numerator == null && denominator == null) || (numerator != null && numerator.equals(denominator));
         }
