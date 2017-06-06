@@ -6,20 +6,35 @@ import java.util.*;
 
 public class Key {
 
-    enum Keys {
-        //keys with no sharps or flats
-        CMAJOR, AMINOR,
-        //major keys with sharp key signatures
-        GMAJOR, DMAJOR, AMAJOR, EMAJOR, BMAJOR, FSHARPMAJOR, CSHARPMAJOR,
-        //minor keys with sharp key signatures
-        EMINOR, BMINOR, FSHARPMINOR, CSHARPMINOR, GSHARPMINOR, DSHARPMINOR, ASHARPMINOR,
-        //major keys with flat key signatures
-        FMAJOR, BFLATMAJOR, EFLATMAJOR, AFLATMAJOR, DFLATMAJOR, GFLATMAJOR, CFLATMAJOR,
-        //minor keys with flat key signatures
-        DMINOR, GMINOR, CMINOR, FMINOR, BFLATMINOR, EFLATMINOR, AFLATMINOR
+    private static final Map<Keys, Integer> NUM_MODIFIED = Collections.unmodifiableMap(initializeNumModified());
+    private static final List<BaseNote> MODIFIED_NOTES = Collections.unmodifiableList(Arrays.asList(BaseNote.F,
+            BaseNote.C, BaseNote.G, BaseNote.D, BaseNote.A, BaseNote.E, BaseNote.B));
+    private final Keys key;
+    private final Map<BaseNote, Pitch> keyNotes;
+
+    public Key(Keys key) {
+        this.key = key;
+        Map<BaseNote, Pitch> keyNotes = new HashMap<BaseNote, Pitch>();
+
+        int numModified = NUM_MODIFIED.get(key);
+        for (int i = 0; i < Math.abs(numModified); i++) {
+            if (numModified > 0) {
+                keyNotes.put(MODIFIED_NOTES.get(i), new Pitch(MODIFIED_NOTES.get(i), Pitch.Accidental.SHARP));
+            } else if (numModified < 0) {
+                keyNotes.put(MODIFIED_NOTES.get(MODIFIED_NOTES.size() - (i + 1)), new Pitch(MODIFIED_NOTES.get
+                        (MODIFIED_NOTES.size() - (i + 1)), Pitch
+                        .Accidental
+                        .FLAT));
+            }
+        }
+        for (BaseNote b : BaseNote.values()) {
+            keyNotes.putIfAbsent(b, new Pitch(b));
+        }
+        this.keyNotes = Collections.unmodifiableMap(keyNotes);
+
+        checkRep();
     }
 
-    private static final Map<Keys, Integer> NUM_MODIFIED = Collections.unmodifiableMap(initializeNumModified());
     private static Map<Keys, Integer> initializeNumModified() {
         Map<Keys, Integer> result = new HashMap<Keys, Integer>();
         result.put(Keys.CMAJOR, 0);
@@ -59,34 +74,6 @@ public class Key {
 
         return result;
     }
-    private static List<BaseNote> MODIFIED_NOTES = Collections.unmodifiableList(Arrays.asList(BaseNote.F,
-            BaseNote.C, BaseNote.G, BaseNote.D, BaseNote.A, BaseNote.E, BaseNote.B));
-
-    private final Keys key;
-    private final Map<BaseNote, Pitch> keyNotes;
-
-    public Key(Keys key) {
-        this.key = key;
-        Map<BaseNote, Pitch> keyNotes = new HashMap<BaseNote, Pitch>();
-
-        int numModified = NUM_MODIFIED.get(key);
-        for (int i = 0; i < Math.abs(numModified); i++) {
-            if (numModified > 0) {
-                keyNotes.put(MODIFIED_NOTES.get(i), new Pitch(MODIFIED_NOTES.get(i), Pitch.Accidental.SHARP));
-            } else if (numModified < 0) {
-                keyNotes.put(MODIFIED_NOTES.get(MODIFIED_NOTES.size() - (i+1)), new Pitch(MODIFIED_NOTES.get
-                        (MODIFIED_NOTES.size() - (i+1)), Pitch
-                        .Accidental
-                        .FLAT));
-            }
-        }
-        for (BaseNote b : BaseNote.values()) {
-            keyNotes.putIfAbsent(b, new Pitch(b));
-        }
-        this.keyNotes = Collections.unmodifiableMap(keyNotes);
-
-        checkRep();
-    }
 
     public Pitch getPitch(Pitch asWritten) {
         Pitch result;
@@ -114,12 +101,8 @@ public class Key {
         if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
-        Key that = (Key)obj;
-        if (this.key == that.key) {
-            return true;
-        } else {
-            return false;
-        }
+        Key that = (Key) obj;
+        return this.key == that.key;
     }
 
     @Override
@@ -145,5 +128,18 @@ public class Key {
     private void checkRep() {
         assert this.key != null;
         assert this.keyNotes.size() == 7;
+    }
+
+    enum Keys {
+        //keys with no sharps or flats
+        CMAJOR, AMINOR,
+        //major keys with sharp key signatures
+        GMAJOR, DMAJOR, AMAJOR, EMAJOR, BMAJOR, FSHARPMAJOR, CSHARPMAJOR,
+        //minor keys with sharp key signatures
+        EMINOR, BMINOR, FSHARPMINOR, CSHARPMINOR, GSHARPMINOR, DSHARPMINOR, ASHARPMINOR,
+        //major keys with flat key signatures
+        FMAJOR, BFLATMAJOR, EFLATMAJOR, AFLATMAJOR, DFLATMAJOR, GFLATMAJOR, CFLATMAJOR,
+        //minor keys with flat key signatures
+        DMINOR, GMINOR, CMINOR, FMINOR, BFLATMINOR, EFLATMINOR, AFLATMINOR
     }
 }

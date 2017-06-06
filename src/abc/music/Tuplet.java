@@ -4,20 +4,20 @@ import java.util.Arrays;
 
 /**
  * Adapted from https://ocw.mit.edu/ans7870/6/6.005/s16/projects/abcplayer/spec/
- * 
+ * <p>
  * Immutable data type to represent a tuplet in abc notation.
- *
+ * <p>
  * Duplet: 2 notes in the time of 3 notes
  * Triplet: 3 notes in the time of 2 notes
  * Quadruplet: 4 notes in the time of 3 notes
- *
+ * <p>
  * For example, a triplet that contains three eighth notes is equal in duration to one quarter note; therefore, each
  * eighth note in the triplet should be played 2/3 the duration of a standard eighth note.
- *
+ * <p>
  * A tuplet may contain chords.
- *
+ * <p>
  * A tuplet may have notes and chords of different lengths.
- *
+ * <p>
  * In the case of a triplet, you should play each note or chord for 2/3 of the original duration. For a duplet, 3/2
  * of the original durations. And for a quadruplet, 3/4 of the original durations.
  */

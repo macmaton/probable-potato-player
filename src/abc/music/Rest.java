@@ -1,7 +1,7 @@
 package abc.music;
 
 public class Rest implements TupletElement {
-    private NoteLength length;
+    private final NoteLength length;
 
     public Rest(NoteLength length) {
         this.length = length;
@@ -13,6 +13,11 @@ public class Rest implements TupletElement {
     }
 
     @Override
+    public int hashCode() {
+        return length.hashCode();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -20,11 +25,6 @@ public class Rest implements TupletElement {
         Rest rest = (Rest) o;
 
         return length.equals(rest.length);
-    }
-
-    @Override
-    public int hashCode() {
-        return length.hashCode();
     }
 
     @Override

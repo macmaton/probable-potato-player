@@ -85,7 +85,7 @@ public class Chord implements TupletElement {
     private void checkRep() {
         assert this.notes != null;
         assert this.notes.length > 0;
-        for(Note n : this.notes) {
+        for (Note n : this.notes) {
             assert n != null;
         }
         assert this.length != null;

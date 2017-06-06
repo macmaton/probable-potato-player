@@ -9,6 +9,7 @@ public class Index {
 
     /**
      * Represents the index of a piece in abc notation, which must be in the first line of the file and denoted by X:
+     *
      * @param index nullable integer
      */
     public Index(Integer index) {

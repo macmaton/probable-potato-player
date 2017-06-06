@@ -13,7 +13,8 @@ public class NoteLength {
 
     /**
      * A note length in abc notation
-     * @param numerator nullable integer
+     *
+     * @param numerator   nullable integer
      * @param denominator nullable integer
      */
     public NoteLength(Integer numerator, Integer denominator) {
@@ -40,7 +41,7 @@ public class NoteLength {
     }
 
     public double getNoteLength() {
-        return (double)numerator / (double)denominator;
+        return (double) numerator / (double) denominator;
     }
 
     public int getNumerator() {

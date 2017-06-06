@@ -2,9 +2,6 @@ package abc.music;
 
 import org.junit.Test;
 
-/**
- * Created by margaret on 6/1/17.
- */
 public class SectionTest {
     Section s1;
     Section s2;

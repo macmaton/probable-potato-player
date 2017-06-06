@@ -22,11 +22,6 @@ import java.io.IOException;
  */
 public class Music {
 
-    /**
-     * The octave that includes middle C
-     */
-    enum BaseNote {A, B, C, D, E, F, G}
-
     public static ParseTree parse(String fileName) {
         File file = new File(fileName);
         FileInputStream fis;
@@ -70,5 +65,12 @@ public class Music {
         Trees.inspect(body, parser);
 
         return body;
+    }
+
+    /**
+     * The octave that includes middle C
+     */
+    enum BaseNote {
+        A, B, C, D, E, F, G
     }
 }

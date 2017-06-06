@@ -8,7 +8,7 @@ public class Tempo {
     private final int beatsPerMinute;
     private final NoteLength beatLength;
     private final boolean isSpecified;
-    //TODO: can Tempo be simplified to eliminate isSpecified
+    //TODO: can Tempo be simplified to eliminate isSpecified?
 
     /**
      * The tempo provided in the header of a file in abc notation

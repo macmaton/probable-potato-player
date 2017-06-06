@@ -1,7 +1,5 @@
 package abc.music;
 
-//TODO: test
-
 import java.util.Arrays;
 
 /**
@@ -17,30 +15,39 @@ public class Body {
         checkRep();
     }
 
-    public BodyElement[] getElements(){
+    public BodyElement[] getElements() {
         return Arrays.copyOf(elements, elements.length);
     }
 
-//    @Override
-//    public boolean equals() {
-//        TODO
-//    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || this.getClass() != obj.getClass()) return false;
 
-//    @Override
-//    public int hashCode() {
-//        TODO
-//    }
+        Body that = (Body) obj;
 
-//    @Override
-//    public String toString() {
-//        TODO
-//    }
+        return Arrays.equals(elements, that.elements);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(elements);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (BodyElement e : elements) {
+            result.append(e.toString());
+        }
+        return result.toString();
+    }
 
     private void checkRep() {
         assert this.elements != null;
         assert this.elements.length > 0;
-        for (int i = 0; i < this.elements.length; i++) {
-            assert this.elements[i] != null;
+        for (BodyElement e : this.elements) {
+            assert e != null;
         }
     }
 }

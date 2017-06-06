@@ -2,8 +2,6 @@ package abc.music;
 
 import java.util.Arrays;
 
-//TODO: test
-
 public class VoicePart implements SectionElement {
     private final Voice voice;
     private final VoicePartElement[] elements;
@@ -15,6 +13,13 @@ public class VoicePart implements SectionElement {
     }
 
     @Override
+    public int hashCode() {
+        int result = voice.hashCode();
+        result = 31 * result + Arrays.hashCode(elements);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || this.getClass() != obj.getClass()) return false;
@@ -23,13 +28,6 @@ public class VoicePart implements SectionElement {
 
         if (!this.voice.equals(that.voice)) return false;
         return Arrays.equals(elements, that.elements);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = voice.hashCode();
-        result = 31 * result + Arrays.hashCode(elements);
-        return result;
     }
 
     @Override

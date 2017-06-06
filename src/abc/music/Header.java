@@ -12,30 +12,46 @@ public class Header {
     private final Title title;
     private final Key key;
     private final Composer composer;
-    private final DefaultNoteLength length;
     private final Meter meter;
+    private final DefaultNoteLength length;
     private final Tempo tempo;
     private final Voice[] voices;
 
-    public Header(Index index, Title title, Key key) {
+    public Header(Index index, Title title, Key key, Meter meter, DefaultNoteLength length, Tempo tempo, Composer
+            composer, Voice[] voices) {
         this.index = index;
         this.title = title;
         this.key = key;
-        this.composer = new Composer();
-        this.meter = new Meter();
-        this.length = new DefaultNoteLength(this.meter);
-        this.tempo = new Tempo(this.length);
-        this.voices = null;
+        if (composer != null) {
+            this.composer = composer;
+        } else {
+            this.composer = new Composer();
+        }
+        if (meter != null) {
+            this.meter = meter;
+        } else {
+            this.meter = new Meter();
+        }
+        if (length != null) {
+            this.length = length;
+        } else {
+            this.length = new DefaultNoteLength(this.meter);
+        }
+        if (tempo != null) {
+            this.tempo = tempo;
+        } else {
+            this.tempo = new Tempo(this.length);
+        }
+        this.voices = voices;
 
         checkRep();
     }
 
-    //TODO: other constructors
+    public Header(Index index, Title title, Key key) {
+        this(index, title, key, null, null, null, null, null);
 
-//    @Override
-//    public boolean equals() {
-//        TODO
-//    }
+        checkRep();
+    }
 
     @Override
     public int hashCode() {
@@ -51,13 +67,56 @@ public class Header {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        } else if (obj.getClass() != this.getClass()) {
+            return false;
+        } else {
+            Header that = (Header) obj;
+            if (!this.index.equals(that.index)) {
+                return false;
+            } else if (!this.title.equals(that.title)) {
+                return false;
+            } else if (!this.key.equals(that.key)) {
+                return false;
+            } else if (!this.composer.equals(that.composer)) {
+                return false;
+            } else if (!this.meter.equals(that.meter)) {
+                return false;
+            } else if (!this.length.equals(that.length)) {
+                return false;
+            } else if (!this.tempo.equals(that.tempo)) {
+                return false;
+            } else {
+                return Arrays.equals(this.voices, that.voices);
+            }
+        }
+    }
+
+    @Override
     public String toString() {
         StringBuilder result = new StringBuilder(index.toString());
         result.append('\n');
         result.append(title.toString());
         result.append('\n');
-
-        //TODO: other fields
+        result.append(composer.toString());
+        result.append('\n');
+        result.append(meter.toString());
+        result.append('\n');
+        result.append(length.toString());
+        result.append('\n');
+        result.append(tempo.toString());
+        result.append('\n');
+        if (voices != null) {
+            for (Voice v : voices) {
+                result.append(v.toString());
+                result.append('\n');
+            }
+        }
 
         result.append(key.toString());
 
@@ -74,8 +133,8 @@ public class Header {
         assert this.tempo != null;
         if (this.voices != null) {
             assert this.voices.length > 0;
-            for (int i = 0; i<this.voices.length; i++) {
-                assert this.voices[i] != null;
+            for (Voice v : this.voices) {
+                assert v != null;
             }
         }
     }

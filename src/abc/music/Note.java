@@ -17,6 +17,7 @@ public class Note implements TupletElement {
 
     /**
      * A Note where length is unspecified
+     *
      * @param pitch non-null pitch
      */
     public Note(Pitch pitch) {
