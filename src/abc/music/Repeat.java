@@ -78,7 +78,16 @@ public class Repeat implements VoicePartElement {
     }
 
     private void checkRep() {
-        assert this.repeatedLines.length != 0;
-        assert this.endings != null;
+        assert this.repeatedLines != null;
+        assert this.repeatedLines.length > 0;
+        for (Line l : repeatedLines) {
+            assert l != null;
+        }
+        if (endings != null) {
+            assert this.endings.length > 0;
+            for (Line l : endings) {
+                assert l != null;
+            }
+        }
     }
 }

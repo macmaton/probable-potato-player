@@ -25,6 +25,8 @@ public class Chord implements TupletElement {
     public Chord(Note[] notes, NoteLength length) {
         this.notes = notes;
         this.length = length;
+
+        checkRep();
     }
 
     public NoteLength getLength() {
@@ -78,5 +80,14 @@ public class Chord implements TupletElement {
             result.append(length.toString());
         }
         return result.toString();
+    }
+
+    private void checkRep() {
+        assert this.notes != null;
+        assert this.notes.length > 0;
+        for(Note n : this.notes) {
+            assert n != null;
+        }
+        assert this.length != null;
     }
 }

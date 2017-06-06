@@ -66,7 +66,6 @@ public class Key {
     private final Map<BaseNote, Pitch> keyNotes;
 
     public Key(Keys key) {
-        Objects.requireNonNull(key);
         this.key = key;
         Map<BaseNote, Pitch> keyNotes = new HashMap<BaseNote, Pitch>();
 
@@ -85,6 +84,8 @@ public class Key {
             keyNotes.putIfAbsent(b, new Pitch(b));
         }
         this.keyNotes = Collections.unmodifiableMap(keyNotes);
+
+        checkRep();
     }
 
     public Pitch getPitch(Pitch asWritten) {
@@ -139,5 +140,10 @@ public class Key {
         }
 
         return "K: " + baseNote + modifier + minor;
+    }
+
+    private void checkRep() {
+        assert this.key != null;
+        assert this.keyNotes.size() == 7;
     }
 }

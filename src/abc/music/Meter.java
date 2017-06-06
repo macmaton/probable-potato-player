@@ -8,6 +8,7 @@ public class Meter {
     private final int beatsPerMeasure;
     private final int noteValue;
     private final boolean isSpecified;
+    //TODO: can meter be simplified to eliminate isSpecified?
 
     /**
      * The meter in abc notation M: beatsPerMeasure/noteValue

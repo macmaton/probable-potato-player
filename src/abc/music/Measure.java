@@ -52,6 +52,9 @@ public class Measure {
 
     private void checkRep() {
         assert this.elements != null;
-        assert this.elements.length != 0;
+        assert this.elements.length > 0;
+        for (MeasureElement e : this.elements) {
+            assert e != null;
+        }
     }
 }

@@ -1,24 +1,17 @@
 package abc.music;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 //TODO: test
 
 public class VoicePart implements SectionElement {
-    Voice voice;
-    VoicePartElement[] elements;
+    private final Voice voice;
+    private final VoicePartElement[] elements;
 
     public VoicePart(Voice voice, VoicePartElement[] elements) {
-        Objects.requireNonNull(voice, "voice may not be null");
-        Objects.requireNonNull(elements, "a VoicePart must have elements");
-        if(elements.length == 0) {
-            throw new IllegalArgumentException("elements may not be empty");
-        }
-        Objects.requireNonNull(elements[0], "VoicePartElements in elements may not be null");
-
         this.voice = voice;
         this.elements = elements;
+        checkRep();
     }
 
     @Override
@@ -48,5 +41,14 @@ public class VoicePart implements SectionElement {
             result.append('\n');
         }
         return result.toString();
+    }
+
+    private void checkRep() {
+        assert this.voice != null;
+        assert this.elements != null;
+        assert this.elements.length > 0;
+        for (VoicePartElement e : elements) {
+            assert e != null;
+        }
     }
 }

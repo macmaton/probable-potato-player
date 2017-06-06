@@ -1,7 +1,6 @@
 package abc.music;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Adapted from https://ocw.mit.edu/ans7870/6/6.005/s16/projects/abcplayer/spec/
@@ -27,9 +26,9 @@ public class Tuplet implements MeasureElement {
     private final TupletElement[] elements;
 
     public Tuplet(int spec, TupletElement[] elements) {
-        Objects.requireNonNull(elements, "A tuplet must have elements");
         this.spec = spec;
         this.elements = elements;
+        checkRep();
     }
 
     public int getSpec() {
@@ -76,5 +75,13 @@ public class Tuplet implements MeasureElement {
             result.append(e.toString());
         }
         return result.toString();
+    }
+
+    private void checkRep() {
+        assert elements != null;
+        assert elements.length > 0;
+        for (TupletElement e : elements) {
+            assert e != null;
+        }
     }
 }

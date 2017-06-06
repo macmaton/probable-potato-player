@@ -52,6 +52,9 @@ public class Section implements BodyElement {
 
     private void checkRep() {
         assert this.elements != null;
-        assert this.elements.length != 0;
+        assert this.elements.length > 0;
+        for (SectionElement e : this.elements) {
+            assert e != null;
+        }
     }
 }

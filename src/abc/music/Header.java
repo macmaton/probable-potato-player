@@ -1,7 +1,6 @@
 package abc.music;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * An immutable data type representing the header of a piece in abc notation
@@ -19,18 +18,16 @@ public class Header {
     private final Voice[] voices;
 
     public Header(Index index, Title title, Key key) {
-        Objects.requireNonNull(index, "index may not be null");
         this.index = index;
-        Objects.requireNonNull(title, "title may not be null");
         this.title = title;
-        Objects.requireNonNull(key, "key may not be null");
         this.key = key;
-
         this.composer = new Composer();
         this.meter = new Meter();
         this.length = new DefaultNoteLength(this.meter);
         this.tempo = new Tempo(this.length);
         this.voices = null;
+
+        checkRep();
     }
 
     //TODO: other constructors
@@ -67,4 +64,19 @@ public class Header {
         return result.toString();
     }
 
+    private void checkRep() {
+        assert this.index != null;
+        assert this.title != null;
+        assert this.key != null;
+        assert this.composer != null;
+        assert this.length != null;
+        assert this.meter != null;
+        assert this.tempo != null;
+        if (this.voices != null) {
+            assert this.voices.length > 0;
+            for (int i = 0; i<this.voices.length; i++) {
+                assert this.voices[i] != null;
+            }
+        }
+    }
 }

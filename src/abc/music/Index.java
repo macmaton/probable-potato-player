@@ -7,6 +7,10 @@ package abc.music;
 public class Index {
     private final Integer index;
 
+    /**
+     * Represents the index of a piece in abc notation, which must be in the first line of the file and denoted by X:
+     * @param index nullable integer
+     */
     public Index(Integer index) {
         this.index = index;
     }

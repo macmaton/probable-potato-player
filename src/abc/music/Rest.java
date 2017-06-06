@@ -1,13 +1,11 @@
 package abc.music;
 
-import java.util.Objects;
-
 public class Rest implements TupletElement {
     private NoteLength length;
 
     public Rest(NoteLength length) {
-        Objects.requireNonNull(length, "length may not be null");
         this.length = length;
+        checkRep();
     }
 
     public Rest() {
@@ -32,5 +30,9 @@ public class Rest implements TupletElement {
     @Override
     public String toString() {
         return "z" + length.toString();
+    }
+
+    private void checkRep() {
+        assert length != null;
     }
 }

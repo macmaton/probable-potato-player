@@ -55,6 +55,9 @@ public class Line implements VoicePartElement {
 
     public void checkRep() {
         assert this.measures != null;
-        assert this.measures.length != 0;
+        assert this.measures.length > 0;
+        for (Measure m : this.measures) {
+            assert m != null;
+        }
     }
 }

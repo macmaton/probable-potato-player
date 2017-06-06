@@ -8,6 +8,7 @@ public class Tempo {
     private final int beatsPerMinute;
     private final NoteLength beatLength;
     private final boolean isSpecified;
+    //TODO: can Tempo be simplified to eliminate isSpecified
 
     /**
      * The tempo provided in the header of a file in abc notation
@@ -24,7 +25,7 @@ public class Tempo {
 
     public Tempo(int beatsPerMinute, int beatLengthNumerator, int beatLengthDenominator) {
         this.beatsPerMinute = beatsPerMinute;
-        this.beatLength = new NoteLength(beatLengthNumerator, beatLengthDenominator, true);
+        this.beatLength = new NoteLength(beatLengthNumerator, beatLengthDenominator);
         isSpecified = true;
         checkRep();
     }
@@ -37,7 +38,7 @@ public class Tempo {
      */
     public Tempo(DefaultNoteLength defaultNoteLength) {
         this.beatsPerMinute = 100;
-        this.beatLength = new NoteLength(defaultNoteLength.getNumerator(), defaultNoteLength.getDenominator(), true);
+        this.beatLength = new NoteLength(defaultNoteLength.getNumerator(), defaultNoteLength.getDenominator());
         isSpecified = false;
         checkRep();
     }
@@ -87,6 +88,5 @@ public class Tempo {
     private void checkRep() {
         assert beatsPerMinute >= 1;
         assert beatLength != null;
-        assert beatLength.isSpecified();
     }
 }

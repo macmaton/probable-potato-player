@@ -52,6 +52,36 @@ public class Pitch {
         return basenote;
     }
 
+    /**
+     * The basenote of a pitch is in the octave of middle C.  Sharps and flats add or subtract one semitone.  An
+     * octave is equal to 12 semitones.
+     * @return The integer number of semitones the basenote is modified based on the octave and accidental.
+     */
+    public int getSemitonesUp() {
+        int semitonesUp = octave*12;
+        switch(accidental) {
+            case NONE:
+                semitonesUp += 0;
+                break;
+            case NATURAL:
+                semitonesUp += 0;
+                break;
+            case FLAT:
+                semitonesUp += -1;
+                break;
+            case DOUBLEFLAT:
+                semitonesUp += -2;
+                break;
+            case SHARP:
+                semitonesUp += 1;
+                break;
+            case DOUBLESHARP:
+                semitonesUp += 2;
+                break;
+        }
+        return semitonesUp;
+    }
+
     @Override
     public int hashCode() {
         int result = octave;
@@ -59,10 +89,6 @@ public class Pitch {
         result = 31 * result + basenote.hashCode();
         return result;
     }
-
-//	public int getModifier(Key key) {
-//		TODO: provide pitch modifier (#/b) based on accidental and key
-//	}
 
     @Override
     public boolean equals(Object obj) {

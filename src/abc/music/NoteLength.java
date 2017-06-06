@@ -6,32 +6,27 @@ package abc.music;
  * Numerator and denominator are nullable.  Default values are provided for when either is null.
  */
 public class NoteLength {
-    private final Integer numerator;
-    private final Integer denominator;
-    private final Boolean isSpecified; //whether a fractional multiplicative factor is provided
-    //TODO: consider simplifying to remove preservation of original notation
+    private static final int DEFAULT_NUMERATOR = 1;
+    private static final int DEFAULT_DENOMINATOR = 2;
+    private final int numerator;
+    private final int denominator;
 
     /**
      * A note length in abc notation
-     *
-     * @param numerator
-     * @param denominator
-     * @param isSpecified Whether the note length was explicitly stated in the file.  If false, toString() returns an
-     *                    empty string and getNoteLength() returns 1.0
+     * @param numerator nullable integer
+     * @param denominator nullable integer
      */
-    public NoteLength(Integer numerator, Integer denominator, boolean isSpecified) {
-        if (!isSpecified) {
-            if ((numerator == null && denominator == null) || (numerator != null && numerator.equals(denominator))) {
-                this.numerator = 1;
-                this.denominator = 1;
-            } else {
-                throw new IllegalArgumentException("If isSpecified is false, the default note length will be used");
-            }
+    public NoteLength(Integer numerator, Integer denominator) {
+        if (numerator == null) {
+            this.numerator = DEFAULT_NUMERATOR;
         } else {
             this.numerator = numerator;
+        }
+        if (denominator == null) {
+            this.denominator = DEFAULT_DENOMINATOR;
+        } else {
             this.denominator = denominator;
         }
-        this.isSpecified = isSpecified;
         checkRep();
     }
 
@@ -41,53 +36,25 @@ public class NoteLength {
     public NoteLength() {
         this.numerator = 1;
         this.denominator = 1;
-        this.isSpecified = false;
         checkRep();
     }
 
     public double getNoteLength() {
-        if (!isSpecified) {
-            return 1.0;
-        } else if (numerator == null && denominator == null) {
-            return 0.5;
-        } else if (numerator == null) {
-            return 1.0 / denominator;
-        } else if (denominator == null) {
-            return (double) numerator / 2.0;
-        } else {
-            return (double) numerator / (double) denominator;
-        }
+        return (double)numerator / (double)denominator;
     }
 
     public int getNumerator() {
-        if (!isSpecified) {
-            return 1;
-        } else if (numerator == null) {
-            return 1;
-        } else {
-            return numerator;
-        }
+        return numerator;
     }
 
     public int getDenominator() {
-        if (!isSpecified) {
-            return 1;
-        } else if (denominator == null) {
-            return 2;
-        } else {
-            return denominator;
-        }
-    }
-
-    public boolean isSpecified() {
-        return isSpecified;
+        return denominator;
     }
 
     @Override
     public int hashCode() {
-        int result = numerator != null ? numerator.hashCode() : 0;
-        result = 31 * result + (denominator != null ? denominator.hashCode() : 0);
-        result = 31 * result + isSpecified.hashCode();
+        int result = numerator;
+        result = 31 * result + denominator;
         return result;
     }
 
@@ -95,63 +62,37 @@ public class NoteLength {
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
-        }
-        if (obj instanceof NoteLength) {
-            NoteLength that = (NoteLength) obj;
-            boolean numeratorCheck;
-            boolean denominatorCheck;
-            if (this.isSpecified != that.isSpecified) {
-                return false;
-            }
-            if (this.numerator == null && that.numerator == null) {
-                numeratorCheck = true;
-            } else if (this.numerator != null && that.numerator != null) {
-                numeratorCheck = this.numerator.equals(that.numerator);
-            } else {
-                return false;
-            }
-            if (this.denominator == null && that.denominator == null) {
-                denominatorCheck = true;
-            } else if (this.denominator != null && that.denominator != null) {
-                denominatorCheck = this.denominator.equals(that.denominator);
-            } else {
-                return false;
-            }
-            return numeratorCheck && denominatorCheck;
-        } else {
+        } else if (obj.getClass() != this.getClass()) {
             return false;
+        } else {
+            NoteLength that = (NoteLength) obj;
+            return this.numerator == that.numerator && this.denominator == that.denominator;
         }
     }
 
     @Override
     public String toString() {
-        if (!isSpecified) {
-            return "";
-        }
-
-        String numerator;
-        String denominator;
-
-        if (this.numerator == null) {
-            numerator = "";
+        String result;
+        if (this.numerator == this.denominator) {
+            result = "";
         } else {
-            numerator = this.numerator.toString();
+            if (this.numerator == 1) {
+                result = "";
+            } else {
+                result = String.valueOf(this.numerator);
+            }
+            if (this.denominator == DEFAULT_DENOMINATOR) {
+                result = result + "/";
+            } else if (this.denominator != DEFAULT_DENOMINATOR && this.denominator != 1) {
+                result = result + "/" + String.valueOf(this.denominator);
+            }
         }
-
-        if (this.denominator == null) {
-            denominator = "";
-        } else if (this.denominator.equals(1)) {
-            return numerator;
-        } else {
-            denominator = this.denominator.toString();
-        }
-        return numerator + "/" + denominator;
+        return result;
     }
 
     private void checkRep() {
-        if (!isSpecified) {
-            assert (numerator == null && denominator == null) || (numerator != null && numerator.equals(denominator));
-        }
+        assert this.numerator > 0;
+        assert this.denominator > 0;
     }
 
 }

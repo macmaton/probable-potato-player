@@ -1,7 +1,5 @@
 package abc.music;
 
-import java.util.Objects;
-
 /**
  * An immutable data type representing a note in abc notation,
  * A note consists of a pitch or rest and a length (duration).
@@ -12,8 +10,6 @@ public class Note implements TupletElement {
     private final NoteLength length;
 
     public Note(Pitch pitch, NoteLength length) {
-        Objects.requireNonNull(pitch, "pitch must not be null");
-        Objects.requireNonNull(length, "if length is not provided, use Note(Pitch pitch)");
         this.pitch = pitch;
         this.length = length;
         checkRep();
@@ -54,7 +50,7 @@ public class Note implements TupletElement {
     }
 
     private void checkRep() {
-        assert !(pitch == null);
-        assert !(length == null);
+        assert pitch != null;
+        assert length != null;
     }
 }
