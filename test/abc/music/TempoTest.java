@@ -9,9 +9,9 @@ public class TempoTest {
     private Tempo t4;
 
     public void setup() {
-        t1 = new Tempo(120, new NoteLength(1, 4, true));
-        t2 = new Tempo(120, new NoteLength(1, 4, true));
-        t3 = new Tempo(100, new NoteLength(1, 4, true));
+        t1 = new Tempo(120, new NoteLength(1, 4));
+        t2 = new Tempo(120, new NoteLength(1, 4));
+        t3 = new Tempo(100, new NoteLength(1, 4));
         t4 = new Tempo(new DefaultNoteLength(1, 4));
     }
 
@@ -39,6 +39,6 @@ public class TempoTest {
 
     @Test(expected = AssertionError.class)
     public void testInitialize() {
-        t1 = new Tempo(-100, new NoteLength(1, 8, true));
+        t1 = new Tempo(-100, new NoteLength(1, 8));
     }
 }

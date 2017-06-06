@@ -10,7 +10,7 @@ public class RestTest {
     public void setup() {
         r1 = new Rest();
         r2 = new Rest();
-        r3 = new Rest(new NoteLength(1, 8, true));
+        r3 = new Rest(new NoteLength(1, 8));
     }
 
     @Test
@@ -30,10 +30,10 @@ public class RestTest {
     public void testToString() {
         setup();
         assert r1.toString().equals("z");
-        assert r3.toString().equals("z1/8");
+        assert r3.toString().equals("z/8");
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = AssertionError.class)
     public void testInitialize() {
         r1 = new Rest(null);
     }

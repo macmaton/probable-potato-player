@@ -2,8 +2,6 @@ package abc.music;
 
 /**
  * Immutable representation of the length of a note in the body as a rational number
- * hasMultiplier represents whether the noteLength is explicitly given and may not be null.
- * Numerator and denominator are nullable.  Default values are provided for when either is null.
  */
 public class NoteLength {
     private static final int DEFAULT_NUMERATOR = 1;
@@ -71,6 +69,9 @@ public class NoteLength {
         }
     }
 
+    /**
+     * @return a parsable String representing the NoteLength.
+     */
     @Override
     public String toString() {
         String result;

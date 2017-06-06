@@ -81,7 +81,7 @@ public class Tempo {
         if (!isSpecified) {
             return "";
         } else {
-            return "Q: " + beatLength.toString() + "=" + beatsPerMinute;
+            return "Q: " + beatLength.getNumerator() + "/" + beatLength.getDenominator() + "=" + beatsPerMinute;
         }
     }
 

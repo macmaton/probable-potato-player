@@ -111,7 +111,7 @@ public class Pitch {
         int octaveSymbols = this.octave;
         String accidental = "";
         String basenote = this.basenote.toString();
-        if (this.octave == 1) {
+        if (this.octave >= 1) {
             basenote = basenote.toLowerCase();
             octaveSymbols -= 1;
         }

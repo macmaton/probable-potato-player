@@ -11,10 +11,10 @@ public class NoteTest {
     private Note n4;
 
     public void setup() {
-        n1 = new Note(new Pitch(BaseNote.C, -3, Accidental.NONE), new NoteLength(null, null, false));
-        n2 = new Note(new Pitch(BaseNote.C, -3, Accidental.NONE), new NoteLength(null, null, false));
-        n3 = new Note(new Pitch(BaseNote.D, 0, Accidental.SHARP), new NoteLength(2, 1, true));
-        n4 = new Note(new Pitch(BaseNote.A, 0, Accidental.FLAT), new NoteLength(1, 4, true));
+        n1 = new Note(new Pitch(BaseNote.C, -3, Accidental.NONE), new NoteLength(null, null));
+        n2 = new Note(new Pitch(BaseNote.C, -3, Accidental.NONE), new NoteLength(null, null));
+        n3 = new Note(new Pitch(BaseNote.D, 0, Accidental.SHARP), new NoteLength(2, 1));
+        n4 = new Note(new Pitch(BaseNote.A, 0, Accidental.FLAT), new NoteLength(1, 4));
     }
 
     @Test
@@ -33,9 +33,9 @@ public class NoteTest {
     @Test
     public void testToString() {
         setup();
-        assert n1.toString().equals("C,,,");
+        assert n1.toString().equals("C,,,/");
         assert n3.toString().equals("^D2");
-        assert n4.toString().equals("_A1/4");
+        assert n4.toString().equals("_A/4");
     }
 
     @Test(expected = AssertionError.class)

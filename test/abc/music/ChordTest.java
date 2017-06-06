@@ -19,7 +19,7 @@ public class ChordTest {
         c3 = new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
                 NoteLength())
                 , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength
-                (1, 2, true));
+                (1, 2));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ChordTest {
     public void testToString() {
         setup();
         assert c1.toString().equals("[ABC]");
-        assert c3.toString().equals("[AB]1/2");
+        assert c3.toString().equals("[AB]/");
     }
 
     @Test
