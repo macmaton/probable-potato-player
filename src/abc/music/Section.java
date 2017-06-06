@@ -3,14 +3,14 @@ package abc.music;
 import java.util.Arrays;
 
 public class Section implements BodyElement {
-    private final BodyElement[] elements;
+    private final SectionElement[] elements;
 
-    public Section(BodyElement[] elements) {
+    public Section(SectionElement[] elements) {
         this.elements = elements;
         checkRep();
     }
 
-    public BodyElement[] getElements() {
+    public SectionElement[] getElements() {
         return Arrays.copyOf(elements, elements.length);
     }
 

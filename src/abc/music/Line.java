@@ -2,7 +2,7 @@ package abc.music;
 
 import java.util.Arrays;
 
-public class Line implements BodyElement {
+public class Line implements VoicePartElement {
     private final Measure[] measures;
 
     public Line(Measure[] measures) {

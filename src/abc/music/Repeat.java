@@ -2,7 +2,7 @@ package abc.music;
 
 import java.util.Arrays;
 
-public class Repeat implements BodyElement {
+public class Repeat implements VoicePartElement {
     private final Line[] repeatedLines;
     private final Line[] endings;
 
