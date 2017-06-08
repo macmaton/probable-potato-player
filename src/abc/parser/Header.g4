@@ -6,43 +6,39 @@
 grammar Header;
 import Configuration;
 
-root: header body;
-header: fieldindex endofline* fieldtitle otherfields* fieldkey;
-fieldindex: INDEXMARKER DIGIT+ endofline;
-fieldtitle: TITLEMARKER text endofline;
-fieldkey: KEYMARKER endofline;
-otherfields: fieldcomposer | fieldlength | fieldmeter | fieldtempo | fieldvoice | comment;
-fieldcomposer: COMPOSERMARKER text endofline;
-fieldlength: LENGTHMARKER notelengthstrict endofline;
-fieldmeter: METERMARKER meter endofline;
-fieldtempo: TEMPOMARKER tempo endofline;
-fieldvoice: VOICEMARKER text endofline;
+root: header;
+header: fieldindex ENDOFLINE* fieldtitle otherfields* fieldkey body;
+fieldindex: INDEXMARKER NUMBER ENDOFLINE;
+fieldtitle: TITLEMARKER TEXT ENDOFLINE;
+fieldkey: KEYMARKER ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G') ('m'?) (('#' | 'b')?) ENDOFLINE;
+otherfields: fieldcomposer | fieldlength | fieldmeter | fieldtempo | fieldvoice | COMMENT;
+fieldcomposer: COMPOSERMARKER TEXT ENDOFLINE;
+fieldlength: LENGTHMARKER (FRACTION | NUMBER) ENDOFLINE;
+fieldmeter: METERMARKER meter ENDOFLINE;
+fieldtempo: TEMPOMARKER TEMPO ENDOFLINE;
+fieldvoice: VOICEMARKER NUMBER?TEXT* ENDOFLINE;
 
-notelengthstrict: DIGIT+ '/' DIGIT+;
+meter: 'C' | 'C|' | FRACTION;
 
-meter: 'C' | 'C|' | fraction;
-fraction: DIGIT+ FRACTIONLINE DIGIT+;
+body: (VOICEMARKER? (TEXT | NUMBER | BARLINE)* ENDOFLINE)* EOF;
 
-tempo: fraction '=' DIGIT+;
+INDEXMARKER: 'X:' WHITESPACE?;
+TITLEMARKER: 'T:' WHITESPACE?;
+KEYMARKER: 'K:' WHITESPACE?;
+COMPOSERMARKER: 'C:' WHITESPACE?;
+LENGTHMARKER: 'L:' WHITESPACE?;
+METERMARKER: 'M:' WHITESPACE?;
+NUMBER: [0-9]+;
+FRACTION: NUMBER '/' NUMBER;
+TEMPOMARKER: 'Q:' WHITESPACE?;
+TEMPO: FRACTION '=' NUMBER;
+VOICEMARKER: 'V:' WHITESPACE?;
+ENDOFLINE: (COMMENT NEWLINE) | NEWLINE;
+COMMENT: '%' TEXT?;
+BARLINE : '|' | '||' | '[|' | '|]' | ':|' | '|:';
+TEXT: CHAR+;
 
-endofline: comment | NEWLINE;
-comment: COMMENTMARKER text+ NEWLINE;
-
-body: (text+ NEWLINE)* EOF;
-
-text: CHAR+;
-
-INDEXMARKER: 'X:' ' '?;
-TITLEMARKER: 'T:' ' '?;
-KEYMARKER: 'K:' ' '? ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G') ('m'?) (('#' | 'b')?);
-COMPOSERMARKER: 'C:' ' '?;
-LENGTHMARKER: 'L:' ' '?;
-METERMARKER: 'M:' ' '?;
-TEMPOMARKER: 'Q:' ' '?;
-VOICEMARKER: 'V:' ' '?;
-FRACTIONLINE: '/';
-COMMENTMARKER: '%';
-DIGIT: [0-9];
-NEWLINE: '\n' | '\r''\n'?;
+fragment
 WHITESPACE: ' ' | '\t';
-CHAR: .;
+NEWLINE: '\n' | '\r''\n'?;
+CHAR: ~[:\n];
