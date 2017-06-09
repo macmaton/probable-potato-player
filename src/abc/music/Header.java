@@ -7,7 +7,7 @@ import java.util.Arrays;
  * 1 - X: index number; 2 - T: title; * - C: composer; * - M: meter; * - L: length -
  * default duration of a note; last - K: key
  */
-public class Header {
+public class Header implements Music {
     private final Index index;
     private final Title title;
     private final Key key;

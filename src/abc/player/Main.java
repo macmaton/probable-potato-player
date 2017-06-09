@@ -1,6 +1,17 @@
 package abc.player;
 
-import abc.music.Music;
+import abc.parser.BodyLexer;
+import abc.parser.BodyParser;
+import abc.parser.HeaderLexer;
+import abc.parser.HeaderParser;
+import org.antlr.v4.gui.Trees;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Main entry point of your application.
@@ -22,6 +33,52 @@ public class Main {
 
     public static void main(String[] args) {
         // CALL play() HERE USING ARGS
-        Music.getBodyParseTree("/home/margaret/workspace/abcplayer/sample_abc/little_night_music.abc");
+        getBodyParseTree("/home/margaret/workspace/abcplayer/sample_abc/little_night_music.abc");
     }
+
+    private static ParseTree parse(String fileName) {
+        File file = new File(fileName);
+        FileInputStream fis;
+        ANTLRInputStream stream = null;
+        try {
+            fis = new FileInputStream(file);
+            stream = new ANTLRInputStream(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HeaderParser parser;
+        ParseTree root;
+
+        HeaderLexer lexer = new HeaderLexer(stream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        parser = new HeaderParser(tokens);
+        root = parser.root();
+
+        return root;
+    }
+
+    public static ParseTree getHeaderParseTree(String fileName) {
+        ParseTree root = parse(fileName);
+        ParseTree header = root.getChild(0);
+        return header;
+    }
+
+    public static ParseTree getBodyParseTree(String fileName) {
+        ParseTree root = parse(fileName);
+        ANTLRInputStream stream = new ANTLRInputStream(root.getChild(1).getText());
+
+        BodyParser parser;
+        ParseTree body;
+
+        BodyLexer lexer = new BodyLexer(stream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        parser = new BodyParser(tokens);
+        body = parser.body();
+
+        Trees.inspect(body, parser);
+
+        return body;
+    }
+
 }

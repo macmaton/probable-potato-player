@@ -6,7 +6,7 @@ import java.util.Arrays;
  * An immutable data type representing the body of a piece of music in abc notation
  * limited implementation based on Spring 2016 version of MIT OCW 6.005
  */
-public class Body {
+public class Body implements Music {
     private final BodyElement[] elements;
 
     public Body(BodyElement[] elements) {

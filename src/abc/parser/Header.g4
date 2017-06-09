@@ -5,7 +5,7 @@
  */
 grammar Header;
 import Configuration;
-
+//TODO: COLON IS RESERVED FOR HEADER FIELD DEMARKATION IN THIS IMPLEMENTATION.  TEXT MUST ALLOW ALL UTF-8 CHARACTERS
 root: header;
 header: fieldindex ENDOFLINE* fieldtitle otherfields* fieldkey body;
 fieldindex: INDEXMARKER NUMBER ENDOFLINE;
@@ -20,6 +20,15 @@ fieldvoice: VOICEMARKER NUMBER?TEXT* ENDOFLINE;
 
 meter: 'C' | 'C|' | FRACTION;
 
+//indexmarker: 'X:' WHITESPACE?;
+//titlemarker: 'T:' WHITESPACE?;
+//keymarker: 'K:' WHITESPACE?;
+//composermarker: 'C:' WHITESPACE?;
+//lengthmarker: 'L:' WHITESPACE?;
+//metermarker: 'M:' WHITESPACE?;
+//tempomarker: 'Q:' WHITESPACE?;
+//voicemarker: 'V:' WHITESPACE?;
+
 body: (VOICEMARKER? (TEXT | NUMBER | BARLINE)* ENDOFLINE)* EOF;
 
 INDEXMARKER: 'X:' WHITESPACE?;
@@ -28,11 +37,11 @@ KEYMARKER: 'K:' WHITESPACE?;
 COMPOSERMARKER: 'C:' WHITESPACE?;
 LENGTHMARKER: 'L:' WHITESPACE?;
 METERMARKER: 'M:' WHITESPACE?;
+TEMPOMARKER: 'Q:' WHITESPACE?;
+VOICEMARKER: 'V:' WHITESPACE?;
 NUMBER: [0-9]+;
 FRACTION: NUMBER '/' NUMBER;
-TEMPOMARKER: 'Q:' WHITESPACE?;
 TEMPO: FRACTION '=' NUMBER;
-VOICEMARKER: 'V:' WHITESPACE?;
 ENDOFLINE: (COMMENT NEWLINE) | NEWLINE;
 COMMENT: '%' TEXT?;
 BARLINE : '|' | '||' | '[|' | '|]' | ':|' | '|:';

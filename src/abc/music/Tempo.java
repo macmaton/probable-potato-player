@@ -4,7 +4,7 @@ package abc.music;
  * An immutable data type representing a tempo field in abc notation,
  * Q: beatLength = beatsPerMinute where beatsPerMinute is a positive non-zero integer
  */
-public class Tempo {
+public class Tempo implements HeaderField {
     private final int beatsPerMinute;
     private final NoteLength beatLength;
     private final boolean isSpecified;
@@ -88,5 +88,10 @@ public class Tempo {
     private void checkRep() {
         assert beatsPerMinute >= 1;
         assert beatLength != null;
+    }
+
+    @Override
+    public Fields getType() {
+        return Fields.TEMPO;
     }
 }

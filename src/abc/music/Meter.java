@@ -4,7 +4,7 @@ package abc.music;
  * Immutable data type to represent the meter of a piece in abc notation
  * M: beatsPerMeasure/noteValue
  */
-public class Meter {
+public class Meter implements HeaderField {
     private final int beatsPerMeasure;
     private final int noteValue;
     private final boolean isSpecified;
@@ -79,5 +79,10 @@ public class Meter {
     private void checkRep() {
         assert beatsPerMeasure > 0;
         assert noteValue > 0;
+    }
+
+    @Override
+    public Fields getType() {
+        return Fields.METER;
     }
 }

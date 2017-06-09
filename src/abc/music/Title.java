@@ -4,7 +4,7 @@ package abc.music;
  * An immutable data type representing a voice field in abc notation,
  * T: title, where the title may be an arbitrary string (not null).
  */
-public class Title {
+public class Title implements HeaderField {
     private final String title;
 
     public Title(String title) {
@@ -41,5 +41,10 @@ public class Title {
 
     private void checkRep() {
         assert title != null;
+    }
+
+    @Override
+    public Fields getType() {
+        return Fields.TITLE;
     }
 }

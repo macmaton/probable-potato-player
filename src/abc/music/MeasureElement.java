@@ -1,4 +1,4 @@
 package abc.music;
 
-public interface MeasureElement {
+public interface MeasureElement extends Music {
 }

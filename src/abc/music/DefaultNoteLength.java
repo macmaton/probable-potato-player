@@ -3,7 +3,7 @@ package abc.music;
 /**
  * Immutable representation of the default note length for a piece
  */
-public class DefaultNoteLength {
+public class DefaultNoteLength implements HeaderField {
     private final int numerator;
     private final int denominator;
     private final Boolean isSpecified;
@@ -77,5 +77,10 @@ public class DefaultNoteLength {
     private void checkRep() {
         assert this.numerator > 0;
         assert this.denominator > 0;
+    }
+
+    @Override
+    public Fields getType() {
+        return Fields.DEFAULTNOTELENGTH;
     }
 }

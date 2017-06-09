@@ -2,7 +2,7 @@ package abc.music;
 
 import java.util.Arrays;
 
-public class Measure {
+public class Measure implements Music {
 
     private final MeasureElement[] elements;
 

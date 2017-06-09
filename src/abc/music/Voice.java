@@ -5,7 +5,7 @@ package abc.music;
  * V: name, where the name of the voice may be an arbitrary string.
  * Voice names may not be null.
  */
-public class Voice {
+public class Voice implements Music {
     private final String name;
 
     public Voice(String name) {

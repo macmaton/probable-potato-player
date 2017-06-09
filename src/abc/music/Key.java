@@ -1,10 +1,8 @@
 package abc.music;
 
-import abc.music.Music.BaseNote;
-
 import java.util.*;
 
-public class Key {
+public class Key implements HeaderField {
 
     private static final Map<Keys, Integer> NUM_MODIFIED = Collections.unmodifiableMap(initializeNumModified());
     private static final List<BaseNote> MODIFIED_NOTES = Collections.unmodifiableList(Arrays.asList(BaseNote.F,
@@ -130,7 +128,12 @@ public class Key {
         assert this.keyNotes.size() == 7;
     }
 
-    enum Keys {
+    @Override
+    public Fields getType() {
+        return Fields.KEY;
+    }
+
+    public enum Keys {
         //keys with no sharps or flats
         CMAJOR, AMINOR,
         //major keys with sharp key signatures

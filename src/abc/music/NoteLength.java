@@ -3,7 +3,7 @@ package abc.music;
 /**
  * Immutable representation of the length of a note in the body as a rational number
  */
-public class NoteLength {
+public class NoteLength implements Music {
     private static final int DEFAULT_NUMERATOR = 1;
     private static final int DEFAULT_DENOMINATOR = 2;
     private final int numerator;

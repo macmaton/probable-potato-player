@@ -1,6 +1,6 @@
 package abc.music;
 
-public class Composer {
+public class Composer implements HeaderField {
     private final String composer;
     private final boolean isSpecified;
 
@@ -58,5 +58,10 @@ public class Composer {
 
     private void checkRep() {
         assert composer != null;
+    }
+
+    @Override
+    public Fields getType() {
+        return Fields.COMPOSER;
     }
 }

@@ -4,7 +4,7 @@ package abc.music;
  * represents the index number of a piece in abc notation
  * denoted by X: in the first line of the file
  */
-public class Index {
+public class Index implements HeaderField {
     private final Integer index;
 
     /**
@@ -41,5 +41,10 @@ public class Index {
         } else {
             return "X: ";
         }
+    }
+
+    @Override
+    public Fields getType() {
+        return Fields.INDEX;
     }
 }
