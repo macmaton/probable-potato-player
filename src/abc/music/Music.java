@@ -15,4 +15,11 @@ public interface Music {
     enum BaseNote {
         A, B, C, D, E, F, G
     }
+
+    enum Components {
+        BODY, CHORD, COMPOSER, DEFAULTNOTELENGTH, HEADER, INDEX, KEY, LINE, MEASURE, METER, NOTE, NOTELENGTH, PITCH,
+        REPEAT, REST, SECTION, TEMPO, TITLE, TUPLET, VOICE, VOICEPART
+    }
+
+    Components getType();
 }

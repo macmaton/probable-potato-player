@@ -44,7 +44,7 @@ public class Index implements HeaderField {
     }
 
     @Override
-    public Fields getType() {
-        return Fields.INDEX;
+    public Components getType() {
+        return Components.INDEX;
     }
 }

@@ -44,7 +44,7 @@ public class Title implements HeaderField {
     }
 
     @Override
-    public Fields getType() {
-        return Fields.TITLE;
+    public Components getType() {
+        return Components.TITLE;
     }
 }

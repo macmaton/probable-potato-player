@@ -84,4 +84,9 @@ public class Tuplet implements MeasureElement {
             assert e != null;
         }
     }
+
+    @Override
+    public Components getType() {
+        return Components.TUPLET;
+    }
 }

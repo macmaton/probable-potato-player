@@ -57,4 +57,9 @@ public class Measure implements Music {
             assert e != null;
         }
     }
+
+    @Override
+    public Components getType() {
+        return Components.MEASURE;
+    }
 }

@@ -14,7 +14,7 @@ import java.util.Stack;
  */
 public class MusicHeaderBuilder implements HeaderListener {
     /**
-     * stack contains the Music objects representing each parse subtree walked so far, but whose parent has not been
+     * The stack contains the Music objects representing each parse subtree walked so far, but whose parent has not been
      * exited by the walk.  The stack is ordered by recency of visit, such that the item at the top of the stack is the
      * Music object for the most recently walked subtree.
      * <p>
@@ -56,27 +56,35 @@ public class MusicHeaderBuilder implements HeaderListener {
         List<Voice> voiceList = new ArrayList<Voice>();
         Voice[] voices = null;
 
-        while(!stack.isEmpty()) {
-            HeaderField field = (HeaderField) stack.peek();
-            switch(field.getType()) {
-                case INDEX: index = (Index) stack.pop();
+        while (!stack.isEmpty()) {
+            Music field = stack.peek();
+            switch (field.getType()) {
+                case INDEX:
+                    index = (Index) stack.pop();
                     break;
-                case TITLE: title = (Title) stack.pop();
+                case TITLE:
+                    title = (Title) stack.pop();
                     break;
-                case KEY: key = (Key) stack.pop();
+                case KEY:
+                    key = (Key) stack.pop();
                     break;
-                case COMPOSER: composer = (Composer) stack.pop();
+                case COMPOSER:
+                    composer = (Composer) stack.pop();
                     break;
-                case METER: meter = (Meter) stack.pop();
+                case METER:
+                    meter = (Meter) stack.pop();
                     break;
-                case DEFAULTNOTELENGTH: length = (DefaultNoteLength) stack.pop();
+                case DEFAULTNOTELENGTH:
+                    length = (DefaultNoteLength) stack.pop();
                     break;
-                case TEMPO: tempo = (Tempo) stack.pop();
+                case TEMPO:
+                    tempo = (Tempo) stack.pop();
                     break;
-                case VOICE: voiceList.add(0, (Voice) stack.pop());
+                case VOICE:
+                    voiceList.add(0, (Voice) stack.pop());
                     break;
             }
-            if(voiceList.size() > 0) {
+            if (voiceList.size() > 0) {
                 voices = voiceList.toArray(new Voice[voiceList.size()]);
             }
             stack.push(new Header(index, title, key, meter, length, tempo, composer, voices));
@@ -143,8 +151,8 @@ public class MusicHeaderBuilder implements HeaderListener {
         if (index == -1) {
             length = new DefaultNoteLength(Integer.parseInt(raw), 1);
         } else {
-            length = new DefaultNoteLength(Integer.parseInt(raw.substring(0,index)), Integer.parseInt(raw.substring
-                    (index+1)));
+            length = new DefaultNoteLength(Integer.parseInt(raw.substring(0, index)), Integer.parseInt(raw.substring
+                    (index + 1)));
         }
         stack.push(length);
     }
@@ -160,14 +168,15 @@ public class MusicHeaderBuilder implements HeaderListener {
         String raw = ctx.getChild(1).getText();
         int index = raw.indexOf("/");
         if (index > 0) {
-            meter = new Meter(Integer.parseInt(raw.substring(0, index)), Integer.parseInt(raw.substring(index+1)));
+            meter = new Meter(Integer.parseInt(raw.substring(0, index)), Integer.parseInt(raw.substring(index + 1)));
         } else if (raw.contains("C|")) {
             meter = new Meter(2, 2);
         } else if (raw.contains("C")) {
             meter = new Meter(4, 4);
         } else {
-            meter = new Meter(); //should not reach here - either meter is specified and one of the above will be
-            // used or has not been specified and this method will not be called.
+            throw new RuntimeException("Invalid meter received from parser: " + raw); //should not reach here - either
+            // meter is specified and one of the above will be used or has not been specified and this method will
+            // not be called.
         }
         stack.push(meter);
     }
@@ -183,8 +192,8 @@ public class MusicHeaderBuilder implements HeaderListener {
         String raw = ctx.getChild(1).getText();
         int slashIndex = raw.indexOf("/");
         int equalsIndex = raw.indexOf("=");
-        tempo = new Tempo(Integer.parseInt(raw.substring(equalsIndex)), Integer.parseInt(raw.substring(0,slashIndex))
-                , Integer.parseInt(raw.substring(slashIndex+1, equalsIndex)));
+        tempo = new Tempo(Integer.parseInt(raw.substring(equalsIndex)), Integer.parseInt(raw.substring(0, slashIndex))
+                , Integer.parseInt(raw.substring(slashIndex + 1, equalsIndex)));
         stack.push(tempo);
     }
 
@@ -221,16 +230,6 @@ public class MusicHeaderBuilder implements HeaderListener {
     }
 
     @Override
-    public void enterNotelengthstrict(HeaderParser.NotelengthstrictContext ctx) {
-
-    }
-
-    @Override
-    public void exitNotelengthstrict(HeaderParser.NotelengthstrictContext ctx) {
-
-    }
-
-    @Override
     public void enterMeter(HeaderParser.MeterContext ctx) {
 
     }
@@ -241,62 +240,12 @@ public class MusicHeaderBuilder implements HeaderListener {
     }
 
     @Override
-    public void enterFraction(HeaderParser.FractionContext ctx) {
-
-    }
-
-    @Override
-    public void exitFraction(HeaderParser.FractionContext ctx) {
-
-    }
-
-    @Override
-    public void enterTempo(HeaderParser.TempoContext ctx) {
-
-    }
-
-    @Override
-    public void exitTempo(HeaderParser.TempoContext ctx) {
-
-    }
-
-    @Override
-    public void enterEndofline(HeaderParser.EndoflineContext ctx) {
-
-    }
-
-    @Override
-    public void exitEndofline(HeaderParser.EndoflineContext ctx) {
-
-    }
-
-    @Override
-    public void enterComment(HeaderParser.CommentContext ctx) {
-
-    }
-
-    @Override
-    public void exitComment(HeaderParser.CommentContext ctx) {
-
-    }
-
-    @Override
     public void enterBody(HeaderParser.BodyContext ctx) {
 
     }
 
     @Override
     public void exitBody(HeaderParser.BodyContext ctx) {
-
-    }
-
-    @Override
-    public void enterText(HeaderParser.TextContext ctx) {
-
-    }
-
-    @Override
-    public void exitText(HeaderParser.TextContext ctx) {
 
     }
 

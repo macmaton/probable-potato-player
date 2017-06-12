@@ -91,7 +91,7 @@ public class Tempo implements HeaderField {
     }
 
     @Override
-    public Fields getType() {
-        return Fields.TEMPO;
+    public Components getType() {
+        return Components.TEMPO;
     }
 }

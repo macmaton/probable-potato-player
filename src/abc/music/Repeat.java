@@ -90,4 +90,9 @@ public class Repeat implements VoicePartElement {
             }
         }
     }
+
+    @Override
+    public Components getType() {
+        return Components.REPEAT;
+    }
 }

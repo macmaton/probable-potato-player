@@ -90,4 +90,9 @@ public class Chord implements TupletElement {
         }
         assert this.length != null;
     }
+
+    @Override
+    public Components getType() {
+        return Components.CHORD;
+    }
 }

@@ -82,7 +82,7 @@ public class Meter implements HeaderField {
     }
 
     @Override
-    public Fields getType() {
-        return Fields.METER;
+    public Components getType() {
+        return Components.METER;
     }
 }

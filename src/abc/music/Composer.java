@@ -61,7 +61,7 @@ public class Composer implements HeaderField {
     }
 
     @Override
-    public Fields getType() {
-        return Fields.COMPOSER;
+    public Components getType() {
+        return Components.COMPOSER;
     }
 }

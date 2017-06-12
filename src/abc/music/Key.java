@@ -128,11 +128,6 @@ public class Key implements HeaderField {
         assert this.keyNotes.size() == 7;
     }
 
-    @Override
-    public Fields getType() {
-        return Fields.KEY;
-    }
-
     public enum Keys {
         //keys with no sharps or flats
         CMAJOR, AMINOR,
@@ -144,5 +139,10 @@ public class Key implements HeaderField {
         FMAJOR, BFLATMAJOR, EFLATMAJOR, AFLATMAJOR, DFLATMAJOR, GFLATMAJOR, CFLATMAJOR,
         //minor keys with flat key signatures
         DMINOR, GMINOR, CMINOR, FMINOR, BFLATMINOR, EFLATMINOR, AFLATMINOR
+    }
+
+    @Override
+    public Components getType() {
+        return Components.KEY;
     }
 }

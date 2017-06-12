@@ -35,4 +35,9 @@ public class Rest implements TupletElement {
     private void checkRep() {
         assert length != null;
     }
+
+    @Override
+    public Components getType() {
+        return Components.REST;
+    }
 }

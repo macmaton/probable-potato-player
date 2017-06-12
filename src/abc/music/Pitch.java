@@ -153,5 +153,10 @@ public class Pitch implements Music {
         assert basenote != null;
     }
 
-    enum Accidental {NATURAL, SHARP, DOUBLESHARP, FLAT, DOUBLEFLAT, NONE}
+    @Override
+    public Components getType() {
+        return Components.PITCH;
+    }
+
+    public enum Accidental {NATURAL, SHARP, DOUBLESHARP, FLAT, DOUBLEFLAT, NONE}
 }

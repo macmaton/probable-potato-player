@@ -60,4 +60,9 @@ public class Line implements VoicePartElement {
             assert m != null;
         }
     }
+
+    @Override
+    public Components getType() {
+        return Components.LINE;
+    }
 }

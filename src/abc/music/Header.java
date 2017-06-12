@@ -138,4 +138,9 @@ public class Header implements Music {
             }
         }
     }
+
+    @Override
+    public Components getType() {
+        return Components.HEADER;
+    }
 }

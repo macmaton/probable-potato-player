@@ -50,4 +50,9 @@ public class Body implements Music {
             assert e != null;
         }
     }
+
+    @Override
+    public Components getType() {
+        return Components.BODY;
+    }
 }

@@ -57,4 +57,9 @@ public class Section implements BodyElement {
             assert e != null;
         }
     }
+
+    @Override
+    public Components getType() {
+        return Components.SECTION;
+    }
 }

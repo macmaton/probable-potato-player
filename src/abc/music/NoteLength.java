@@ -97,4 +97,8 @@ public class NoteLength implements Music {
         assert this.denominator > 0;
     }
 
+    @Override
+    public Components getType() {
+        return Components.NOTELENGTH;
+    }
 }

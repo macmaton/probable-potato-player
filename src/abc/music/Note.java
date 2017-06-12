@@ -54,4 +54,9 @@ public class Note implements TupletElement {
         assert pitch != null;
         assert length != null;
     }
+
+    @Override
+    public Components getType() {
+        return Components.NOTE;
+    }
 }

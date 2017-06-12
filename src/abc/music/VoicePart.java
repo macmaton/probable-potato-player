@@ -49,4 +49,9 @@ public class VoicePart implements SectionElement {
             assert e != null;
         }
     }
+
+    @Override
+    public Components getType() {
+        return Components.VOICEPART;
+    }
 }

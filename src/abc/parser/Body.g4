@@ -12,17 +12,17 @@ sectionelement: voicepart | line;
 voicepart: fieldvoice line;
 line: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+ | EOF);
 measure: NTHREPEAT? WHITESPACE? measureelement+;
-measureelement: tupletelement WHITESPACE? | tuplet WHITESPACE;
+measureelement: tupletelement WHITESPACE? | tuplet;
 tupletelement: note WHITESPACE? | chord WHITESPACE?;
 note: noterest notelength;
 noterest: pitch | REST;
 pitch: ACCIDENTAL? BASENOTE octave*;
 octave: '\'' | ',';
-notelength: (DIGIT+)? ('/' (DIGIT+)?)?;
+notelength: (NUMBER+)? ('/' (NUMBER+)?)?;
 
 tuplet: tupletspec tupletelement+ WHITESPACE;
-tupletspec: '(' DIGIT;
-chord: '[' note+ ']';
+tupletspec: '(' NUMBER;
+chord: '[' note+? ']' notelength;
 
 //midtunefield: fieldvoice;
 fieldvoice: 'V:' WHITESPACE? text endofline;
@@ -30,14 +30,17 @@ fieldvoice: 'V:' WHITESPACE? text endofline;
 endofline: comment | NEWLINE;
 comment: '%' text* NEWLINE;
 
-text: (CHAR|DIGIT)+;
+text: (CHAR|NUMBER)+;
 
 BASENOTE: ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g');
 ACCIDENTAL: '^' | '^^' | '_' | '__' | '=';
 BARLINE : '|' | '||' | '[|' | '|]' | ':|' | '|:';
-NTHREPEAT: '['DIGIT;
+NTHREPEAT: '['NUMBER;
 REST: 'z';
-DIGIT: [0-9];
+NUMBER: DIGIT+;
 NEWLINE: '\n' | '\r''\n'? | '\r' | EOF;
 WHITESPACE: ' ' | '\t';
-CHAR: ~[NEWLINE];
+CHAR: ~[\r\n];
+
+fragment
+DIGIT: [0-9];

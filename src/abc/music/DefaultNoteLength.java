@@ -66,6 +66,11 @@ public class DefaultNoteLength implements HeaderField {
     }
 
     @Override
+    public Components getType() {
+        return Components.DEFAULTNOTELENGTH;
+    }
+
+    @Override
     public String toString() {
         if (isSpecified) {
             return "L: " + numerator + "/" + denominator;
@@ -77,10 +82,5 @@ public class DefaultNoteLength implements HeaderField {
     private void checkRep() {
         assert this.numerator > 0;
         assert this.denominator > 0;
-    }
-
-    @Override
-    public Fields getType() {
-        return Fields.DEFAULTNOTELENGTH;
     }
 }
