@@ -87,9 +87,8 @@ public class MusicHeaderBuilder implements HeaderListener {
             if (voiceList.size() > 0) {
                 voices = voiceList.toArray(new Voice[voiceList.size()]);
             }
-            stack.push(new Header(index, title, key, meter, length, tempo, composer, voices));
         }
-
+        stack.push(new Header(index, title, key, meter, length, tempo, composer, voices));
     }
 
     @Override
@@ -192,7 +191,7 @@ public class MusicHeaderBuilder implements HeaderListener {
         String raw = ctx.getChild(1).getText();
         int slashIndex = raw.indexOf("/");
         int equalsIndex = raw.indexOf("=");
-        tempo = new Tempo(Integer.parseInt(raw.substring(equalsIndex)), Integer.parseInt(raw.substring(0, slashIndex))
+        tempo = new Tempo(Integer.parseInt(raw.substring(equalsIndex+1)), Integer.parseInt(raw.substring(0, slashIndex))
                 , Integer.parseInt(raw.substring(slashIndex + 1, equalsIndex)));
         stack.push(tempo);
     }
@@ -216,7 +215,7 @@ public class MusicHeaderBuilder implements HeaderListener {
     public void exitFieldkey(HeaderParser.FieldkeyContext ctx) {
         Key key;
         String raw = ctx.getChild(1).getText();
-        StringBuilder keyName = new StringBuilder(raw.charAt(0));
+        StringBuilder keyName = new StringBuilder(raw.substring(0,1));
         if (raw.contains("#")) {
             keyName.append("SHARP");
         } else if (raw.contains("b")) {
@@ -224,6 +223,8 @@ public class MusicHeaderBuilder implements HeaderListener {
         }
         if (raw.contains("m")) {
             keyName.append("MINOR");
+        } else {
+            keyName.append("MAJOR");
         }
         key = new Key(Key.Keys.valueOf(keyName.toString()));
         stack.push(key);

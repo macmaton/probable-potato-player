@@ -1,13 +1,12 @@
 package abc.player;
 
-import abc.parser.BodyLexer;
-import abc.parser.BodyParser;
-import abc.parser.HeaderLexer;
-import abc.parser.HeaderParser;
+import abc.music.*;
+import abc.parser.*;
 import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,7 +32,13 @@ public class Main {
 
     public static void main(String[] args) {
         // CALL play() HERE USING ARGS
-        getBodyParseTree("/home/margaret/workspace/abcplayer/sample_abc/little_night_music.abc");
+        ParseTree tree = getHeaderParseTree("/home/margaret/workspace/abcplayer/sample_abc/little_night_music.abc");
+        ParseTreeWalker walker = new ParseTreeWalker();
+        HeaderListener listener = new MusicHeaderBuilder();
+        walker.walk(listener, tree);
+        MusicHeaderBuilder hb = (MusicHeaderBuilder) listener;
+        Header header = (Header) hb.getHeader();
+        System.out.println(header.toString());
     }
 
     private static ParseTree parse(String fileName) {
