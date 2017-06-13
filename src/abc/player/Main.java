@@ -32,7 +32,7 @@ public class Main {
 
     public static void main(String[] args) {
         // CALL play() HERE USING ARGS
-        ParseTree tree = getHeaderParseTree("/home/margaret/workspace/abcplayer/sample_abc/little_night_music.abc");
+        ParseTree tree = getHeaderParseTree("/home/margaret/workspace/abcplayer/sample_abc/fur_elise.abc");
         ParseTreeWalker walker = new ParseTreeWalker();
         HeaderListener listener = new MusicHeaderBuilder();
         walker.walk(listener, tree);

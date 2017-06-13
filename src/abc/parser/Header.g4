@@ -10,7 +10,10 @@ root: header;
 header: fieldindex ENDOFLINE* fieldtitle otherfields* fieldkey body;
 fieldindex: INDEXMARKER NUMBER ENDOFLINE;
 fieldtitle: TITLEMARKER TEXT ENDOFLINE;
-fieldkey: KEYMARKER ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G') ('m'?) (('#' | 'b')?) ENDOFLINE;
+//fieldkey: KEYMARKER ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G') (('#' | 'b')?) ('m'?) ENDOFLINE;
+fieldkey: KEYMARKER ('C' | 'Am' | 'G' | 'D' | 'A' | 'E' | 'B' | 'F#' | 'C#' | 'Em' | 'Bm' | 'F#m' | 'C#m' | 'G#m' | 'D#m' | 'A#m'
+                             | 'F' | 'Bb' | 'Eb' | 'Ab' | 'Db' | 'Gb' | 'Cb' | 'Dm' | 'Gm' | 'Cm' | 'Fm' | 'Bbm' |
+                             'Ebm' | 'Abm') ENDOFLINE;
 otherfields: fieldcomposer | fieldlength | fieldmeter | fieldtempo | fieldvoice | COMMENT;
 fieldcomposer: COMPOSERMARKER TEXT ENDOFLINE;
 fieldlength: LENGTHMARKER (FRACTION | NUMBER) ENDOFLINE;
@@ -19,15 +22,6 @@ fieldtempo: TEMPOMARKER TEMPO ENDOFLINE;
 fieldvoice: VOICEMARKER NUMBER?TEXT* ENDOFLINE;
 
 meter: 'C' | 'C|' | FRACTION;
-
-//indexmarker: 'X:' WHITESPACE?;
-//titlemarker: 'T:' WHITESPACE?;
-//keymarker: 'K:' WHITESPACE?;
-//composermarker: 'C:' WHITESPACE?;
-//lengthmarker: 'L:' WHITESPACE?;
-//metermarker: 'M:' WHITESPACE?;
-//tempomarker: 'Q:' WHITESPACE?;
-//voicemarker: 'V:' WHITESPACE?;
 
 body: (VOICEMARKER? (TEXT | NUMBER | BARLINE)* ENDOFLINE)* EOF;
 
