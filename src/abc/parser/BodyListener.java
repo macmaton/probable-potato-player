@@ -51,6 +51,66 @@ public interface BodyListener extends ParseTreeListener {
    */
   void exitVoicepart(BodyParser.VoicepartContext ctx);
   /**
+   * Enter a parse tree produced by {@link BodyParser#voicepartelement}.
+   * @param ctx the parse tree
+   */
+  void enterVoicepartelement(BodyParser.VoicepartelementContext ctx);
+  /**
+   * Exit a parse tree produced by {@link BodyParser#voicepartelement}.
+   * @param ctx the parse tree
+   */
+  void exitVoicepartelement(BodyParser.VoicepartelementContext ctx);
+  /**
+   * Enter a parse tree produced by {@link BodyParser#repeatstart}.
+   * @param ctx the parse tree
+   */
+  void enterRepeatstart(BodyParser.RepeatstartContext ctx);
+  /**
+   * Exit a parse tree produced by {@link BodyParser#repeatstart}.
+   * @param ctx the parse tree
+   */
+  void exitRepeatstart(BodyParser.RepeatstartContext ctx);
+  /**
+   * Enter a parse tree produced by {@link BodyParser#repeatend}.
+   * @param ctx the parse tree
+   */
+  void enterRepeatend(BodyParser.RepeatendContext ctx);
+  /**
+   * Exit a parse tree produced by {@link BodyParser#repeatend}.
+   * @param ctx the parse tree
+   */
+  void exitRepeatend(BodyParser.RepeatendContext ctx);
+  /**
+   * Enter a parse tree produced by {@link BodyParser#repeatfull}.
+   * @param ctx the parse tree
+   */
+  void enterRepeatfull(BodyParser.RepeatfullContext ctx);
+  /**
+   * Exit a parse tree produced by {@link BodyParser#repeatfull}.
+   * @param ctx the parse tree
+   */
+  void exitRepeatfull(BodyParser.RepeatfullContext ctx);
+  /**
+   * Enter a parse tree produced by {@link BodyParser#repeatendingline}.
+   * @param ctx the parse tree
+   */
+  void enterRepeatendingline(BodyParser.RepeatendinglineContext ctx);
+  /**
+   * Exit a parse tree produced by {@link BodyParser#repeatendingline}.
+   * @param ctx the parse tree
+   */
+  void exitRepeatendingline(BodyParser.RepeatendinglineContext ctx);
+  /**
+   * Enter a parse tree produced by {@link BodyParser#repeatending}.
+   * @param ctx the parse tree
+   */
+  void enterRepeatending(BodyParser.RepeatendingContext ctx);
+  /**
+   * Exit a parse tree produced by {@link BodyParser#repeatending}.
+   * @param ctx the parse tree
+   */
+  void exitRepeatending(BodyParser.RepeatendingContext ctx);
+  /**
    * Enter a parse tree produced by {@link BodyParser#line}.
    * @param ctx the parse tree
    */

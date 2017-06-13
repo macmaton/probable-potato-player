@@ -2,7 +2,7 @@ package abc.music;
 
 import java.util.Arrays;
 
-public class Measure implements Music {
+public class Measure implements RepeatElement {
 
     private final MeasureElement[] elements;
 

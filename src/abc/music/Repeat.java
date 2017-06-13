@@ -3,25 +3,25 @@ package abc.music;
 import java.util.Arrays;
 
 public class Repeat implements VoicePartElement {
-    private final Line[] repeatedLines;
-    private final Line[] endings;
+    private final RepeatElement[] repeatedLines;
+    private final RepeatElement[] endings;
 
-    public Repeat(Line[] repeatedLines, Line[] endings) {
+    public Repeat(RepeatElement[] repeatedLines, RepeatElement[] endings) {
         this.repeatedLines = repeatedLines;
         this.endings = endings;
         checkRep();
     }
 
-    public Repeat(Line[] repeatedLines) {
-        this(repeatedLines, new Line[0]);
+    public Repeat(RepeatElement[] repeatedLines) {
+        this(repeatedLines, new RepeatElement[0]);
         checkRep();
     }
 
-    public Line[] getRepeatedLines() {
+    public RepeatElement[] getRepeatedLines() {
         return Arrays.copyOf(repeatedLines, repeatedLines.length);
     }
 
-    public Line[] getEndings() {
+    public RepeatElement[] getEndings() {
         return Arrays.copyOf(endings, endings.length);
     }
 
@@ -65,7 +65,7 @@ public class Repeat implements VoicePartElement {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (Line r : repeatedLines) {
+        for (RepeatElement r : repeatedLines) {
             result.append(r);
         }
         if (endings.length != 0) {
@@ -80,13 +80,13 @@ public class Repeat implements VoicePartElement {
     private void checkRep() {
         assert this.repeatedLines != null;
         assert this.repeatedLines.length > 0;
-        for (Line l : repeatedLines) {
-            assert l != null;
+        for (RepeatElement r : repeatedLines) {
+            assert r != null;
         }
         if (endings != null) {
             assert this.endings.length > 0;
-            for (Line l : endings) {
-                assert l != null;
+            for (RepeatElement r : endings) {
+                assert r != null;
             }
         }
     }

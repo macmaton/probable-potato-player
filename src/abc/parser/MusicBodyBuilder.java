@@ -68,6 +68,67 @@ public class MusicBodyBuilder implements BodyListener {
     }
 
     @Override
+    public void enterVoicepartelement(BodyParser.VoicepartelementContext ctx) {
+
+    }
+
+    @Override
+    public void exitVoicepartelement(BodyParser.VoicepartelementContext ctx) {
+
+    }
+
+    @Override
+    public void enterRepeatstart(BodyParser.RepeatstartContext ctx) {
+
+    }
+
+    @Override
+    public void exitRepeatstart(BodyParser.RepeatstartContext ctx) {
+
+    }
+
+    @Override
+    public void enterRepeatend(BodyParser.RepeatendContext ctx) {
+
+    }
+
+    @Override
+    public void exitRepeatend(BodyParser.RepeatendContext ctx) {
+
+    }
+
+    @Override
+    public void enterRepeatfull(BodyParser.RepeatfullContext ctx) {
+
+    }
+
+    @Override
+    public void exitRepeatfull(BodyParser.RepeatfullContext ctx) {
+
+    }
+
+    @Override
+    public void enterRepeatendingline(BodyParser.RepeatendinglineContext ctx) {
+
+    }
+
+    @Override
+    public void exitRepeatendingline(BodyParser.RepeatendinglineContext ctx) {
+
+    }
+
+    @Override
+    public void enterRepeatending(BodyParser.RepeatendingContext ctx) {
+
+    }
+
+    @Override
+    public void exitRepeatending(BodyParser.RepeatendingContext ctx) {
+        //RepeatElement nthending;
+
+    }
+
+    @Override
     public void enterLine(BodyParser.LineContext ctx) {
 
     }
