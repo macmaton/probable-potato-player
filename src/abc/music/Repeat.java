@@ -6,6 +6,10 @@ public class Repeat implements VoicePartElement {
     private final RepeatElement[] repeatedLines;
     private final RepeatElement[] endings;
 
+    /**
+     * @param repeatedLines nullable
+     * @param endings nullable
+     */
     public Repeat(RepeatElement[] repeatedLines, RepeatElement[] endings) {
         this.repeatedLines = repeatedLines;
         this.endings = endings;
@@ -78,11 +82,11 @@ public class Repeat implements VoicePartElement {
     }
 
     private void checkRep() {
-        assert this.repeatedLines != null;
-        assert this.repeatedLines.length > 0;
-        for (RepeatElement r : repeatedLines) {
-            assert r != null;
-        }
+//        assert this.repeatedLines != null;
+//        assert this.repeatedLines.length > 0;
+//        for (RepeatElement r : repeatedLines) {
+//            assert r != null;
+//        }
         if (endings != null) {
             assert this.endings.length > 0;
             for (RepeatElement r : endings) {

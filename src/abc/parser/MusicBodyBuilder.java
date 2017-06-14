@@ -5,6 +5,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -15,10 +17,10 @@ public class MusicBodyBuilder implements BodyListener {
      * stack contains the Music objects representing each parse subtree walked so far, but whose parent has not been
      * exited by the walk.  The stack is ordered by recency of visit, such that the item at the top of the stack is the
      * Music object for the most recently walked subtree.
-     * <p>
+     *
      * When a node is exited by the walk, its children are on top of the stack.  The values are popped and combined and
      * a new Music object representing the entire subtree is pushed onto the stack.
-     * <p>
+     *
      * When a walk is completed, the Music object representing the entire tree is the sole object on the stack.
      */
     private Stack<Music> stack = new Stack<Music>();
@@ -42,9 +44,15 @@ public class MusicBodyBuilder implements BodyListener {
 
     }
 
+    /**
+     * Builds and pushes to stack Sections.  Simplifies voice parts and repeats such that there is one voice part per
+     * voice, and repeats are complete (have repeated lines or measures from beginning of piece or section or
+     * repeatstart to end of repeat, and consolidate endings to one array)
+     * @param ctx the parse tree
+     */
     @Override
     public void exitBodyelement(BodyParser.BodyelementContext ctx) {
-
+        //TODO
     }
 
     @Override
@@ -62,6 +70,11 @@ public class MusicBodyBuilder implements BodyListener {
 
     }
 
+    /**
+     * Builds and pushes to stack a VoicePart with lines or repeats available.  Simplify lines and repeats where
+     * possible.
+     * @param ctx the parse tree
+     */
     @Override
     public void exitVoicepart(BodyParser.VoicepartContext ctx) {
         //TODO
@@ -82,9 +95,14 @@ public class MusicBodyBuilder implements BodyListener {
 
     }
 
+    /**
+     * Builds and pushes to stack a Repeat using lines or measures available.  May be incomplete due to spanning
+     * across multiple lines.
+     * @param ctx the parse tree
+     */
     @Override
     public void exitRepeatstart(BodyParser.RepeatstartContext ctx) {
-
+        //TODO
     }
 
     @Override
@@ -92,9 +110,14 @@ public class MusicBodyBuilder implements BodyListener {
 
     }
 
+    /**
+     * Builds and pushes to stack a Repeat using lines or measures available.  May be incomplete due to spanning
+     * across multiple lines.
+     * @param ctx the parse tree
+     */
     @Override
     public void exitRepeatend(BodyParser.RepeatendContext ctx) {
-
+        //TODO
     }
 
     @Override
@@ -102,9 +125,14 @@ public class MusicBodyBuilder implements BodyListener {
 
     }
 
+    /**
+     * Builds and pushes to stack a Repeat using lines or measures available.  May be incomplete due to spanning
+     * across multiple lines.
+     * @param ctx the parse tree
+     */
     @Override
     public void exitRepeatfull(BodyParser.RepeatfullContext ctx) {
-
+        //TODO
     }
 
     @Override
@@ -122,10 +150,19 @@ public class MusicBodyBuilder implements BodyListener {
 
     }
 
+    /**
+     * Builds and pushes to stack a Repeat using lines or measures available, with only endings.
+     * @param ctx the parse tree
+     */
     @Override
     public void exitRepeatending(BodyParser.RepeatendingContext ctx) {
-        //RepeatElement nthending;
+        List<Measure> nthending = new ArrayList<>();
 
+        for (BodyParser.MeasureContext m : ctx.measure()) {
+            assert stack.peek().getType().equals(Music.Components.MEASURE);
+            nthending.add(0, (Measure) stack.pop());
+        }
+        stack.push(new Repeat(null, nthending.toArray(new Measure[nthending.size()])));
     }
 
     @Override
@@ -135,7 +172,13 @@ public class MusicBodyBuilder implements BodyListener {
 
     @Override
     public void exitLine(BodyParser.LineContext ctx) {
-        //TODO
+        List<Measure> measures = new ArrayList<>();
+
+        for (BodyParser.MeasureContext m : ctx.measure()) {
+            assert stack.peek().getType().equals(Music.Components.MEASURE);
+            measures.add(0, (Measure) stack.pop());
+        }
+        stack.push(new Line(measures.toArray(new Measure[measures.size()])));
     }
 
     @Override
@@ -145,22 +188,21 @@ public class MusicBodyBuilder implements BodyListener {
 
     @Override
     public void exitMeasure(BodyParser.MeasureContext ctx) {
-        int numElements = ctx.getChildCount();
-        MeasureElement[] elements = new MeasureElement[numElements];
-        for(int i = 1; i <= numElements; i++) {
+        List<MeasureElement> elements = new ArrayList<>();
+        for(int i = 1; i <= ctx.getChildCount(); i++) {
             Music.Components type = stack.peek().getType();
             switch(type) {
                 case TUPLET:
                 case CHORD:
                 case NOTE:
                 case REST:
-                    elements[numElements - i] = (MeasureElement) stack.pop();
+                    elements.add(0, (MeasureElement) stack.pop());
                     break;
                 default:
                     throw new RuntimeException("Illegal measure element: " + type + stack.peek().toString());
             }
         }
-        stack.push(new Measure(elements));
+        stack.push(new Measure(elements.toArray(new MeasureElement[elements.size()])));
     }
 
     @Override
@@ -291,23 +333,22 @@ public class MusicBodyBuilder implements BodyListener {
 
     @Override
     public void exitTuplet(BodyParser.TupletContext ctx) {
-        int spec = Integer.getInteger(ctx.tupletspec().getChild(1).getText()); //child 0 is (
-        int numElements = ctx.getChildCount() - 2; //child 0 is spec, child last is whitespace
-        TupletElement[] elements = new TupletElement[numElements];
-        for (int i = 1; i <= numElements; i++) {
+        int spec = Integer.getInteger(ctx.tupletspec().NUMBER().getText());
+        List<TupletElement> elements = new ArrayList<>();
+        for (BodyParser.TupletelementContext t : ctx.tupletelement()) {
             Music.Components type = stack.peek().getType();
             switch(type) {
                 case CHORD:
                 case NOTE:
                 case REST:
-                    elements[numElements - i] = (TupletElement) stack.pop();
+                    elements.add(0, (TupletElement) stack.pop());
                     break;
                 default:
                     throw new RuntimeException("Illegal TupletElement reached: " + type + stack.peek().toString());
             }
 
         }
-        stack.push(new Tuplet(spec, elements));
+        stack.push(new Tuplet(spec, elements.toArray(new TupletElement[elements.size()])));
     }
 
     @Override
@@ -337,15 +378,15 @@ public class MusicBodyBuilder implements BodyListener {
 
     @Override
     public void exitChord(BodyParser.ChordContext ctx) {
-        int numNotes = ctx.getChildCount() - 3; //the two brackets [ ] and the notelength
         assert stack.peek().getType().equals(Music.Components.NOTELENGTH);
         NoteLength length = (NoteLength) stack.pop();
-        Note[] notes = new Note[numNotes];
-        for (int i = 1; i <= numNotes; i++) {
+
+        List<Note> notes = new ArrayList<>();
+        for (BodyParser.NoteContext n : ctx.note()) {
             assert stack.peek().getType().equals(Music.Components.NOTE);
-            notes[numNotes-i] = (Note) stack.pop();
+            notes.add(0, (Note) stack.pop());
         }
-        stack.push(new Chord(notes, length));
+        stack.push(new Chord(notes.toArray(new Note[notes.size()]), length));
     }
 
     @Override
