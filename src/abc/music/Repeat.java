@@ -1,38 +1,57 @@
 package abc.music;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Repeat implements VoicePartElement {
-    private final RepeatElement[] repeatedLines;
-    private final RepeatElement[] endings;
+    private final List<RepeatElement> repeatedLines;
+    private final List<RepeatElement> endings;
 
     /**
-     * @param repeatedLines nullable
-     * @param endings nullable
+     * @param repeatedLines nullable - the portion of the music which is repeated
+     * @param endings nullable - endings to be used following each repeat
      */
-    public Repeat(RepeatElement[] repeatedLines, RepeatElement[] endings) {
-        this.repeatedLines = repeatedLines;
-        this.endings = endings;
+    public Repeat(List<RepeatElement> repeatedLines, List<RepeatElement> endings) {
+        if (repeatedLines != null) {
+            this.repeatedLines = Collections.unmodifiableList(new ArrayList<RepeatElement>(repeatedLines));
+        } else {
+            this.repeatedLines = null;
+        }
+        if (endings != null) {
+            this.endings = Collections.unmodifiableList(new ArrayList<RepeatElement>(endings));
+        } else {
+            this.endings = null;
+        }
+
         checkRep();
     }
 
-    public Repeat(RepeatElement[] repeatedLines) {
-        this(repeatedLines, new RepeatElement[0]);
+    public Repeat(List<RepeatElement> repeatedLines) {
+        this(repeatedLines, null);
         checkRep();
     }
 
-    public RepeatElement[] getRepeatedLines() {
-        return Arrays.copyOf(repeatedLines, repeatedLines.length);
+    public List<RepeatElement> getRepeatedLines() {
+        if (repeatedLines != null) {
+            return repeatedLines;
+        } else {
+            return null;
+        }
     }
 
-    public RepeatElement[] getEndings() {
-        return Arrays.copyOf(endings, endings.length);
+    public List<RepeatElement> getEndings() {
+        if(endings != null) {
+            return endings;
+        } else {
+            return null;
+        }
     }
 
     @Override
     public int hashCode() {
-        int result = Arrays.hashCode(repeatedLines);
-        result = 31 * result + Arrays.hashCode(endings);
+        int result = repeatedLines != null ? repeatedLines.hashCode() : 0;
+        result = 31 * result + (endings != null ? endings.hashCode() : 0);
         return result;
     }
 
@@ -43,24 +62,15 @@ public class Repeat implements VoicePartElement {
         }
         if (obj instanceof Repeat) {
             Repeat that = (Repeat) obj;
-            if (this.repeatedLines.length == that.repeatedLines.length) {
-                for (int i = 0; i < repeatedLines.length; i++) {
-                    if (!this.repeatedLines[i].equals(that.repeatedLines[i])) {
-                        return false;
-                    }
-                }
-                if (this.endings.length == that.endings.length) {
-                    for (int i = 0; i < endings.length; i++) {
-                        if (!this.endings[i].equals(that.endings[i])) {
-                            return false;
-                        }
-                    }
-                    return true;
-                } else {
-                    return false;
-                }
+            if (this.repeatedLines != null && this.endings != null) {
+                return (this.repeatedLines.equals(that.repeatedLines) && this.endings.equals(that.endings));
+            } else if (this.repeatedLines != null && this.endings == null) {
+                return (this.repeatedLines.equals(that.repeatedLines) && that.endings == null);
+            } else if (this.repeatedLines == null && this.endings != null) {
+                return (that.repeatedLines == null && this.endings.equals(that.endings));
             } else {
-                return false;
+                return false; //should not reach here - would require both this.repeatedLines and this.endings ==
+                // null, violating the rep invariant
             }
         } else {
             return false;
@@ -69,29 +79,26 @@ public class Repeat implements VoicePartElement {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (RepeatElement r : repeatedLines) {
-            result.append(r);
+        if (this.repeatedLines != null) {
+            for (RepeatElement e : repeatedLines) {
+                result.append(e.toString());
+            }
         }
-        if (endings.length != 0) {
-            result.append("|[1").append(endings[0].toString()).append(":|");
-            for (int i = 1; i < endings.length; i++) {
-                result.append("[").append(i + 1).append(endings[i].toString());
+        if (this.endings != null) {
+            for (RepeatElement e : endings) {
+                result.append(e.toString());
             }
         }
         return result.toString();
     }
 
     private void checkRep() {
-//        assert this.repeatedLines != null;
-//        assert this.repeatedLines.length > 0;
-//        for (RepeatElement r : repeatedLines) {
-//            assert r != null;
-//        }
+        assert (repeatedLines != null || endings != null);
+        if (repeatedLines != null) {
+            assert repeatedLines.size() > 0;
+        }
         if (endings != null) {
-            assert this.endings.length > 0;
-            for (RepeatElement r : endings) {
-                assert r != null;
-            }
+            assert endings.size() > 0;
         }
     }
 

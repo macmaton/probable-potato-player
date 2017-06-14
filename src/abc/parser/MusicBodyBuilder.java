@@ -78,6 +78,7 @@ public class MusicBodyBuilder implements BodyListener {
     @Override
     public void exitVoicepart(BodyParser.VoicepartContext ctx) {
         //TODO
+
     }
 
     @Override
@@ -96,13 +97,18 @@ public class MusicBodyBuilder implements BodyListener {
     }
 
     /**
-     * Builds and pushes to stack a Repeat using lines or measures available.  May be incomplete due to spanning
-     * across multiple lines.
+     * Builds and pushes to stack a Repeat using lines or measures available.  Repeated lines may be incomplete due
+     * to spanning multiple lines.  Repeat endings, if any, provided in other lines.
      * @param ctx the parse tree
      */
     @Override
     public void exitRepeatstart(BodyParser.RepeatstartContext ctx) {
-        //TODO
+        List<RepeatElement> repeated = new ArrayList<>();
+        for (BodyParser.MeasureContext m : ctx.measure()) {
+            assert stack.peek().getType().equals(Music.Components.MEASURE);
+            repeated.add(0, (Measure) stack.pop());
+        }
+        stack.push(new Repeat(repeated, null));
     }
 
     @Override
@@ -117,7 +123,22 @@ public class MusicBodyBuilder implements BodyListener {
      */
     @Override
     public void exitRepeatend(BodyParser.RepeatendContext ctx) {
-        //TODO
+        List<RepeatElement> repeated = new ArrayList<>();
+        List<RepeatElement> endings = new ArrayList<>();
+
+        for(BodyParser.RepeatendingContext e : ctx.repeatending()) {
+            assert stack.peek().getType().equals(Music.Components.REPEAT);
+            Repeat ending = (Repeat) stack.pop();
+            assert ending.getRepeatedLines() == null;
+            endings.addAll(0, ending.getEndings());
+        }
+
+        for (BodyParser.MeasureContext m : ctx.measure()) {
+            assert stack.peek().getType().equals(Music.Components.MEASURE);
+            repeated.add(0, (Measure) stack.pop());
+        }
+
+        stack.push(new Repeat(repeated, endings));
     }
 
     @Override
@@ -126,13 +147,28 @@ public class MusicBodyBuilder implements BodyListener {
     }
 
     /**
-     * Builds and pushes to stack a Repeat using lines or measures available.  May be incomplete due to spanning
-     * across multiple lines.
+     * Builds and pushes to stack a Repeat using lines or measures.  Endings may be incomplete if endings span
+     * multiple lines.
      * @param ctx the parse tree
      */
     @Override
     public void exitRepeatfull(BodyParser.RepeatfullContext ctx) {
-        //TODO
+        List<RepeatElement> repeated = new ArrayList<>();
+        List<RepeatElement> endings = new ArrayList<>();
+
+        for(BodyParser.RepeatendingContext e : ctx.repeatending()) {
+            assert stack.peek().getType().equals(Music.Components.REPEAT);
+            Repeat ending = (Repeat) stack.pop();
+            assert ending.getRepeatedLines() == null;
+            endings.addAll(0, ending.getEndings());
+        }
+
+        for (BodyParser.MeasureContext m : ctx.measure()) {
+            assert stack.peek().getType().equals(Music.Components.MEASURE);
+            repeated.add(0, (Measure) stack.pop());
+        }
+
+        stack.push(new Repeat(repeated, endings));
     }
 
     @Override
@@ -156,13 +192,13 @@ public class MusicBodyBuilder implements BodyListener {
      */
     @Override
     public void exitRepeatending(BodyParser.RepeatendingContext ctx) {
-        List<Measure> nthending = new ArrayList<>();
+        List<RepeatElement> nthending = new ArrayList<>();
 
         for (BodyParser.MeasureContext m : ctx.measure()) {
             assert stack.peek().getType().equals(Music.Components.MEASURE);
             nthending.add(0, (Measure) stack.pop());
         }
-        stack.push(new Repeat(null, nthending.toArray(new Measure[nthending.size()])));
+        stack.push(new Repeat(null, nthending));
     }
 
     @Override

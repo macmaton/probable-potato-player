@@ -15,7 +15,7 @@ repeatstart: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHIT
 repeatend: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? repeatending? REPEATENDBAR repeatending*
 (endofline+ | EOF);
 repeatfull: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? repeatending? REPEATENDBAR
-repeatending* (endofline+ | EOF);
+repeatending* (endofline+ | EOF); //TODO: additional endings found on another line
 repeatendingline: repeatending (endofline+ | EOF);
 repeatending: NTHREPEAT WHITESPACE? (measure BARLINE? WHITESPACE?)+;
 line: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+ | EOF);
@@ -26,7 +26,7 @@ note: noterest notelength;
 noterest: pitch | REST;
 pitch: ACCIDENTAL? BASENOTE octave*;
 octave: '\'' | ',';
-notelength: (NUMBER+)? ('/' (NUMBER+)?)?;
+notelength: NUMBER? ('/' NUMBER?)?; //TODO: when there is an accidental followed by '/' notelength does not parse
 
 tuplet: tupletspec tupletelement+;
 tupletspec: '(' NUMBER;
