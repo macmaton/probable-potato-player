@@ -23,7 +23,7 @@ public class MusicHeaderBuilder implements HeaderListener {
      * <p>
      * When a walk is completed, the Music object representing the entire tree is the sole object on the stack.
      */
-    private Stack<Music> stack = new Stack<Music>();
+    private final Stack<Music> stack = new Stack<>();
 
     public Music getHeader() {
         return stack.get(0);
@@ -53,7 +53,7 @@ public class MusicHeaderBuilder implements HeaderListener {
         Meter meter = null;
         DefaultNoteLength length = null;
         Tempo tempo = null;
-        List<Voice> voiceList = new ArrayList<Voice>();
+        List<Voice> voiceList = new ArrayList<>();
         Voice[] voices = null;
 
         while (!stack.isEmpty()) {

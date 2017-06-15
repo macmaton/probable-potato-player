@@ -12,7 +12,7 @@ public class Key implements HeaderField {
 
     public Key(Keys key) {
         this.key = key;
-        Map<BaseNote, Pitch> keyNotes = new HashMap<BaseNote, Pitch>();
+        Map<BaseNote, Pitch> keyNotes = new HashMap<>();
 
         int numModified = NUM_MODIFIED.get(key);
         for (int i = 0; i < Math.abs(numModified); i++) {
@@ -34,7 +34,7 @@ public class Key implements HeaderField {
     }
 
     private static Map<Keys, Integer> initializeNumModified() {
-        Map<Keys, Integer> result = new HashMap<Keys, Integer>();
+        Map<Keys, Integer> result = new HashMap<>();
         result.put(Keys.CMAJOR, 0);
         result.put(Keys.AMINOR, 0);
 

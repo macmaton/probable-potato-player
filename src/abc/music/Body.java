@@ -1,37 +1,39 @@
 package abc.music;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * An immutable data type representing the body of a piece of music in abc notation
  * limited implementation based on Spring 2016 version of MIT OCW 6.005
  */
 public class Body implements Music {
-    private final BodyElement[] elements;
+    private final List<BodyElement> elements;
 
-    public Body(BodyElement[] elements) {
-        this.elements = elements;
-
+    public Body(List<BodyElement> elements) {
+        assert elements != null && elements.size() > 0;
+        this.elements = Collections.unmodifiableList(new ArrayList<>(elements));
         checkRep();
     }
 
-    public BodyElement[] getElements() {
-        return Arrays.copyOf(elements, elements.length);
+    public List<BodyElement> getElements() {
+        return elements;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || this.getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         Body that = (Body) obj;
 
-        return Arrays.equals(elements, that.elements);
+        return this.elements.equals(that.elements);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(elements);
+        return elements.hashCode();
     }
 
     @Override
@@ -45,7 +47,7 @@ public class Body implements Music {
 
     private void checkRep() {
         assert this.elements != null;
-        assert this.elements.length > 0;
+        assert this.elements.size() > 0;
         for (BodyElement e : this.elements) {
             assert e != null;
         }

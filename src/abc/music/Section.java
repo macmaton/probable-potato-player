@@ -1,44 +1,35 @@
 package abc.music;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Section implements BodyElement {
-    private final SectionElement[] elements;
+    private final List<SectionElement> elements;
 
-    public Section(SectionElement[] elements) {
-        this.elements = elements;
+    public Section(List<SectionElement> elements) {
+        assert elements != null;
+        this.elements = Collections.unmodifiableList(new ArrayList<>(elements));
         checkRep();
     }
 
-    public SectionElement[] getElements() {
-        return Arrays.copyOf(elements, elements.length);
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(elements);
+    public List<SectionElement> getElements() {
+        return elements;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof Section) {
-            Section that = (Section) obj;
-            if (this.elements.length == that.elements.length) {
-                for (int i = 0; i < elements.length; i++) {
-                    if (!this.elements[i].equals(that.elements[i])) {
-                        return false;
-                    }
-                }
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Section that = (Section) obj;
+
+        return this.elements.equals(that.elements);
+    }
+
+    @Override
+    public int hashCode() {
+        return elements.hashCode();
     }
 
     public String toString() {
@@ -52,7 +43,7 @@ public class Section implements BodyElement {
 
     private void checkRep() {
         assert this.elements != null;
-        assert this.elements.length > 0;
+        assert this.elements.size() > 0;
         for (SectionElement e : this.elements) {
             assert e != null;
         }

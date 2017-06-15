@@ -4,10 +4,9 @@ import abc.music.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Builds Music object for Body from parse tree
@@ -23,7 +22,7 @@ public class MusicBodyBuilder implements BodyListener {
      *
      * When a walk is completed, the Music object representing the entire tree is the sole object on the stack.
      */
-    private Stack<Music> stack = new Stack<Music>();
+    private final Stack<Music> stack = new Stack<>();
 
     public Music getBody() {
         return stack.get(0);
@@ -36,7 +35,22 @@ public class MusicBodyBuilder implements BodyListener {
 
     @Override
     public void exitBody(BodyParser.BodyContext ctx) {
-        //TODO
+        List<BodyElement> elements = new ArrayList<>();
+        for (BodyParser.BodyelementContext e : ctx.bodyelement()) {
+            Music.Components type = stack.peek().getType();
+            switch(type) {
+                case LINE:
+                case REPEAT:
+                case SECTION:
+                case VOICEPART:
+                    elements.add(0, (BodyElement) stack.pop());
+                    break;
+                default:
+                    throw new RuntimeException("Illegal section: " + type.toString());
+            }
+        }
+        assert stack.isEmpty();
+        stack.push(new Body(elements));
     }
 
     @Override
@@ -45,7 +59,8 @@ public class MusicBodyBuilder implements BodyListener {
     }
 
     /**
-     * Builds and pushes to stack Sections.  Simplifies voice parts and repeats such that there is one voice part per
+     * Builds and pushes to stack Sections.  Simplifies voice parts and repeats such that there is one voice part
+     * per
      * voice, and repeats are complete (have repeated lines or measures from beginning of piece or section or
      * repeatstart to end of repeat, and consolidate endings to one array)
      * @param ctx the parse tree
@@ -53,6 +68,31 @@ public class MusicBodyBuilder implements BodyListener {
     @Override
     public void exitBodyelement(BodyParser.BodyelementContext ctx) {
         //TODO
+        //bodyelement: sectionelement+;
+        //sectionelement: voicepart | voicepartelement;
+        Section section;
+        Map<Voice,List<VoicePartElement>> sortedVoiceParts = new HashMap<>();
+        List<VoicePartElement> elements;
+        for (BodyParser.SectionelementContext s : ctx.sectionelement()) {
+            //if the section contains voiceparts, add them to sortedVoiceParts
+
+            //if the section contains voicepartelements, add them to elements
+            //TODO: update grammar and this method to allow one voice to apply to multiple lines
+        }
+
+    }
+
+    /**
+     * Simplifies VoicePartElements so that incomplete repeats stored across multiple structures are stored in one
+     * Repeat, and other lines are stored as lines.  Preserves order of elements.
+     * @param elementList List of VoicePartElements which may have non-contiguous sections
+     * @param ctx the context for the Section where the VoicePart is used.  The parse tree has additional needed
+     *            information about where the repeat sections begin and end. TODO: should this be stored in Repeat?
+     * @return Simplified list of VoicePartElements
+     */
+    private List<VoicePartElement> simplifyVoicePartElements(List<VoicePartElement> elementList,
+                                                             BodyParser.BodyelementContext ctx) {
+        throw new NotImplementedException();
     }
 
     @Override
@@ -62,7 +102,7 @@ public class MusicBodyBuilder implements BodyListener {
 
     @Override
     public void exitSectionelement(BodyParser.SectionelementContext ctx) {
-
+        //TODO?
     }
 
     @Override
@@ -71,14 +111,19 @@ public class MusicBodyBuilder implements BodyListener {
     }
 
     /**
-     * Builds and pushes to stack a VoicePart with lines or repeats available.  Simplify lines and repeats where
-     * possible.
+     * Builds and pushes to stack a VoicePart with lines or repeats available.
      * @param ctx the parse tree
      */
     @Override
     public void exitVoicepart(BodyParser.VoicepartContext ctx) {
-        //TODO
-
+        String voice = ctx.fieldvoice().getText().substring(2).trim();
+        VoicePartElement element;
+        assert stack.peek().getType().equals(Music.Components.REPEAT) || stack.peek().getType().equals(Music
+                .Components.LINE);
+        element = (VoicePartElement) stack.pop();
+        List<VoicePartElement> elements = new ArrayList<>();
+        elements.add(element);
+        stack.push(new VoicePart(new Voice(voice), elements));
     }
 
     @Override
@@ -178,7 +223,31 @@ public class MusicBodyBuilder implements BodyListener {
 
     @Override
     public void exitRepeatendingline(BodyParser.RepeatendinglineContext ctx) {
+        List<RepeatElement> endings = new ArrayList<>();
 
+        //accumulate endings - last ending may be incomplete due to spanning multiple lines
+        for (BodyParser.RepeatendingContext e : ctx.repeatending()) {
+            assert stack.peek().getType().equals(Music.Components.REPEAT);
+            Repeat ending = (Repeat) stack.pop();
+            assert ending.getRepeatedLines() == null;
+            List<Measure> nthending = new ArrayList<>();
+
+            for(RepeatElement endingElement : ending.getRepeatedLines()) {
+                assert endingElement.getType().equals(Music.Components.MEASURE);
+                nthending.add((Measure) endingElement);
+            }
+            endings.add(0, new Line(nthending));
+        }
+
+        //assemble partial ending from measures at start of line
+        List<Measure> partialEnding = new ArrayList<>();
+        for (BodyParser.MeasureContext m : ctx.measure()) {
+            assert stack.peek().getType().equals(Music.Components.MEASURE);
+            partialEnding.add(0, (Measure) stack.pop());
+        }
+        endings.add(0, new Line(partialEnding));
+
+        stack.push(new Repeat(null, endings));
     }
 
     @Override
@@ -214,7 +283,7 @@ public class MusicBodyBuilder implements BodyListener {
             assert stack.peek().getType().equals(Music.Components.MEASURE);
             measures.add(0, (Measure) stack.pop());
         }
-        stack.push(new Line(measures.toArray(new Measure[measures.size()])));
+        stack.push(new Line(measures));
     }
 
     @Override

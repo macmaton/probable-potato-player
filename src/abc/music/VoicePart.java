@@ -1,33 +1,39 @@
 package abc.music;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class VoicePart implements SectionElement {
     private final Voice voice;
-    private final VoicePartElement[] elements;
+    private final List<VoicePartElement> elements;
 
-    public VoicePart(Voice voice, VoicePartElement[] elements) {
+    public VoicePart(Voice voice, List<VoicePartElement> elements) {
+        if (elements != null) {
+            this.elements = Collections.unmodifiableList(new ArrayList<>(elements));
+        } else {
+            throw new IllegalArgumentException("elements must be a non-null list");
+        }
         this.voice = voice;
-        this.elements = elements;
         checkRep();
-    }
-
-    @Override
-    public int hashCode() {
-        int result = voice.hashCode();
-        result = 31 * result + Arrays.hashCode(elements);
-        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || this.getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         VoicePart that = (VoicePart) obj;
 
         if (!this.voice.equals(that.voice)) return false;
-        return Arrays.equals(elements, that.elements);
+        return this.elements.equals(that.elements);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = voice.hashCode();
+        result = 31 * result + elements.hashCode();
+        return result;
     }
 
     @Override
@@ -44,7 +50,7 @@ public class VoicePart implements SectionElement {
     private void checkRep() {
         assert this.voice != null;
         assert this.elements != null;
-        assert this.elements.length > 0;
+        assert this.elements.size() > 0;
         for (VoicePartElement e : elements) {
             assert e != null;
         }

@@ -9,14 +9,14 @@ import Configuration;
 body: bodyelement+ EOF;
 bodyelement: sectionelement+;
 sectionelement: voicepart | voicepartelement;
-voicepart: fieldvoice voicepartelement;
+voicepart: fieldvoice voicepartelement; //TODO: voices can be declared once and apply to several lines
 voicepartelement: repeatstart | repeatend | repeatfull | repeatendingline | line;
 repeatstart: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+);
 repeatend: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? repeatending? REPEATENDBAR repeatending*
 (endofline+ | EOF);
 repeatfull: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? repeatending? REPEATENDBAR
-repeatending* (endofline+ | EOF); //TODO: additional endings found on another line
-repeatendingline: repeatending (endofline+ | EOF);
+repeatending* (endofline+ | EOF);
+repeatendingline: (measure BARLINE WHITESPACE?)* repeatending+ (endofline+ | EOF);
 repeatending: NTHREPEAT WHITESPACE? (measure BARLINE? WHITESPACE?)+;
 line: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+ | EOF);
 measure: WHITESPACE? (measureelement WHITESPACE?)+;

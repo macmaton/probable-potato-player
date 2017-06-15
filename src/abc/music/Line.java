@@ -1,52 +1,46 @@
 package abc.music;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Line implements VoicePartElement, RepeatElement {
-    private final Measure[] measures;
+    private final List<Measure> measures;
 
-    public Line(Measure[] measures) {
-        this.measures = measures;
+    public Line(List<Measure> measures) {
+        if (measures != null && measures.size() > 0) {
+            this.measures = Collections.unmodifiableList(new ArrayList<>(measures));
+        } else {
+            throw new IllegalArgumentException("measures must be initialized and have size greater than 0");
+        }
         checkRep();
     }
 
-    public Measure[] getMeasures() {
-        return Arrays.copyOf(measures, measures.length);
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(measures);
+    public List<Measure> getMeasures() {
+        return measures;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof Line) {
-            Line that = (Line) obj;
-            if (this.measures.length == that.measures.length) {
-                for (int i = 0; i < measures.length; i++) {
-                    if (!this.measures[i].equals(that.measures[i])) {
-                        return false;
-                    }
-                }
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Line that = (Line) obj;
+
+        return this.measures.equals(that.measures);
+    }
+
+    @Override
+    public int hashCode() {
+        return measures.hashCode();
     }
 
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("");
-        for (int i = 0; i < measures.length; i++) {
-            result.append(measures[i].toString());
-            if (i < measures.length - 1) {
+        for (Measure m : measures) {
+            result.append(m.toString());
+            if (measures.indexOf(m) < measures.size()-1) {
                 result.append("|");
             }
         }
@@ -55,7 +49,7 @@ public class Line implements VoicePartElement, RepeatElement {
 
     public void checkRep() {
         assert this.measures != null;
-        assert this.measures.length > 0;
+        assert this.measures.size() > 0;
         for (Measure m : this.measures) {
             assert m != null;
         }

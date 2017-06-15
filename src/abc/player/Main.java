@@ -65,8 +65,7 @@ public class Main {
 
     public static ParseTree getHeaderParseTree(String fileName) {
         ParseTree root = parse(fileName);
-        ParseTree header = root.getChild(0);
-        return header;
+        return root.getChild(0);
     }
 
     public static ParseTree getBodyParseTree(String fileName) {

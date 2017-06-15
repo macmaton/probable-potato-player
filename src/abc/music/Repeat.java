@@ -13,13 +13,13 @@ public class Repeat implements VoicePartElement {
      * @param endings nullable - endings to be used following each repeat
      */
     public Repeat(List<RepeatElement> repeatedLines, List<RepeatElement> endings) {
-        if (repeatedLines != null) {
-            this.repeatedLines = Collections.unmodifiableList(new ArrayList<RepeatElement>(repeatedLines));
+        if (repeatedLines != null && repeatedLines.size() > 0) {
+            this.repeatedLines = Collections.unmodifiableList(new ArrayList<>(repeatedLines));
         } else {
             this.repeatedLines = null;
         }
-        if (endings != null) {
-            this.endings = Collections.unmodifiableList(new ArrayList<RepeatElement>(endings));
+        if (endings != null && repeatedLines.size() > 0) {
+            this.endings = Collections.unmodifiableList(new ArrayList<>(endings));
         } else {
             this.endings = null;
         }
