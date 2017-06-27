@@ -8,8 +8,8 @@ import Configuration;
 
 body: bodyelement+ EOF;
 bodyelement: sectionelement+;
-sectionelement: voicepart | voicepartelement;
-voicepart: fieldvoice voicepartelement; //TODO: voices can be declared once and apply to several lines
+sectionelement: voicepart+ | voicepartelement+;
+voicepart: fieldvoice voicepartelement+;
 voicepartelement: repeatstart | repeatend | repeatfull | repeatendingline | line;
 repeatstart: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+);
 repeatend: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? repeatending? REPEATENDBAR repeatending*
@@ -40,15 +40,15 @@ comment: '%' text* NEWLINE;
 
 text: (CHAR|NUMBER)+;
 
+NEWLINE: EOF | '\n' | '\r''\n'? | '\r';
 BASENOTE: ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g');
 ACCIDENTAL: '^' | '^^' | '_' | '__' | '=';
 BARLINE : '|' | '||' | '[|' | '|]' ;
 REPEATBEGINBAR: '|:';
 REPEATENDBAR: ':|';
-NTHREPEAT: '['NUMBER;
+NTHREPEAT: '[1' | '[2';
 REST: 'z';
 NUMBER: DIGIT+;
-NEWLINE: '\n' | '\r''\n'? | '\r' | EOF;
 WHITESPACE: ' ' | '\t';
 CHAR: ~[\r\n];
 

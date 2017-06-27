@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Repeat implements VoicePartElement {
-    private final List<RepeatElement> repeatedLines;
-    private final List<RepeatElement> endings;
+    protected final List<RepeatElement> repeatedLines;
+    protected final List<RepeatElement> endings;
 
     /**
      * @param repeatedLines nullable - the portion of the music which is repeated

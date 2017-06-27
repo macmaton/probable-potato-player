@@ -18,6 +18,14 @@ public class VoicePart implements SectionElement {
         checkRep();
     }
 
+    public Voice getVoice() {
+        return voice;
+    }
+
+    public List<VoicePartElement> getElements() {
+        return elements;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -38,11 +46,15 @@ public class VoicePart implements SectionElement {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder(voice.toString());
-        result.append('\n');
+        StringBuilder result = new StringBuilder("\n");
+        result.append(voice.toString());
         for (VoicePartElement e : elements) {
-            result.append(e.toString());
             result.append('\n');
+            if (e.getType().equals(Components.REPEAT)) {
+                result.append("|:").append(e.toString()).append(":|");
+            } else {
+                result.append(e.toString()).append("|");
+            }
         }
         return result.toString();
     }

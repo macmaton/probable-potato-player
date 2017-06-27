@@ -103,14 +103,22 @@ public class Header implements Music {
         result.append('\n');
         result.append(title.toString());
         result.append('\n');
-        result.append(composer.toString());
-        result.append('\n');
-        result.append(meter.toString());
-        result.append('\n');
-        result.append(length.toString());
-        result.append('\n');
-        result.append(tempo.toString());
-        result.append('\n');
+        if (!composer.toString().isEmpty()) {
+            result.append(composer.toString());
+            result.append('\n');
+        }
+        if (!meter.toString().isEmpty()) {
+            result.append(meter.toString());
+            result.append('\n');
+        }
+        if (!length.toString().isEmpty()) {
+            result.append(length.toString());
+            result.append('\n');
+        }
+        if (!tempo.toString().isEmpty()) {
+            result.append(tempo.toString());
+            result.append('\n');
+        }
         if (voices != null) {
             for (Voice v : voices) {
                 result.append(v.toString());

@@ -1,8 +1,8 @@
 package abc.player;
 
-import abc.music.*;
+import abc.music.Body;
+import abc.music.Header;
 import abc.parser.*;
-import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -32,13 +32,20 @@ public class Main {
 
     public static void main(String[] args) {
         // CALL play() HERE USING ARGS
-        ParseTree tree = getHeaderParseTree("/home/margaret/workspace/abcplayer/sample_abc/fur_elise.abc");
+        ParseTree headerTree = getHeaderParseTree("/home/margaret/workspace/abcplayer/sample_abc/aldersgate.abc");
         ParseTreeWalker walker = new ParseTreeWalker();
-        HeaderListener listener = new MusicHeaderBuilder();
-        walker.walk(listener, tree);
-        MusicHeaderBuilder hb = (MusicHeaderBuilder) listener;
+        HeaderListener headerListener = new MusicHeaderBuilder();
+        walker.walk(headerListener, headerTree);
+        MusicHeaderBuilder hb = (MusicHeaderBuilder) headerListener;
         Header header = (Header) hb.getHeader();
         System.out.println(header.toString());
+
+        ParseTree bodyTree = getBodyParseTree("/home/margaret/workspace/abcplayer/sample_abc/aldersgate.abc");
+        BodyListener bodyListener = new MusicBodyBuilder();
+        walker.walk(bodyListener, bodyTree);
+        MusicBodyBuilder bb = (MusicBodyBuilder) bodyListener;
+        Body body = (Body) bb.getBody();
+        System.out.println(body.toString());
     }
 
     private static ParseTree parse(String fileName) {
@@ -69,8 +76,10 @@ public class Main {
     }
 
     public static ParseTree getBodyParseTree(String fileName) {
-        ParseTree root = parse(fileName);
-        ANTLRInputStream stream = new ANTLRInputStream(root.getChild(1).getText());
+        //ParseTree root = parse(fileName);
+        ParseTree root = getHeaderParseTree(fileName);
+        String bodyString = root.getChild(root.getChildCount()-1).getText().replace("<EOF>", "");
+        ANTLRInputStream stream = new ANTLRInputStream(bodyString);
 
         BodyParser parser;
         ParseTree body;
@@ -79,8 +88,6 @@ public class Main {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         parser = new BodyParser(tokens);
         body = parser.body();
-
-        Trees.inspect(body, parser);
 
         return body;
     }

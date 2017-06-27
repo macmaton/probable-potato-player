@@ -41,6 +41,9 @@ public class Line implements VoicePartElement, RepeatElement {
         for (Measure m : measures) {
             result.append(m.toString());
             if (measures.indexOf(m) < measures.size()-1) {
+                if (!result.substring(result.length()-1).equals(" ")) {
+                    result.append(" ");
+                }
                 result.append("|");
             }
         }

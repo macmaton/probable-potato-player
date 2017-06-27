@@ -32,10 +32,14 @@ public class Section implements BodyElement {
         return elements.hashCode();
     }
 
+
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (BodyElement e : elements) {
-            result.append(e.toString()).append("|");
+            result.append(e.toString());
+        }
+        if (result.lastIndexOf("|") != result.length()-1) {
+            result.append("|");
         }
         result.append("]");
         return result.toString();
