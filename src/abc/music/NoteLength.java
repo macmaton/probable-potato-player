@@ -85,7 +85,7 @@ public class NoteLength implements Music {
             }
             if (this.denominator == DEFAULT_DENOMINATOR) {
                 result = result + "/";
-            } else if (this.denominator != DEFAULT_DENOMINATOR && this.denominator != 1) {
+            } else if (this.denominator != 1) {
                 result = result + "/" + String.valueOf(this.denominator);
             }
         }

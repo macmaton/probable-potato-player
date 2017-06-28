@@ -26,15 +26,10 @@ public class Main {
      *
      * @param file the name of input abc file
      */
-    public static void play(String file) {
+    private static void play(String file) {
         // YOUR CODE HERE
-    }
 
-    public static void main(String[] args) {
-        // CALL play() HERE USING ARGS
-        String fileName = "waxies_dargle";
-        String filePath = "/home/margaret/workspace/abcplayer/sample_abc/";
-        ParseTree headerTree = getHeaderParseTree(filePath + fileName + ".abc");
+        ParseTree headerTree = getHeaderParseTree(file);
         ParseTreeWalker walker = new ParseTreeWalker();
         HeaderListener headerListener = new MusicHeaderBuilder();
         walker.walk(headerListener, headerTree);
@@ -42,12 +37,17 @@ public class Main {
         Header header = (Header) hb.getHeader();
         System.out.println(header.toString());
 
-        ParseTree bodyTree = getBodyParseTree(filePath + fileName + ".abc");
+        ParseTree bodyTree = getBodyParseTree(file);
         BodyListener bodyListener = new MusicBodyBuilder();
         walker.walk(bodyListener, bodyTree);
         MusicBodyBuilder bb = (MusicBodyBuilder) bodyListener;
         Body body = (Body) bb.getBody();
         System.out.println(body.toString());
+    }
+
+    public static void main(String[] args) {
+        // CALL play() HERE USING ARGS
+        play(args[0]);
     }
 
     private static ParseTree parse(String fileName) {
@@ -72,12 +72,12 @@ public class Main {
         return root;
     }
 
-    public static ParseTree getHeaderParseTree(String fileName) {
+    private static ParseTree getHeaderParseTree(String fileName) {
         ParseTree root = parse(fileName);
         return root.getChild(0);
     }
 
-    public static ParseTree getBodyParseTree(String fileName) {
+    private static ParseTree getBodyParseTree(String fileName) {
         //ParseTree root = parse(fileName);
         ParseTree root = getHeaderParseTree(fileName);
         String bodyString = root.getChild(root.getChildCount()-1).getText().replace("<EOF>", "");

@@ -568,8 +568,7 @@ public class MusicBodyBuilder implements BodyListener {
         //list of indices of repeats in sortedElements
         List<Integer> repeatIndices = new ArrayList<>();
         List<VoicePartElement> workingElement = new ArrayList<>();
-        for (int i = 0; i < elementList.size(); i++) {
-            VoicePartElement current = elementList.get(i);
+        for (VoicePartElement current : elementList) {
             if (current.getType().equals(Music.Components.PARTIALREPEAT)) {
                 PartialRepeat partial = (PartialRepeat) current;
                 if (partial.getFragment().equals(PartialRepeat.RepeatFragment.START)) {
@@ -672,7 +671,6 @@ public class MusicBodyBuilder implements BodyListener {
     private Repeat simplifyRepeat(List<VoicePartElement> elementList) {
         List<RepeatElement> repeatedLines = new ArrayList<>();
         List<RepeatElement> endings = new ArrayList<>();
-        boolean repeatedLinesCompleted = false;
 
         for (VoicePartElement e : elementList) {
             if (e.getType().equals(Music.Components.PARTIALREPEAT) || e.getType().equals(Music.Components.REPEAT)) {
@@ -680,10 +678,7 @@ public class MusicBodyBuilder implements BodyListener {
                 List<RepeatElement> repeated = current.getRepeatedLines();
                 List<RepeatElement> ending = current.getEndings();
                 if (repeated != null) {
-                    assert !repeatedLinesCompleted;
-                    for (RepeatElement re : repeated) {
-                        repeatedLines.add(re);
-                    }
+                    repeatedLines.addAll(repeated);
                 }
                 if (ending != null) {
                     endings.addAll(ending);

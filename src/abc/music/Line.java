@@ -50,7 +50,7 @@ public class Line implements VoicePartElement, RepeatElement {
         return result.toString();
     }
 
-    public void checkRep() {
+    private void checkRep() {
         assert this.measures != null;
         assert this.measures.size() > 0;
         for (Measure m : this.measures) {

@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Repeat implements VoicePartElement {
-    protected final List<RepeatElement> repeatedLines;
-    protected final List<RepeatElement> endings;
+    final List<RepeatElement> repeatedLines;
+    final List<RepeatElement> endings;
 
     /**
      * @param repeatedLines nullable - the portion of the music which is repeated
@@ -64,13 +64,10 @@ public class Repeat implements VoicePartElement {
             Repeat that = (Repeat) obj;
             if (this.repeatedLines != null && this.endings != null) {
                 return (this.repeatedLines.equals(that.repeatedLines) && this.endings.equals(that.endings));
-            } else if (this.repeatedLines != null && this.endings == null) {
+            } else if (this.repeatedLines != null) {
                 return (this.repeatedLines.equals(that.repeatedLines) && that.endings == null);
-            } else if (this.repeatedLines == null && this.endings != null) {
-                return (that.repeatedLines == null && this.endings.equals(that.endings));
             } else {
-                return false; //should not reach here - would require both this.repeatedLines and this.endings ==
-                // null, violating the rep invariant
+                return this.endings != null && that.repeatedLines == null && this.endings.equals(that.endings);
             }
         } else {
             return false;

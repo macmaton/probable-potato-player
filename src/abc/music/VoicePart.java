@@ -33,8 +33,7 @@ public class VoicePart implements SectionElement {
 
         VoicePart that = (VoicePart) obj;
 
-        if (!this.voice.equals(that.voice)) return false;
-        return this.elements.equals(that.elements);
+        return this.voice.equals(that.voice) && this.elements.equals(that.elements);
     }
 
     @Override

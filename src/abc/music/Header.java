@@ -77,23 +77,14 @@ public class Header implements Music {
             return false;
         } else {
             Header that = (Header) obj;
-            if (!this.index.equals(that.index)) {
-                return false;
-            } else if (!this.title.equals(that.title)) {
-                return false;
-            } else if (!this.key.equals(that.key)) {
-                return false;
-            } else if (!this.composer.equals(that.composer)) {
-                return false;
-            } else if (!this.meter.equals(that.meter)) {
-                return false;
-            } else if (!this.length.equals(that.length)) {
-                return false;
-            } else if (!this.tempo.equals(that.tempo)) {
-                return false;
-            } else {
-                return Arrays.equals(this.voices, that.voices);
-            }
+            return this.index.equals(that.index)
+                    && this.title.equals(that.title)
+                    && this.key.equals(that.key)
+                    && this.composer.equals(that.composer)
+                    && this.meter.equals(that.meter)
+                    && this.length.equals(that.length)
+                    && this.tempo.equals(that.tempo)
+                    && Arrays.equals(this.voices, that.voices);
         }
     }
 
