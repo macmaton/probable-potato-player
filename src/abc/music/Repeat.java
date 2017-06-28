@@ -18,7 +18,7 @@ public class Repeat implements VoicePartElement {
         } else {
             this.repeatedLines = null;
         }
-        if (endings != null && repeatedLines.size() > 0) {
+        if (endings != null && endings.size() > 0) {
             this.endings = Collections.unmodifiableList(new ArrayList<>(endings));
         } else {
             this.endings = null;

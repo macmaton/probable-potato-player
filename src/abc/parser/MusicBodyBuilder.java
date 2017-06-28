@@ -15,10 +15,10 @@ public class MusicBodyBuilder implements BodyListener {
      * stack contains the Music objects representing each parse subtree walked so far, but whose parent has not been
      * exited by the walk.  The stack is ordered by recency of visit, such that the item at the top of the stack is the
      * Music object for the most recently walked subtree.
-     *
+     * <p>
      * When a node is exited by the walk, its children are on top of the stack.  The values are popped and combined and
      * a new Music object representing the entire subtree is pushed onto the stack.
-     *
+     * <p>
      * When a walk is completed, the Music object representing the entire tree is the sole object on the stack.
      */
     private final Stack<Music> stack = new Stack<>();
@@ -37,7 +37,7 @@ public class MusicBodyBuilder implements BodyListener {
         List<BodyElement> elements = new ArrayList<>();
         for (BodyParser.BodyelementContext e : ctx.bodyelement()) {
             Music.Components type = stack.peek().getType();
-            switch(type) {
+            switch (type) {
                 case LINE:
                 case REPEAT:
                 case SECTION:
@@ -61,13 +61,14 @@ public class MusicBodyBuilder implements BodyListener {
      * Builds and pushes to stack Sections.  Simplifies voice parts and repeats such that there is one voice part per
      * voice, and repeats are complete (have repeated lines or measures from beginning of piece or section or
      * repeatstart to end of repeat, and consolidate endings to one array)
+     *
      * @param ctx the parse tree
      */
     @Override
     public void exitBodyelement(BodyParser.BodyelementContext ctx) {
         List<SectionElement> elements = new ArrayList<>();
         for (BodyParser.SectionelementContext s : ctx.sectionelement()) {
-            Map<Voice,List<VoicePartElement>> sortedVoiceParts = new HashMap<>();
+            Map<Voice, List<VoicePartElement>> sortedVoiceParts = new HashMap<>();
             List<Voice> voices = new ArrayList<>();
             //if the section contains voiceparts, add them to sortedVoiceParts
             if (s.voicepart() != null) {
@@ -93,147 +94,12 @@ public class MusicBodyBuilder implements BodyListener {
             //either all elements should be VoiceParts or all elements should be VoicePartElements in a given Section
             assert (sortedVoiceParts.isEmpty() || elements.isEmpty());
             if (!sortedVoiceParts.isEmpty()) {
-                for(Voice v : voices) {
+                for (Voice v : voices) {
                     elements.add(0, new VoicePart(v, simplifyVoicePartElements(sortedVoiceParts.get(v))));
                 }
             }
         }
         stack.push(new Section(elements));
-    }
-
-    /**
-     * Simplifies VoicePartElements for a given Voice so that incomplete repeats stored across multiple structures are
-     * stored in one Repeat, and other lines are stored as lines.  Preserves order of elements.
-     * @param elementList List of VoicePartElements which may have non-contiguous sections
-     * @return Simplified list of VoicePartElements
-     */
-    private List<VoicePartElement> simplifyVoicePartElements(List<VoicePartElement> elementList) {
-        //list of simplified VoicePartElements
-        List<VoicePartElement> simplifiedElements = new ArrayList<>();
-        //each list in sortedElements will be a full repeat or line and will result in a single VoicePartElement
-        List<List<VoicePartElement>> sortedElements = new ArrayList<>();
-        //list of indices of repeats in sortedElements
-        List<Integer> repeatIndices = new ArrayList<>();
-        List<VoicePartElement> workingElement = new ArrayList<>();
-        for (int i = 0; i < elementList.size(); i++) {
-            VoicePartElement current = elementList.get(i);
-            if (current.getType().equals(Music.Components.PARTIALREPEAT)) {
-                PartialRepeat partial = (PartialRepeat) current;
-                if (partial.getFragment().equals(PartialRepeat.RepeatFragment.START)) {
-                    if (!workingElement.isEmpty()) {
-                        sortedElements.add(workingElement);
-                        workingElement = new ArrayList<>();
-                    }
-                    workingElement.add(current);
-                    //next element in sortedElements will be a repeat
-                    if (!repeatIndices.contains(sortedElements.size())) {
-                        repeatIndices.add(sortedElements.size());
-                    }
-                } else {
-                    workingElement.add(current);
-                }
-            } else if (current.getType().equals(Music.Components.REPEAT)) {
-                if (!workingElement.isEmpty()) {
-                    sortedElements.add(workingElement);
-                    workingElement = new ArrayList<>();
-                }
-                workingElement.add(current);
-                //next element in sortedElements will be a repeat
-                if (!repeatIndices.contains(sortedElements.size())) {
-                    repeatIndices.add(sortedElements.size());
-                }
-
-            } else {
-                //current is a Line
-                //if previous element was the end of a repeat, add workingElement to sortedElements and re-initialize
-                // workingElement
-                VoicePartElement previous =  workingElement.get(workingElement.size()-1);
-                if (previous.getType().equals(Music.Components.REPEAT)) {
-                    sortedElements.add(workingElement);
-                    workingElement = new ArrayList<>();
-                } else if (previous.getType().equals(Music.Components.PARTIALREPEAT)) {
-                    PartialRepeat partial = (PartialRepeat) previous;
-                    if (partial.getFragment().equals(PartialRepeat.RepeatFragment.ENDING)) {
-                        sortedElements.add(workingElement);
-                        workingElement = new ArrayList<>();
-                    }
-                }
-                workingElement.add(current);
-            }
-        }
-        sortedElements.add(workingElement);
-
-        for (int i = 0; i < sortedElements.size(); i++) {
-            if (repeatIndices.contains(i)) {
-                //sortedElements[i] contains elements for a repeat
-                simplifiedElements.add(simplifyRepeat(sortedElements.get(i)));
-            } else {
-                //sortedElements[i] contains elements for a line
-                List<RepeatElement> line = new ArrayList<>();
-                for (VoicePartElement e : sortedElements.get(i)) {
-                    assert e.getType().equals(Music.Components.LINE) || e.getType().equals(Music.Components.MEASURE);
-                    RepeatElement re = (RepeatElement) e;
-                    line.add(re);
-                }
-                simplifiedElements.add(simplifyLines(line));
-            }
-        }
-
-        return simplifiedElements;
-    }
-
-    /**
-     * Simplifies list of measures and lines into a single line
-     * @param elementList list of elements to be consolidated; list should contain only Lines and Measures
-     * @return a Line containing all measures obtained from elementList
-     */
-    private Line simplifyLines(List<RepeatElement> elementList) {
-        List<Measure> measures = new ArrayList<>();
-        for (RepeatElement e : elementList) {
-            if(e.getType().equals(Music.Components.MEASURE)) {
-                measures.add((Measure) e);
-            } else if (e.getType().equals(Music.Components.LINE)){
-                Line line = (Line) e;
-                measures.addAll(line.getMeasures());
-            } else {
-                throw new IllegalArgumentException("Elements other than Lines and Measures cannot be simplified into " +
-                        "a Line");
-            }
-        }
-
-        return new Line(measures);
-    }
-
-    /**
-     * Simplifies a list of Repeats and RepeatElements into a single repeat
-     * @param elementList list of elements to be consolidated
-     * @return a Repeat containing all elements obtained from elementList
-     */
-    private Repeat simplifyRepeat(List<VoicePartElement> elementList) {
-        List<RepeatElement> repeatedLines = new ArrayList<>();
-        List<RepeatElement> endings = new ArrayList<>();
-        boolean repeatedLinesCompleted = false;
-
-        for(VoicePartElement e : elementList) {
-            if (e.getType().equals(Music.Components.PARTIALREPEAT) || e.getType().equals(Music.Components.REPEAT)) {
-                Repeat current = (Repeat) e;
-                List<RepeatElement> repeated = current.getRepeatedLines();
-                List<RepeatElement> ending = current.getEndings();
-                if (repeated != null) {
-                    assert !repeatedLinesCompleted;
-                    for (RepeatElement re : repeated) {
-                        repeatedLines.add(re);
-                    }
-                }
-                if (ending != null) {
-                    endings.addAll(ending);
-                }
-            }
-        }
-        RepeatElement repeatedLine = simplifyLines(repeatedLines);
-        repeatedLines = new ArrayList<>();
-        repeatedLines.add(repeatedLine);
-        return new Repeat(repeatedLines, endings);
     }
 
     @Override
@@ -253,6 +119,7 @@ public class MusicBodyBuilder implements BodyListener {
 
     /**
      * Builds and pushes to stack a VoicePart with lines or repeats available.
+     *
      * @param ctx the parse tree
      */
     @Override
@@ -261,10 +128,10 @@ public class MusicBodyBuilder implements BodyListener {
         List<VoicePartElement> elements = new ArrayList<>();
 
         for (BodyParser.VoicepartelementContext e : ctx.voicepartelement()) {
-            assert stack.peek().getType().equals(Music.Components.REPEAT) || stack.peek().getType().equals(Music
-                    .Components.LINE);
+            assert stack.peek().getType().equals(Music.Components.REPEAT) || stack.peek().getType().equals(Music.Components.PARTIALREPEAT) || stack
+                    .peek().getType().equals(Music.Components.LINE);
             VoicePartElement element = (VoicePartElement) stack.pop();
-            elements.add(0,element);
+            elements.add(0, element);
         }
         stack.push(new VoicePart(new Voice(voice), elements));
     }
@@ -287,6 +154,7 @@ public class MusicBodyBuilder implements BodyListener {
     /**
      * Builds and pushes to stack a Repeat using lines or measures available.  Repeated lines may be incomplete due
      * to spanning multiple lines.  Repeat endings, if any, provided in other lines.
+     *
      * @param ctx the parse tree
      */
     @Override
@@ -306,6 +174,7 @@ public class MusicBodyBuilder implements BodyListener {
 
     /**
      * Builds and pushes to stack a Repeat using lines or measures available.  Additional endings may be on other lines.
+     *
      * @param ctx the parse tree
      */
     @Override
@@ -313,8 +182,8 @@ public class MusicBodyBuilder implements BodyListener {
         List<RepeatElement> repeated = new ArrayList<>();
         List<RepeatElement> endings = new ArrayList<>();
 
-        for(BodyParser.RepeatendingContext e : ctx.repeatending()) {
-            assert stack.peek().getType().equals(Music.Components.REPEAT);
+        for (BodyParser.RepeatendingContext e : ctx.repeatending()) {
+            assert stack.peek().getType().equals(Music.Components.REPEAT) || stack.peek().getType().equals(Music.Components.PARTIALREPEAT);
             Repeat ending = (Repeat) stack.pop();
             assert ending.getRepeatedLines() == null;
             endings.addAll(0, ending.getEndings());
@@ -335,6 +204,7 @@ public class MusicBodyBuilder implements BodyListener {
 
     /**
      * Builds and pushes to stack a Repeat using lines or measures.  Endings assumed to fit in one line.
+     *
      * @param ctx the parse tree
      */
     @Override
@@ -342,7 +212,7 @@ public class MusicBodyBuilder implements BodyListener {
         List<RepeatElement> repeated = new ArrayList<>();
         List<RepeatElement> endings = new ArrayList<>();
 
-        for(BodyParser.RepeatendingContext e : ctx.repeatending()) {
+        for (BodyParser.RepeatendingContext e : ctx.repeatending()) {
             assert stack.peek().getType().equals(Music.Components.REPEAT);
             Repeat ending = (Repeat) stack.pop();
             assert ending.getRepeatedLines() == null;
@@ -373,7 +243,7 @@ public class MusicBodyBuilder implements BodyListener {
             assert ending.getRepeatedLines() == null;
             List<Measure> nthending = new ArrayList<>();
 
-            for(RepeatElement endingElement : ending.getRepeatedLines()) {
+            for (RepeatElement endingElement : ending.getEndings()) {
                 assert endingElement.getType().equals(Music.Components.MEASURE);
                 nthending.add((Measure) endingElement);
             }
@@ -390,6 +260,7 @@ public class MusicBodyBuilder implements BodyListener {
 
     /**
      * Builds and pushes to stack a Repeat using lines or measures available, with only endings.
+     *
      * @param ctx the parse tree
      */
     @Override
@@ -427,9 +298,9 @@ public class MusicBodyBuilder implements BodyListener {
     @Override
     public void exitMeasure(BodyParser.MeasureContext ctx) {
         List<MeasureElement> elements = new ArrayList<>();
-        for(BodyParser.MeasureelementContext e : ctx.measureelement()) {
+        for (BodyParser.MeasureelementContext e : ctx.measureelement()) {
             Music.Components type = stack.peek().getType();
-            switch(type) {
+            switch (type) {
                 case TUPLET:
                 case CHORD:
                 case NOTE:
@@ -454,6 +325,16 @@ public class MusicBodyBuilder implements BodyListener {
     }
 
     @Override
+    public void enterTupletelement(BodyParser.TupletelementContext ctx) {
+
+    }
+
+    @Override
+    public void exitTupletelement(BodyParser.TupletelementContext ctx) {
+
+    }
+
+    @Override
     public void enterNote(BodyParser.NoteContext ctx) {
 
     }
@@ -462,12 +343,17 @@ public class MusicBodyBuilder implements BodyListener {
     public void exitNote(BodyParser.NoteContext ctx) {
         assert stack.peek().getType().equals(Music.Components.NOTELENGTH);
         NoteLength length = (NoteLength) stack.pop();
-        if (stack.peek().getType().equals(Music.Components.PITCH)) {
-            Pitch pitch = (Pitch) stack.pop();
-            stack.push(new Note(pitch, length));
+        if (!stack.isEmpty()) {
+            if (stack.peek().getType().equals(Music.Components.PITCH)) {
+                Pitch pitch = (Pitch) stack.pop();
+                stack.push(new Note(pitch, length));
+            } else {
+                stack.push(new Rest(length));
+            }
         } else {
             stack.push(new Rest(length));
         }
+
     }
 
     @Override
@@ -490,33 +376,41 @@ public class MusicBodyBuilder implements BodyListener {
         Pitch pitch;
         String rawBaseNote = String.valueOf(ctx.BASENOTE());
         Music.BaseNote basenote = Music.BaseNote.valueOf(rawBaseNote.toUpperCase());
-
-        String rawOctave = ctx.octave().toString();
         int octave = 0;
-        if (rawBaseNote.toLowerCase().equals(rawBaseNote)) {
-            octave += 1;
+        if (!ctx.octave().isEmpty()) {
+            String rawOctave = ctx.octave(0).getText();
+            if (rawBaseNote.toLowerCase().equals(rawBaseNote)) {
+                octave += 1;
+            }
+            if (rawOctave.contains("'")) {
+                octave += ctx.octave().size();
+            } else if (rawOctave.contains(",")) {
+                octave -= ctx.octave().size();
+            }
         }
-        if (rawOctave.contains("'")) {
-            octave += rawOctave.length();
-        } else if (rawOctave.contains(",")) {
-            octave -= rawOctave.length();
-        }
+
 
         Pitch.Accidental accidental = Pitch.Accidental.NONE;
         if (ctx.ACCIDENTAL() != null) {
             String rawAccidental = ctx.ACCIDENTAL().getText();
-            switch(rawAccidental) {
-                case "^": accidental = Pitch.Accidental.SHARP;
+            switch (rawAccidental) {
+                case "^":
+                    accidental = Pitch.Accidental.SHARP;
                     break;
-                case "^^": accidental = Pitch.Accidental.DOUBLESHARP;
+                case "^^":
+                    accidental = Pitch.Accidental.DOUBLESHARP;
                     break;
-                case "_": accidental = Pitch.Accidental.FLAT;
+                case "_":
+                    accidental = Pitch.Accidental.FLAT;
                     break;
-                case "__": accidental = Pitch.Accidental.DOUBLEFLAT;
+                case "__":
+                    accidental = Pitch.Accidental.DOUBLEFLAT;
                     break;
-                case "=": accidental = Pitch.Accidental.NATURAL;
+                case "=":
+                    accidental = Pitch.Accidental.NATURAL;
                     break;
-                default: accidental = Pitch.Accidental.NONE;
+                default:
+                    accidental = Pitch.Accidental.NONE;
             }
         }
 
@@ -556,8 +450,8 @@ public class MusicBodyBuilder implements BodyListener {
                 if (slashIndex > 0) {
                     numerator = Integer.valueOf(rawLength.substring(0, slashIndex));
                 }
-                if (slashIndex < rawLength.length()-1) {
-                    denominator = Integer.valueOf(rawLength.substring(slashIndex+1));
+                if (slashIndex < rawLength.length() - 1) {
+                    denominator = Integer.valueOf(rawLength.substring(slashIndex + 1));
                 }
                 length = new NoteLength(numerator, denominator);
             }
@@ -573,11 +467,11 @@ public class MusicBodyBuilder implements BodyListener {
 
     @Override
     public void exitTuplet(BodyParser.TupletContext ctx) {
-        int spec = Integer.getInteger(ctx.tupletspec().NUMBER().getText());
+        int spec = Integer.valueOf(ctx.tupletspec().NUMBER().getText());
         List<TupletElement> elements = new ArrayList<>();
         for (BodyParser.TupletelementContext t : ctx.tupletelement()) {
             Music.Components type = stack.peek().getType();
-            switch(type) {
+            switch (type) {
                 case CHORD:
                 case NOTE:
                 case REST:
@@ -589,16 +483,6 @@ public class MusicBodyBuilder implements BodyListener {
 
         }
         stack.push(new Tuplet(spec, elements.toArray(new TupletElement[elements.size()])));
-    }
-
-    @Override
-    public void enterTupletelement(BodyParser.TupletelementContext ctx) {
-
-    }
-
-    @Override
-    public void exitTupletelement(BodyParser.TupletelementContext ctx) {
-
     }
 
     @Override
@@ -667,6 +551,149 @@ public class MusicBodyBuilder implements BodyListener {
     @Override
     public void exitText(BodyParser.TextContext ctx) {
 
+    }
+
+    /**
+     * Simplifies VoicePartElements for a given Voice so that incomplete repeats stored across multiple structures are
+     * stored in one Repeat, and other lines are stored as lines.  Preserves order of elements.
+     *
+     * @param elementList List of VoicePartElements which may have non-contiguous sections
+     * @return Simplified list of VoicePartElements
+     */
+    private List<VoicePartElement> simplifyVoicePartElements(List<VoicePartElement> elementList) {
+        //list of simplified VoicePartElements
+        List<VoicePartElement> simplifiedElements = new ArrayList<>();
+        //each list in sortedElements will be a full repeat or line and will result in a single VoicePartElement
+        List<List<VoicePartElement>> sortedElements = new ArrayList<>();
+        //list of indices of repeats in sortedElements
+        List<Integer> repeatIndices = new ArrayList<>();
+        List<VoicePartElement> workingElement = new ArrayList<>();
+        for (int i = 0; i < elementList.size(); i++) {
+            VoicePartElement current = elementList.get(i);
+            if (current.getType().equals(Music.Components.PARTIALREPEAT)) {
+                PartialRepeat partial = (PartialRepeat) current;
+                if (partial.getFragment().equals(PartialRepeat.RepeatFragment.START)) {
+                    if (!workingElement.isEmpty()) {
+                        sortedElements.add(workingElement);
+                        workingElement = new ArrayList<>();
+                    }
+                    workingElement.add(current);
+                    //next element in sortedElements will be a repeat
+                    if (!repeatIndices.contains(sortedElements.size())) {
+                        repeatIndices.add(sortedElements.size());
+                    }
+                } else {
+                    workingElement.add(current);
+                }
+            } else if (current.getType().equals(Music.Components.REPEAT)) {
+                if (!workingElement.isEmpty()) {
+                    sortedElements.add(workingElement);
+                    workingElement = new ArrayList<>();
+                }
+                workingElement.add(current);
+                //next element in sortedElements will be a repeat
+                if (!repeatIndices.contains(sortedElements.size())) {
+                    repeatIndices.add(sortedElements.size());
+                }
+
+            } else {
+                //current is a Line
+                //if previous element was the end of a repeat, add workingElement to sortedElements and re-initialize
+                // workingElement
+                if (!workingElement.isEmpty()) {
+                    VoicePartElement previous = workingElement.get(workingElement.size() - 1);
+                    if (previous.getType().equals(Music.Components.REPEAT)) {
+                        sortedElements.add(workingElement);
+                        workingElement = new ArrayList<>();
+                    } else if (previous.getType().equals(Music.Components.PARTIALREPEAT)) {
+                        PartialRepeat partial = (PartialRepeat) previous;
+                        if (partial.getFragment().equals(PartialRepeat.RepeatFragment.ENDING)) {
+                            if (!repeatIndices.contains(sortedElements.size())) {
+                                repeatIndices.add(sortedElements.size());
+                            }
+                            sortedElements.add(workingElement);
+                            workingElement = new ArrayList<>();
+                        }
+                    }
+                }
+                workingElement.add(current);
+            }
+        }
+        sortedElements.add(workingElement);
+
+        for (int i = 0; i < sortedElements.size(); i++) {
+            if (repeatIndices.contains(i)) {
+                //sortedElements[i] contains elements for a repeat
+                simplifiedElements.add(simplifyRepeat(sortedElements.get(i)));
+            } else {
+                //sortedElements[i] contains elements for a line
+                List<RepeatElement> line = new ArrayList<>();
+                for (VoicePartElement e : sortedElements.get(i)) {
+                    assert e.getType().equals(Music.Components.LINE) || e.getType().equals(Music.Components.MEASURE);
+                    RepeatElement re = (RepeatElement) e;
+                    line.add(re);
+                }
+                simplifiedElements.add(simplifyLines(line));
+            }
+        }
+
+        return simplifiedElements;
+    }
+
+    /**
+     * Simplifies list of measures and lines into a single line
+     *
+     * @param elementList list of elements to be consolidated; list should contain only Lines and Measures
+     * @return a Line containing all measures obtained from elementList
+     */
+    private Line simplifyLines(List<RepeatElement> elementList) {
+        List<Measure> measures = new ArrayList<>();
+        for (RepeatElement e : elementList) {
+            if (e.getType().equals(Music.Components.MEASURE)) {
+                measures.add((Measure) e);
+            } else if (e.getType().equals(Music.Components.LINE)) {
+                Line line = (Line) e;
+                measures.addAll(line.getMeasures());
+            } else {
+                throw new IllegalArgumentException("Elements other than Lines and Measures cannot be simplified into " +
+                        "a Line");
+            }
+        }
+
+        return new Line(measures);
+    }
+
+    /**
+     * Simplifies a list of Repeats and RepeatElements into a single repeat
+     *
+     * @param elementList list of elements to be consolidated
+     * @return a Repeat containing all elements obtained from elementList
+     */
+    private Repeat simplifyRepeat(List<VoicePartElement> elementList) {
+        List<RepeatElement> repeatedLines = new ArrayList<>();
+        List<RepeatElement> endings = new ArrayList<>();
+        boolean repeatedLinesCompleted = false;
+
+        for (VoicePartElement e : elementList) {
+            if (e.getType().equals(Music.Components.PARTIALREPEAT) || e.getType().equals(Music.Components.REPEAT)) {
+                Repeat current = (Repeat) e;
+                List<RepeatElement> repeated = current.getRepeatedLines();
+                List<RepeatElement> ending = current.getEndings();
+                if (repeated != null) {
+                    assert !repeatedLinesCompleted;
+                    for (RepeatElement re : repeated) {
+                        repeatedLines.add(re);
+                    }
+                }
+                if (ending != null) {
+                    endings.addAll(ending);
+                }
+            }
+        }
+        RepeatElement repeatedLine = simplifyLines(repeatedLines);
+        repeatedLines = new ArrayList<>();
+        repeatedLines.add(repeatedLine);
+        return new Repeat(repeatedLines, endings);
     }
 
     @Override

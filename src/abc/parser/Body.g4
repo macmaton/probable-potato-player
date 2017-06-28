@@ -8,7 +8,7 @@ import Configuration;
 
 body: bodyelement+ EOF;
 bodyelement: sectionelement+;
-sectionelement: voicepart+ | voicepartelement+;
+sectionelement: BARLINE? (voicepart+ | voicepartelement+);
 voicepart: fieldvoice voicepartelement+;
 voicepartelement: repeatstart | repeatend | repeatfull | repeatendingline | line;
 repeatstart: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+);
@@ -18,16 +18,15 @@ repeatfull: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITE
 repeatending* (endofline+ | EOF);
 repeatendingline: (measure BARLINE WHITESPACE?)* repeatending+ (endofline+ | EOF);
 repeatending: NTHREPEAT WHITESPACE? (measure BARLINE? WHITESPACE?)+;
-line: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+ | EOF);
-measure: WHITESPACE? (measureelement WHITESPACE?)+;
+line: WHITESPACE* (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+ | EOF);
+measure: WHITESPACE* (measureelement WHITESPACE*)+;
 measureelement: tupletelement | tuplet;
 tupletelement: note WHITESPACE? | chord WHITESPACE?;
 note: noterest notelength;
 noterest: pitch | REST;
 pitch: ACCIDENTAL? BASENOTE octave*;
 octave: '\'' | ',';
-notelength: NUMBER? ('/' NUMBER?)?; //TODO: when there is an accidental followed by '/' notelength does not parse
-
+notelength: NUMBER? ('/' NUMBER?)?;
 tuplet: tupletspec tupletelement+;
 tupletspec: '(' NUMBER;
 chord: '[' note+? ']' notelength;
