@@ -17,6 +17,39 @@ public class Header implements Music {
     private final Tempo tempo;
     private final Voice[] voices;
 
+    public Index getIndex() {
+        return index;
+    }
+
+    public Title getTitle() {
+        return title;
+    }
+
+    public Key getKey() {
+        return key;
+    }
+
+    public Composer getComposer() {
+        return composer;
+    }
+
+    public Meter getMeter() {
+        return meter;
+    }
+
+    public DefaultNoteLength getLength() {
+        return length;
+    }
+
+    public Tempo getTempo() {
+        return tempo;
+    }
+
+    //TODO: refactor Voice[] to List<Voice>
+    public Voice[] getVoices() {
+        return voices;
+    }
+
     public Header(Index index, Title title, Key key, Meter meter, DefaultNoteLength length, Tempo tempo, Composer
             composer, Voice[] voices) {
         this.index = index;

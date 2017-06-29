@@ -2,23 +2,15 @@ package abc.music;
 
 import org.junit.Test;
 
-public class TupletTest {
+public class TupletTest extends TestBase {
     Tuplet t1;
     Tuplet t2;
     Tuplet t3;
 
     public void setup() {
-        t1 = new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-                NoteLength())
-                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())});
-        t2 = new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-                NoteLength())
-                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())});
-        t3 = new Tuplet(2, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-                NoteLength())
-                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength())});
+        t1 = createTuplet();
+        t2 = createTuplet();
+        t3 = createTuplet(n3);
     }
 
     @Test
@@ -37,14 +29,14 @@ public class TupletTest {
     @Test
     public void testToString() {
         setup();
-		assert t1.toString().equals("(3ABC");
-		assert t3.toString().equals("(2AB");
+		assert t1.toString().equals("(3CCC");
+		assert t3.toString().equals("(3CCE");
     }
 
-    @Test
+    @Test(expected = UnsupportedOperationException.class)
     public void testGetElements() {
         setup();
-        t1.getElements()[0] = new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength());
+        t1.getElements().set(0, n2);
         assert t1.equals(t2);
     }
 }

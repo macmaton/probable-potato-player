@@ -51,10 +51,6 @@ public class Tempo implements HeaderField {
         return beatLength;
     }
 
-    public boolean isSpecified() {
-        return isSpecified;
-    }
-
     @Override
     public int hashCode() {
         int result = beatsPerMinute;

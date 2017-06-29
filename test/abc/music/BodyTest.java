@@ -2,7 +2,7 @@ package abc.music;
 
 import org.junit.Test;
 
-public class BodyTest {
+public class BodyTest extends TestBase {
     Body b1;
     Body b2;
     Body b3;

@@ -50,6 +50,10 @@ public class Pitch implements Music {
         return basenote;
     }
 
+    public char getBaseNoteChar() {
+        return basenote.toString().charAt(0);
+    }
+
     /**
      * The basenote of a pitch is in the octave of middle C.  Sharps and flats add or subtract one semitone.  An
      * octave is equal to 12 semitones.

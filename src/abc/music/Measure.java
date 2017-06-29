@@ -1,45 +1,35 @@
 package abc.music;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Measure implements RepeatElement {
 
-    private final MeasureElement[] elements;
+    private final List<MeasureElement> elements;
 
-    public Measure(MeasureElement[] elements) {
-        this.elements = elements;
+    public Measure(List<MeasureElement> elements) {
+        this.elements = Collections.unmodifiableList(new ArrayList<>(elements));
         checkRep();
     }
 
-    public MeasureElement[] getElements() {
-        return Arrays.copyOf(elements, elements.length);
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(elements);
+    public List<MeasureElement> getElements() {
+        return elements;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof Measure) {
-            Measure that = (Measure) obj;
-            if (this.elements.length == that.elements.length) {
-                for (int i = 0; i < elements.length; i++) {
-                    if (!this.elements[i].equals(that.elements[i])) {
-                        return false;
-                    }
-                }
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Measure that = (Measure) obj;
+
+        return elements.equals(that.elements);
+    }
+
+    @Override
+    public int hashCode() {
+        return elements.hashCode();
     }
 
     public String toString() {
@@ -55,7 +45,7 @@ public class Measure implements RepeatElement {
 
     private void checkRep() {
         assert this.elements != null;
-        assert this.elements.length > 0;
+        assert this.elements.size() > 0;
         for (MeasureElement e : this.elements) {
             assert e != null;
         }

@@ -25,6 +25,14 @@ public class Note implements TupletElement {
         checkRep();
     }
 
+    public Pitch getPitch() {
+        return pitch;
+    }
+
+    public NoteLength getLength() {
+        return length;
+    }
+
     @Override
     public int hashCode() {
         int result = pitch.hashCode();

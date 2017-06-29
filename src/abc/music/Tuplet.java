@@ -1,6 +1,8 @@
 package abc.music;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Adapted from https://ocw.mit.edu/ans7870/6/6.005/s16/projects/abcplayer/spec/
@@ -23,11 +25,11 @@ import java.util.Arrays;
  */
 public class Tuplet implements MeasureElement {
     private final int spec;
-    private final TupletElement[] elements;
+    private final List<TupletElement> elements;
 
-    public Tuplet(int spec, TupletElement[] elements) {
+    public Tuplet(int spec, List<TupletElement> elements) {
         this.spec = spec;
-        this.elements = elements;
+        this.elements = Collections.unmodifiableList(new ArrayList<>(elements));
         checkRep();
     }
 
@@ -38,34 +40,26 @@ public class Tuplet implements MeasureElement {
     /**
      * @return an array of notes in the tuplet
      */
-    public TupletElement[] getElements() {
-        return Arrays.copyOf(elements, spec);
+    public List<TupletElement> getElements() {
+        return elements;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Tuplet that = (Tuplet) obj;
+
+        if (spec != that.spec) return false;
+        return elements.equals(that.elements);
     }
 
     @Override
     public int hashCode() {
         int result = spec;
-        result = 31 * result + Arrays.hashCode(elements);
+        result = 31 * result + elements.hashCode();
         return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof Tuplet) {
-            Tuplet that = (Tuplet) obj;
-            boolean result = this.spec == that.spec;
-            if (result) {
-                for (int i = 0; i < elements.length; i++) {
-                    result = result && (this.elements[i].equals(that.elements[i]));
-                }
-            }
-            return result;
-        } else {
-            return false;
-        }
     }
 
     @Override
@@ -79,7 +73,7 @@ public class Tuplet implements MeasureElement {
 
     private void checkRep() {
         assert elements != null;
-        assert elements.length > 0;
+        assert elements.size() > 0;
         for (TupletElement e : elements) {
             assert e != null;
         }

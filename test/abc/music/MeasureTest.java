@@ -2,38 +2,15 @@ package abc.music;
 
 import org.junit.Test;
 
-public class MeasureTest {
+public class MeasureTest extends TestBase {
     Measure m1;
     Measure m2;
     Measure m3;
 
     public void setup() {
-        m1 = new Measure(new MeasureElement[]{
-                new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-                        NoteLength())
-                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-                new Rest(),
-                new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-                        NoteLength())
-                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})});
-        m2 = new Measure(new MeasureElement[]{
-                new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-                        NoteLength())
-                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-                new Rest(),
-                new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-                        NoteLength())
-                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})});
-        m3 = new Measure(new MeasureElement[]{
-                new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-                NoteLength()),
-                new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()),
-                new Note(new
-                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())});
+        m1 = createMeasure();
+        m2 = createMeasure();
+        m3 = createMeasure(createChord());
     }
 
     @Test
@@ -52,14 +29,23 @@ public class MeasureTest {
     @Test
     public void testToString() {
         setup();
-        assert m1.toString().equals(" [ABC] z (3ABC ");
-        assert m3.toString().equals(" A B C ");
+        Body b1 = parseBody(m1.toString());
+        Section s1 = (Section) b1.getElements().get(0);
+        Line l1 = (Line) s1.getElements().get(0);
+        Measure test1 = l1.getMeasures().get(0);
+
+        Body b2 = parseBody(m3.toString());
+        Section s2 = (Section) b2.getElements().get(0);
+        Line l2 = (Line) s2.getElements().get(0);
+        Measure test2 = l2.getMeasures().get(0);
+
+        assert m1.equals(test1);
+        assert m3.equals(test2);
     }
 
-    @Test
+    @Test (expected = UnsupportedOperationException.class)
     public void testGetElements() {
         setup();
-        m1.getElements()[0] = new Rest();
-        assert m1.equals(m2);
+        m1.getElements().set(0, createRest());
     }
 }

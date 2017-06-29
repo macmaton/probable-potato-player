@@ -4,7 +4,7 @@ import abc.music.Music.BaseNote;
 import abc.music.Pitch.Accidental;
 import org.junit.Test;
 
-public class NoteTest {
+public class NoteTest extends TestBase {
     private Note n1;
     private Note n2;
     private Note n3;
@@ -33,9 +33,24 @@ public class NoteTest {
     @Test
     public void testToString() {
         setup();
-        assert n1.toString().equals("C,,,/");
-        assert n3.toString().equals("^D2");
-        assert n4.toString().equals("_A/4");
+        Body b1 = parseBody(n1.toString());
+        Section s1 = (Section) b1.getElements().get(0);
+        Line l1 = (Line) s1.getElements().get(0);
+        Note test1 = (Note) l1.getMeasures().get(0).getElements().get(0);
+
+        Body b2 = parseBody(n3.toString());
+        Section s2 = (Section) b2.getElements().get(0);
+        Line l2 = (Line) s2.getElements().get(0);
+        Note test2 = (Note) l2.getMeasures().get(0).getElements().get(0);
+
+        Body b3 = parseBody(n4.toString());
+        Section s3 = (Section) b3.getElements().get(0);
+        Line l3 = (Line) s3.getElements().get(0);
+        Note test3 = (Note) l3.getMeasures().get(0).getElements().get(0);
+
+        assert n1.equals(test1);
+        assert n3.equals(test2);
+        assert n4.equals(test3);
     }
 
     @Test(expected = AssertionError.class)

@@ -20,7 +20,7 @@ repeatendingline: (measure BARLINE WHITESPACE?)* repeatending+ (endofline+ | EOF
 repeatending: NTHREPEAT WHITESPACE? (measure BARLINE? WHITESPACE?)+;
 line: WHITESPACE* (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+ | EOF);
 measure: WHITESPACE* (measureelement WHITESPACE*)+;
-measureelement: tupletelement | tuplet;
+measureelement: tupletelement | (tuplet WHITESPACE);
 tupletelement: note WHITESPACE? | chord WHITESPACE?;
 note: noterest notelength;
 noterest: pitch | REST;

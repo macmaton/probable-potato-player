@@ -4,7 +4,7 @@ import abc.music.Music.BaseNote;
 import abc.music.Pitch.Accidental;
 import org.junit.Test;
 
-public class PitchTest {
+public class PitchTest extends TestBase {
 
     private Pitch p1;
     private Pitch p2;
@@ -45,13 +45,56 @@ public class PitchTest {
     @Test
     public void testToString() {
         setup();
-        assert p1.toString().equals("C");
-        assert p3.toString().equals("C,");
-        assert p4.toString().equals("c");
-        assert p5.toString().equals("^c''");
-        assert p6.toString().equals("^^a'");
-        assert p7.toString().equals("__D,");
-        assert p8.toString().equals("_G,,,");
+
+        Body b1 = parseBody(p1.toString());
+        Section s1 = (Section) b1.getElements().get(0);
+        Line l1 = (Line) s1.getElements().get(0);
+        Note n1 = (Note) l1.getMeasures().get(0).getElements().get(0);
+        Pitch test1 = n1.getPitch();
+
+        Body b2 = parseBody(p3.toString());
+        Section s2 = (Section) b2.getElements().get(0);
+        Line l2 = (Line) s2.getElements().get(0);
+        Note n2 = (Note) l2.getMeasures().get(0).getElements().get(0);
+        Pitch test2 = n2.getPitch();
+
+        Body b3 = parseBody(p4.toString());
+        Section s3 = (Section) b3.getElements().get(0);
+        Line l3 = (Line) s3.getElements().get(0);
+        Note n3 = (Note) l3.getMeasures().get(0).getElements().get(0);
+        Pitch test3 = n3.getPitch();
+
+        Body b4 = parseBody(p5.toString());
+        Section s4 = (Section) b4.getElements().get(0);
+        Line l4 = (Line) s4.getElements().get(0);
+        Note n4 = (Note) l4.getMeasures().get(0).getElements().get(0);
+        Pitch test4 = n4.getPitch();
+
+        Body b5 = parseBody(p6.toString());
+        Section s5 = (Section) b5.getElements().get(0);
+        Line l5 = (Line) s5.getElements().get(0);
+        Note n5 = (Note) l5.getMeasures().get(0).getElements().get(0);
+        Pitch test5 = n5.getPitch();
+
+        Body b6 = parseBody(p7.toString());
+        Section s6 = (Section) b6.getElements().get(0);
+        Line l6 = (Line) s6.getElements().get(0);
+        Note n6 = (Note) l6.getMeasures().get(0).getElements().get(0);
+        Pitch test6 = n6.getPitch();
+
+        Body b7 = parseBody(p8.toString());
+        Section s7 = (Section) b7.getElements().get(0);
+        Line l7 = (Line) s7.getElements().get(0);
+        Note n7 = (Note) l7.getMeasures().get(0).getElements().get(0);
+        Pitch test7 = n7.getPitch();
+
+        assert p1.equals(test1);
+        assert p3.equals(test2);
+        assert p4.equals(test3);
+        assert p5.equals(test4);
+        assert p6.equals(test5);
+        assert p7.equals(test6);
+        assert p8.equals(test7);
     }
 
     @Test(expected = AssertionError.class)

@@ -2,162 +2,15 @@ package abc.music;
 
 import org.junit.Test;
 
-public class RepeatTest {
+public class RepeatTest extends TestBase {
     Repeat r1;
     Repeat r2;
     Repeat r3;
 
     public void setup() {
-//        r1 = new Repeat(new Line[]{new Line(new Measure[]{
-//                new Measure(new MeasureElement[]{
-//                        new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                        new Rest(),
-//                        new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})}),
-//                new Measure(new MeasureElement[]{
-//                        new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                        new Rest(),
-//                        new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})})},
-//                new Line[]{new Line(new Measure[]{
-//                        new Measure(new MeasureElement[]{
-//                                new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                                new Rest(),
-//                                new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})}),
-//                        new Measure(new MeasureElement[]{
-//                                new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                                new Rest(),
-//                                new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})}),
-//                        new Measure(new MeasureElement[]{
-//                                new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength()),
-//                                new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()),
-//                                new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})});
-//        r2 = new Repeat(new Line[]{new Line(new Measure[]{
-//                new Measure(new MeasureElement[]{
-//                        new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                        new Rest(),
-//                        new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})}),
-//                new Measure(new MeasureElement[]{
-//                        new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                        new Rest(),
-//                        new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})})},
-//                new Line[]{new Line(new Measure[]{
-//                        new Measure(new MeasureElement[]{
-//                                new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                                new Rest(),
-//                                new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})}),
-//                        new Measure(new MeasureElement[]{
-//                                new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                                new Rest(),
-//                                new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})}),
-//                        new Measure(new MeasureElement[]{
-//                                new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength()),
-//                                new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()),
-//                                new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})});
-//        r3 = new Repeat(new Line[]{new Line(new Measure[]{
-//                new Measure(new MeasureElement[]{
-//                        new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                        new Rest(),
-//                        new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})}),
-//                new Measure(new MeasureElement[]{
-//                        new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                        new Rest(),
-//                        new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength())
-//                                , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})}),
-//                new Measure(new MeasureElement[]{
-//                        new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                NoteLength()),
-//                        new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()),
-//                        new Note(new
-//                                Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})},
-//                new Line[]{new Line(new Measure[]{
-//                        new Measure(new MeasureElement[]{
-//                                new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                                new Rest(),
-//                                new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})}),
-//                        new Measure(new MeasureElement[]{
-//                                new Chord(new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())}, new NoteLength()),
-//                                new Rest(),
-//                                new Tuplet(3, new Note[]{new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength())
-//                                        , new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()), new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})}),
-//                        new Measure(new MeasureElement[]{
-//                                new Note(new Pitch(Music.BaseNote.A, 0, Pitch.Accidental.NONE), new
-//                                        NoteLength()),
-//                                new Note(new Pitch(Music.BaseNote.B, 0, Pitch.Accidental.NONE), new NoteLength()),
-//                                new Note(new
-//                                        Pitch(Music.BaseNote.C, 0, Pitch.Accidental.NONE), new NoteLength())})})});
+        r1 = createRepeat();
+        r2 = createRepeat();
+        r3 = createRepeat(createMeasure(createChord()));
     }
 
     @Test
@@ -175,22 +28,35 @@ public class RepeatTest {
 
     @Test
     public void testToString() {
-        //TODO: test case
-//        setup();
-//        System.out.println(r1.toString());
-//        System.out.println(r3.toString());
-//        assert r1.toString().equals("");
-//        assert r3.toString().equals("");
+        setup();
+
+        Body b1 = parseBody(r1.toString());
+        Section s1 = (Section) b1.getElements().get(0);
+        Repeat test1 = (Repeat) s1.getElements().get(0);
+
+        System.out.println(r1.toString());
+        System.out.println(test1.toString());
+
+        Body b2 = parseBody(r3.toString());
+        Section s2 = (Section) b2.getElements().get(0);
+        Repeat test2 = (Repeat) s2.getElements().get(0);
+
+        System.out.println(r3.toString());
+        System.out.println(test2.toString());
+
+        assert r1.equals(test1);
+        assert r3.equals(test2);
     }
 
-    @Test
-    public void testGetLines() {
-        //TODO: test case
-//        setup();
+    @Test (expected = UnsupportedOperationException.class)
+    public void testGetRepeatedLines() {
+        setup();
+        r1.getRepeatedLines().set(0, createLine());
     }
 
-    @Test
+    @Test (expected = UnsupportedOperationException.class)
     public void testGetEndings() {
         setup();
+        r1.getEndings().set(0, createLine());
     }
 }

@@ -1,6 +1,8 @@
 package abc.music;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Adapted from https://ocw.mit.edu/ans7870/6/6.005/s16/projects/abcplayer/spec/
@@ -19,11 +21,11 @@ import java.util.Arrays;
  * they should be multiplied. Example: [C2E2G2]3 has the same meaning as [CEG]6.
  */
 public class Chord implements TupletElement {
-    private final Note[] notes;
+    private final List<Note> notes;
     private final NoteLength length;
 
-    public Chord(Note[] notes, NoteLength length) {
-        this.notes = notes;
+    public Chord(List<Note> notes, NoteLength length) {
+        this.notes = Collections.unmodifiableList(new ArrayList<>(notes));
         this.length = length;
 
         checkRep();
@@ -33,40 +35,26 @@ public class Chord implements TupletElement {
         return length;
     }
 
-    public Note[] getNotes() {
-        return Arrays.copyOf(notes, notes.length);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Arrays.hashCode(notes);
-        result = 31 * result + (length != null ? length.hashCode() : 0);
-        return result;
+    public List<Note> getNotes() {
+        return notes;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof Chord) {
-            Chord that = (Chord) obj;
-            if (!this.length.equals(that.length)) {
-                return false;
-            }
-            if (this.notes.length == that.notes.length) {
-                for (int i = 0; i < notes.length; i++) {
-                    if (!this.notes[i].equals(that.notes[i])) {
-                        return false;
-                    }
-                }
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Chord that = (Chord) obj;
+
+        if (!notes.equals(that.notes)) return false;
+        return length.equals(that.length);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = notes.hashCode();
+        result = 31 * result + length.hashCode();
+        return result;
     }
 
     @Override
@@ -84,7 +72,7 @@ public class Chord implements TupletElement {
 
     private void checkRep() {
         assert this.notes != null;
-        assert this.notes.length > 0;
+        assert this.notes.size() > 0;
         for (Note n : this.notes) {
             assert n != null;
         }

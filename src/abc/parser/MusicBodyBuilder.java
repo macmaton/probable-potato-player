@@ -213,10 +213,10 @@ public class MusicBodyBuilder implements BodyListener {
         List<RepeatElement> endings = new ArrayList<>();
 
         for (BodyParser.RepeatendingContext e : ctx.repeatending()) {
-            assert stack.peek().getType().equals(Music.Components.REPEAT);
+            assert stack.peek().getType().equals(Music.Components.REPEAT) || stack.peek().getType().equals(Music.Components.PARTIALREPEAT);
             Repeat ending = (Repeat) stack.pop();
             assert ending.getRepeatedLines() == null;
-            endings.addAll(0, ending.getEndings());
+            endings.add(0, simplifyLines(ending.getEndings()));
         }
 
         for (BodyParser.MeasureContext m : ctx.measure()) {
@@ -311,7 +311,7 @@ public class MusicBodyBuilder implements BodyListener {
                     throw new RuntimeException("Illegal measure element: " + type + stack.peek().toString());
             }
         }
-        stack.push(new Measure(elements.toArray(new MeasureElement[elements.size()])));
+        stack.push(new Measure(elements));
     }
 
     @Override
@@ -375,13 +375,16 @@ public class MusicBodyBuilder implements BodyListener {
     public void exitPitch(BodyParser.PitchContext ctx) {
         Pitch pitch;
         String rawBaseNote = String.valueOf(ctx.BASENOTE());
-        Music.BaseNote basenote = Music.BaseNote.valueOf(rawBaseNote.toUpperCase());
+
         int octave = 0;
+        if (rawBaseNote.equals(rawBaseNote.toLowerCase())) {
+            octave += 1;
+        }
+
+        Music.BaseNote basenote = Music.BaseNote.valueOf(rawBaseNote.toUpperCase());
+
         if (!ctx.octave().isEmpty()) {
             String rawOctave = ctx.octave(0).getText();
-            if (rawBaseNote.toLowerCase().equals(rawBaseNote)) {
-                octave += 1;
-            }
             if (rawOctave.contains("'")) {
                 octave += ctx.octave().size();
             } else if (rawOctave.contains(",")) {
@@ -482,7 +485,7 @@ public class MusicBodyBuilder implements BodyListener {
             }
 
         }
-        stack.push(new Tuplet(spec, elements.toArray(new TupletElement[elements.size()])));
+        stack.push(new Tuplet(spec, elements));
     }
 
     @Override
@@ -510,7 +513,7 @@ public class MusicBodyBuilder implements BodyListener {
             assert stack.peek().getType().equals(Music.Components.NOTE);
             notes.add(0, (Note) stack.pop());
         }
-        stack.push(new Chord(notes.toArray(new Note[notes.size()]), length));
+        stack.push(new Chord(notes, length));
     }
 
     @Override
