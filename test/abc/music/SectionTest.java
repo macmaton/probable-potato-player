@@ -2,40 +2,47 @@ package abc.music;
 
 import org.junit.Test;
 
-public class SectionTest {
+public class SectionTest extends TestBase {
     Section s1;
     Section s2;
     Section s3;
 
     public void setup() {
-        //TODO: test setup
+        s1 = createSection();
+        s2 = createSection();
+        s3 = createSection(createLine());
     }
 
     @Test
     public void testEquals() {
-        //TODO: test case
-//        setup();
-//        assert s1.equals(s2);
-//        assert !(s2.equals(s3));
+        setup();
+        assert s1.equals(s2);
+        assert !(s2.equals(s3));
     }
 
     @Test
     public void testHashCode() {
-        //TODO: test case
-//        setup();
-//        assert s1.hashCode() == s2.hashCode();
+        setup();
+        assert s1.hashCode() == s2.hashCode();
     }
 
     @Test
     public void testToString() {
-        //TODO: test case
-//        setup();
-//        assert s1.toString().equals("");
-//        assert s3.toString().equals("");
+        setup();
+
+        Body b1 = parseBody(s1.toString());
+        Section test1 = (Section) b1.getSections().get(0);
+
+        Body b2 = parseBody(s3.toString());
+        Section test2 = (Section) b2.getSections().get(0);
+
+        assert s1.equals(test1);
+        assert s3.equals(test2);
     }
 
-    @Test
-    public void testGetMeasures() {
+    @Test (expected = UnsupportedOperationException.class)
+    public void testGetElements() {
         setup();
+        s1.getElements().set(0, createLine());
     }
 }

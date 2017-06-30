@@ -34,17 +34,17 @@ public class NoteTest extends TestBase {
     public void testToString() {
         setup();
         Body b1 = parseBody(n1.toString());
-        Section s1 = (Section) b1.getElements().get(0);
+        Section s1 = (Section) b1.getSections().get(0);
         Line l1 = (Line) s1.getElements().get(0);
         Note test1 = (Note) l1.getMeasures().get(0).getElements().get(0);
 
         Body b2 = parseBody(n3.toString());
-        Section s2 = (Section) b2.getElements().get(0);
+        Section s2 = (Section) b2.getSections().get(0);
         Line l2 = (Line) s2.getElements().get(0);
         Note test2 = (Note) l2.getMeasures().get(0).getElements().get(0);
 
         Body b3 = parseBody(n4.toString());
-        Section s3 = (Section) b3.getElements().get(0);
+        Section s3 = (Section) b3.getSections().get(0);
         Line l3 = (Line) s3.getElements().get(0);
         Note test3 = (Note) l3.getMeasures().get(0).getElements().get(0);
 

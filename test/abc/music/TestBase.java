@@ -1,7 +1,6 @@
 package abc.music;
 
 import abc.parser.*;
-import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -42,6 +41,12 @@ class TestBase {
 
     Chord createChord() {
         return new Chord(createNoteList(), createNoteLength());
+    }
+
+    Chord createChord(Note note) {
+        List<Note> notes = createNoteList();
+        notes.add(note);
+        return new Chord(notes, createNoteLength());
     }
 
     Tuplet createTuplet() {
@@ -89,21 +94,63 @@ class TestBase {
     }
 
     Repeat createRepeat() {
-        List<RepeatElement> repeated = new ArrayList<>();
-        List<RepeatElement> endings = new ArrayList<>();
+        List<Line> repeated = new ArrayList<>();
+        List<Line> endings = new ArrayList<>();
         repeated.add(createLine());
         endings.add(createLine());
-        endings.add(createMeasure());
+        endings.add(createLine());
         return new Repeat(repeated, endings);
     }
 
-    Repeat createRepeat(RepeatElement element) {
-        List<RepeatElement> repeated = new ArrayList<>();
-        List<RepeatElement> endings = new ArrayList<>();
+    Repeat createRepeat(Line line) {
+        List<Line> repeated = new ArrayList<>();
+        List<Line> endings = new ArrayList<>();
         repeated.add(createLine());
-        endings.add(createMeasure());
-        endings.add(element);
+        endings.add(createLine(createMeasure()));
+        endings.add(line);
         return new Repeat(repeated, endings);
+    }
+
+    VoicePart createVoicePart() {
+        Voice voice = new Voice("Test Voice");
+        List<VoicePartElement> elements = new ArrayList<>();
+        elements.add(createLine());
+        elements.add(createRepeat());
+        return new VoicePart(voice, elements);
+    }
+
+    VoicePart createVoicePart(VoicePartElement element) {
+        Voice voice = new Voice("Test Voice with Element");
+        List<VoicePartElement> elements = new ArrayList<>();
+        elements.add(element);
+        return new VoicePart(voice, elements);
+    }
+
+    Section createSection() {
+        List<SectionElement> elements = new ArrayList<>();
+        elements.add(createLine());
+        return new Section(elements);
+    }
+
+    Section createSection(SectionElement element) {
+        List<SectionElement> elements = new ArrayList<>();
+        elements.add(createLine());
+        elements.add(element);
+        return new Section(elements);
+    }
+
+    Body createBody() {
+        List<Section> sections = new ArrayList<>();
+        sections.add(createSection());
+        sections.add(createSection());
+        return new Body(sections);
+    }
+
+    Body createBody(Section section) {
+        List<Section> sections = new ArrayList<>();
+        sections.add(section);
+        sections.add(createSection(createRepeat()));
+        return new Body(sections);
     }
 
     Header parseHeader(String toParse) {
@@ -131,8 +178,6 @@ class TestBase {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         BodyParser parser = new BodyParser(tokens);
         ParseTree bodyTree = parser.body();
-
-        Trees.inspect(bodyTree, parser);
 
         BodyListener bodyListener = new MusicBodyBuilder();
         ParseTreeWalker walker = new ParseTreeWalker();

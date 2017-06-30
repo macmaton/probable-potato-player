@@ -5,14 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class Repeat implements VoicePartElement {
-    protected final List<RepeatElement> repeatedLines;
-    protected final List<RepeatElement> endings;
+    protected final List<Line> repeatedLines;
+    protected final List<Line> endings;
 
     /**
      * @param repeatedLines nullable - the portion of the music which is repeated
      * @param endings nullable - endings to be used following each repeat
      */
-    public Repeat(List<RepeatElement> repeatedLines, List<RepeatElement> endings) {
+    public Repeat(List<Line> repeatedLines, List<Line> endings) {
         if (repeatedLines != null && repeatedLines.size() > 0) {
             this.repeatedLines = Collections.unmodifiableList(new ArrayList<>(repeatedLines));
         } else {
@@ -27,12 +27,12 @@ public class Repeat implements VoicePartElement {
         checkRep();
     }
 
-    public Repeat(List<RepeatElement> repeatedLines) {
+    public Repeat(List<Line> repeatedLines) {
         this(repeatedLines, null);
         checkRep();
     }
 
-    public List<RepeatElement> getRepeatedLines() {
+    public List<Line> getRepeatedLines() {
         if (repeatedLines != null) {
             return repeatedLines;
         } else {
@@ -40,7 +40,7 @@ public class Repeat implements VoicePartElement {
         }
     }
 
-    public List<RepeatElement> getEndings() {
+    public List<Line> getEndings() {
         if(endings != null) {
             return endings;
         } else {
@@ -78,7 +78,7 @@ public class Repeat implements VoicePartElement {
         StringBuilder result = new StringBuilder();
         if (this.repeatedLines != null) {
             result.append("|:");
-            for (RepeatElement e : repeatedLines) {
+            for (Line e : repeatedLines) {
                 result.append(e.toString());
             }
         }
@@ -87,11 +87,9 @@ public class Repeat implements VoicePartElement {
             result.append(endings.get(0));
         }
         result.append(" :|");
-            for (RepeatElement e : endings) {
-                if (endings.indexOf(e) != 0) {
-                    result.append("[" + (endings.indexOf(e)+1));
-                    result.append(e.toString());
-                }
+            for (int i = 1; i < endings.size(); i++) {
+                result.append("[" + (i+1));
+                result.append(endings.get(i).toString());
             }
         return result.toString();
     }

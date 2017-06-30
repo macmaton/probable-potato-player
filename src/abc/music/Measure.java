@@ -36,9 +36,6 @@ public class Measure implements RepeatElement {
         StringBuilder result = new StringBuilder(" ");
         for (MeasureElement e : elements) {
             result.append(e.toString());
-            if (e.getType().equals(Components.TUPLET) || e.getType().equals(Components.CHORD)) {
-                result.append(" ");
-            }
         }
         return result.toString();
     }

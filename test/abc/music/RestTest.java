@@ -30,12 +30,12 @@ public class RestTest extends TestBase {
     public void testToString() {
         setup();
         Body b1 = parseBody(r1.toString());
-        Section s1 = (Section) b1.getElements().get(0);
+        Section s1 = b1.getSections().get(0);
         Line l1 = (Line) s1.getElements().get(0);
         Rest test1 = (Rest) l1.getMeasures().get(0).getElements().get(0);
 
         Body b2 = parseBody(r3.toString());
-        Section s2 = (Section) b2.getElements().get(0);
+        Section s2 = b2.getSections().get(0);
         Line l2 = (Line) s2.getElements().get(0);
         Rest test2 = (Rest) l2.getMeasures().get(0).getElements().get(0);
 

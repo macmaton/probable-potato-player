@@ -10,7 +10,7 @@ public class RepeatTest extends TestBase {
     public void setup() {
         r1 = createRepeat();
         r2 = createRepeat();
-        r3 = createRepeat(createMeasure(createChord()));
+        r3 = createRepeat(createLine(createMeasure(createChord())));
     }
 
     @Test
@@ -31,18 +31,12 @@ public class RepeatTest extends TestBase {
         setup();
 
         Body b1 = parseBody(r1.toString());
-        Section s1 = (Section) b1.getElements().get(0);
+        Section s1 = (Section) b1.getSections().get(0);
         Repeat test1 = (Repeat) s1.getElements().get(0);
 
-        System.out.println(r1.toString());
-        System.out.println(test1.toString());
-
         Body b2 = parseBody(r3.toString());
-        Section s2 = (Section) b2.getElements().get(0);
+        Section s2 = (Section) b2.getSections().get(0);
         Repeat test2 = (Repeat) s2.getElements().get(0);
-
-        System.out.println(r3.toString());
-        System.out.println(test2.toString());
 
         assert r1.equals(test1);
         assert r3.equals(test2);

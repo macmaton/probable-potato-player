@@ -34,10 +34,12 @@ public class Section implements BodyElement {
 
 
     public String toString() {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder("\n");
         for (BodyElement e : elements) {
             result.append(e.toString());
+            result.append("\n");
         }
+        result.deleteCharAt(result.length()-1);
         if (result.lastIndexOf("|") != result.length()-1) {
             result.append("|");
         }

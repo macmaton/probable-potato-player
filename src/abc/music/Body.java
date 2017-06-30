@@ -9,16 +9,16 @@ import java.util.List;
  * limited implementation based on Spring 2016 version of MIT OCW 6.005
  */
 public class Body implements Music {
-    private final List<BodyElement> elements;
+    private final List<Section> sections;
 
-    public Body(List<BodyElement> elements) {
-        assert elements != null && elements.size() > 0;
-        this.elements = Collections.unmodifiableList(new ArrayList<>(elements));
+    public Body(List<Section> sections) {
+        assert sections != null && sections.size() > 0;
+        this.sections = Collections.unmodifiableList(new ArrayList<>(sections));
         checkRep();
     }
 
-    public List<BodyElement> getElements() {
-        return elements;
+    public List<Section> getSections() {
+        return sections;
     }
 
     @Override
@@ -28,27 +28,27 @@ public class Body implements Music {
 
         Body that = (Body) obj;
 
-        return this.elements.equals(that.elements);
+        return this.sections.equals(that.sections);
     }
 
     @Override
     public int hashCode() {
-        return elements.hashCode();
+        return sections.hashCode();
     }
 
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (BodyElement e : elements) {
-            result.append(e.toString());
+        for (Section s : sections) {
+            result.append(s.toString());
         }
         return result.toString();
     }
 
     private void checkRep() {
-        assert this.elements != null;
-        assert this.elements.size() > 0;
-        for (BodyElement e : this.elements) {
+        assert this.sections != null;
+        assert this.sections.size() > 0;
+        for (BodyElement e : this.sections) {
             assert e != null;
         }
     }

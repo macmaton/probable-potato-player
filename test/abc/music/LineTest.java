@@ -30,11 +30,11 @@ public class LineTest extends TestBase {
     public void testToString() {
         setup();
         Body b1 = parseBody(l1.toString());
-        Section s1 = (Section) b1.getElements().get(0);
+        Section s1 = (Section) b1.getSections().get(0);
         Line test1 = (Line) s1.getElements().get(0);
 
         Body b2 = parseBody(l3.toString());
-        Section s2 = (Section) b2.getElements().get(0);
+        Section s2 = (Section) b2.getSections().get(0);
         Line test2 = (Line) s2.getElements().get(0);
 
         assert l1.equals(test1);

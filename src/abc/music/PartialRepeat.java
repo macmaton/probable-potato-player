@@ -7,7 +7,7 @@ public class PartialRepeat extends Repeat {
 
     public enum RepeatFragment {START, ENDING}
 
-    public PartialRepeat(List<RepeatElement> repeatedLines, List<RepeatElement> endings, RepeatFragment fragment) {
+    public PartialRepeat(List<Line> repeatedLines, List<Line> endings, RepeatFragment fragment) {
         super(repeatedLines, endings);
         this.fragment = fragment;
         checkRep();

@@ -30,12 +30,12 @@ public class MeasureTest extends TestBase {
     public void testToString() {
         setup();
         Body b1 = parseBody(m1.toString());
-        Section s1 = (Section) b1.getElements().get(0);
+        Section s1 = (Section) b1.getSections().get(0);
         Line l1 = (Line) s1.getElements().get(0);
         Measure test1 = l1.getMeasures().get(0);
 
         Body b2 = parseBody(m3.toString());
-        Section s2 = (Section) b2.getElements().get(0);
+        Section s2 = (Section) b2.getSections().get(0);
         Line l2 = (Line) s2.getElements().get(0);
         Measure test2 = l2.getMeasures().get(0);
 

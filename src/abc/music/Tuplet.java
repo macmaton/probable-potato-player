@@ -68,6 +68,7 @@ public class Tuplet implements MeasureElement {
         for (TupletElement e : elements) {
             result.append(e.toString());
         }
+        result.append(" ");
         return result.toString();
     }
 

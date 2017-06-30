@@ -211,16 +211,6 @@ public interface BodyListener extends ParseTreeListener {
    */
   void exitTuplet(BodyParser.TupletContext ctx);
   /**
-   * Enter a parse tree produced by {@link BodyParser#tupletspec}.
-   * @param ctx the parse tree
-   */
-  void enterTupletspec(BodyParser.TupletspecContext ctx);
-  /**
-   * Exit a parse tree produced by {@link BodyParser#tupletspec}.
-   * @param ctx the parse tree
-   */
-  void exitTupletspec(BodyParser.TupletspecContext ctx);
-  /**
    * Enter a parse tree produced by {@link BodyParser#chord}.
    * @param ctx the parse tree
    */

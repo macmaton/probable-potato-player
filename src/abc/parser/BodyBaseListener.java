@@ -259,18 +259,6 @@ public class BodyBaseListener implements BodyListener {
    *
    * <p>The default implementation does nothing.</p>
    */
-  @Override public void enterTupletspec(BodyParser.TupletspecContext ctx) { }
-  /**
-   * {@inheritDoc}
-   *
-   * <p>The default implementation does nothing.</p>
-   */
-  @Override public void exitTupletspec(BodyParser.TupletspecContext ctx) { }
-  /**
-   * {@inheritDoc}
-   *
-   * <p>The default implementation does nothing.</p>
-   */
   @Override public void enterChord(BodyParser.ChordContext ctx) { }
   /**
    * {@inheritDoc}

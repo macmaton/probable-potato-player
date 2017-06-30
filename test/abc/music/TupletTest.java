@@ -29,8 +29,21 @@ public class TupletTest extends TestBase {
     @Test
     public void testToString() {
         setup();
-		assert t1.toString().equals("(3CCC");
-		assert t3.toString().equals("(3CCE");
+
+        Body b1 = parseBody(t1.toString());
+        Section s1 = (Section) b1.getSections().get(0);
+        Line l1 = (Line) s1.getElements().get(0);
+        Measure m1 = l1.getMeasures().get(0);
+        Tuplet test1 = (Tuplet) m1.getElements().get(0);
+
+        Body b2 = parseBody(t3.toString());
+        Section s2 = (Section) b2.getSections().get(0);
+        Line l2 = (Line) s2.getElements().get(0);
+        Measure m2 = l2.getMeasures().get(0);
+        Tuplet test2 = (Tuplet) m2.getElements().get(0);
+
+        assert t1.equals(test1);
+        assert t3.equals(test2);
     }
 
     @Test(expected = UnsupportedOperationException.class)

@@ -6,10 +6,10 @@
 grammar Body;
 import Configuration;
 
-body: bodyelement+ EOF;
+body: NEWLINE* bodyelement+;
 bodyelement: sectionelement+;
-sectionelement: BARLINE? (voicepart+ | voicepartelement+);
-voicepart: fieldvoice voicepartelement+;
+sectionelement: BARLINE? (voicepartelement+ | voicepart+);
+voicepart: fieldvoice WHITESPACE? voicepartelement+;
 voicepartelement: repeatstart | repeatend | repeatfull | repeatendingline | line;
 repeatstart: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+);
 repeatend: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? repeatending? REPEATENDBAR repeatending*
@@ -20,15 +20,15 @@ repeatendingline: (measure BARLINE WHITESPACE?)* repeatending+ (endofline+ | EOF
 repeatending: NTHREPEAT WHITESPACE? (measure BARLINE? WHITESPACE?)+;
 line: WHITESPACE* (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (endofline+ | EOF);
 measure: WHITESPACE* (measureelement WHITESPACE*)+;
-measureelement: tupletelement | (tuplet WHITESPACE);
+measureelement: (tuplet WHITESPACE) | tupletelement;
 tupletelement: note WHITESPACE? | chord WHITESPACE?;
 note: noterest notelength;
 noterest: pitch | REST;
 pitch: ACCIDENTAL? BASENOTE octave*;
 octave: '\'' | ',';
 notelength: NUMBER? ('/' NUMBER?)?;
-tuplet: tupletspec tupletelement+;
-tupletspec: '(' NUMBER;
+tuplet: TUPLETSPEC tupletelement+;
+//tupletspec: '(' NUMBER;
 chord: '[' note+? ']' notelength;
 
 //midtunefield: fieldvoice;
@@ -37,12 +37,15 @@ fieldvoice: 'V:' WHITESPACE? text endofline;
 endofline: comment | NEWLINE;
 comment: '%' text* NEWLINE;
 
-text: (CHAR|NUMBER)+;
+text: ((BASENOTE | WHITESPACE)* (CHAR|NUMBER)+ (BASENOTE | WHITESPACE)*)+;
 
 NEWLINE: EOF | '\n' | '\r''\n'? | '\r';
+TUPLETSPEC: '(' NUMBER;
 BASENOTE: ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g');
 ACCIDENTAL: '^' | '^^' | '_' | '__' | '=';
-BARLINE : '|' | '||' | '[|' | '|]' ;
+BARLINE : '|' | '||' | '[|' | '|]';
+//SECTIONBEGINBAR: '[|';
+//SECTIONENDBAR: '|]';
 REPEATBEGINBAR: '|:';
 REPEATENDBAR: ':|';
 NTHREPEAT: '[1' | '[2';
