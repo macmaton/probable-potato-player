@@ -31,13 +31,13 @@ public class BodyBaseListener implements BodyListener {
    *
    * <p>The default implementation does nothing.</p>
    */
-  @Override public void enterBodyelement(BodyParser.BodyelementContext ctx) { }
+  @Override public void enterSection(BodyParser.SectionContext ctx) { }
   /**
    * {@inheritDoc}
    *
    * <p>The default implementation does nothing.</p>
    */
-  @Override public void exitBodyelement(BodyParser.BodyelementContext ctx) { }
+  @Override public void exitSection(BodyParser.SectionContext ctx) { }
   /**
    * {@inheritDoc}
    *
@@ -302,6 +302,18 @@ public class BodyBaseListener implements BodyListener {
    * <p>The default implementation does nothing.</p>
    */
   @Override public void exitComment(BodyParser.CommentContext ctx) { }
+  /**
+   * {@inheritDoc}
+   *
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override public void enterSectionend(BodyParser.SectionendContext ctx) { }
+  /**
+   * {@inheritDoc}
+   *
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override public void exitSectionend(BodyParser.SectionendContext ctx) { }
   /**
    * {@inheritDoc}
    *

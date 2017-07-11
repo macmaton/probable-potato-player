@@ -35,7 +35,7 @@ public class MusicBodyBuilder implements BodyListener {
     @Override
     public void exitBody(BodyParser.BodyContext ctx) {
         List<Section> elements = new ArrayList<>();
-        for (BodyParser.BodyelementContext e : ctx.bodyelement()) {
+        for (BodyParser.SectionContext e : ctx.section()) {
             if (stack.peek().getType().equals(Music.Components.SECTION)) {
                 elements.add(0, (Section) stack.pop());
             } else {
@@ -47,12 +47,12 @@ public class MusicBodyBuilder implements BodyListener {
     }
 
     @Override
-    public void enterBodyelement(BodyParser.BodyelementContext ctx) {
+    public void enterSection(BodyParser.SectionContext ctx) {
 
     }
 
     @Override
-    public void exitBodyelement(BodyParser.BodyelementContext ctx) {
+    public void exitSection(BodyParser.SectionContext ctx) {
 
     }
 
@@ -547,6 +547,16 @@ public class MusicBodyBuilder implements BodyListener {
     @Override
     public void exitComment(BodyParser.CommentContext ctx) {
 
+    }
+
+    @Override
+    public void enterSectionend(BodyParser.SectionendContext ctx) {
+
+    }
+
+    @Override
+    public void exitSectionend(BodyParser.SectionendContext ctx) {
+        //TODO push object to flag section end for higher level operations to assemble sections
     }
 
     @Override

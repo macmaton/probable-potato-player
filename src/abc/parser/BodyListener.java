@@ -21,15 +21,15 @@ public interface BodyListener extends ParseTreeListener {
    */
   void exitBody(BodyParser.BodyContext ctx);
   /**
-   * Enter a parse tree produced by {@link BodyParser#bodyelement}.
+   * Enter a parse tree produced by {@link BodyParser#section}.
    * @param ctx the parse tree
    */
-  void enterBodyelement(BodyParser.BodyelementContext ctx);
+  void enterSection(BodyParser.SectionContext ctx);
   /**
-   * Exit a parse tree produced by {@link BodyParser#bodyelement}.
+   * Exit a parse tree produced by {@link BodyParser#section}.
    * @param ctx the parse tree
    */
-  void exitBodyelement(BodyParser.BodyelementContext ctx);
+  void exitSection(BodyParser.SectionContext ctx);
   /**
    * Enter a parse tree produced by {@link BodyParser#sectionelement}.
    * @param ctx the parse tree
@@ -250,6 +250,16 @@ public interface BodyListener extends ParseTreeListener {
    * @param ctx the parse tree
    */
   void exitComment(BodyParser.CommentContext ctx);
+  /**
+   * Enter a parse tree produced by {@link BodyParser#sectionend}.
+   * @param ctx the parse tree
+   */
+  void enterSectionend(BodyParser.SectionendContext ctx);
+  /**
+   * Exit a parse tree produced by {@link BodyParser#sectionend}.
+   * @param ctx the parse tree
+   */
+  void exitSectionend(BodyParser.SectionendContext ctx);
   /**
    * Enter a parse tree produced by {@link BodyParser#text}.
    * @param ctx the parse tree
