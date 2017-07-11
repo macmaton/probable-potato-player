@@ -49,8 +49,9 @@ public class VoicePart implements SectionElement {
         result.append(voice.toString());
         for (VoicePartElement e : elements) {
             result.append('\n');
+            result.append(e.toString());
             if (result.lastIndexOf("|") != result.length()-1) {
-                result.append(e.toString()).append("|");
+                result.append("|");
             }
         }
         return result.toString();

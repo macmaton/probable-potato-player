@@ -31,11 +31,11 @@ public class VoicePartTest extends TestBase {
         setup();
 
         Body b1 = parseBody(v1.toString());
-        Section s1 = (Section) b1.getSections().get(0);
+        Section s1 = b1.getSections().get(0);
         VoicePart test1 = (VoicePart) s1.getElements().get(0);
 
         Body b2 = parseBody(v3.toString());
-        Section s2 = (Section) b2.getSections().get(0);
+        Section s2 = b2.getSections().get(0);
         VoicePart test2 = (VoicePart) s2.getElements().get(0);
 
         assert v1.equals(test1);

@@ -33,11 +33,6 @@ public class BodyTest extends TestBase {
         Body test1 = parseBody(b1.toString());
         Body test2 = parseBody(b3.toString());
 
-        System.out.println(b1.toString());
-        System.out.println(test1.toString());
-        System.out.println(b3.toString());
-        System.out.println(test2.toString());
-
         assert b1.equals(test1);
         assert b3.equals(test2);
     }

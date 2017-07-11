@@ -134,7 +134,6 @@ class TestBase {
 
     Section createSection(SectionElement element) {
         List<SectionElement> elements = new ArrayList<>();
-        elements.add(createLine());
         elements.add(element);
         return new Section(elements);
     }
