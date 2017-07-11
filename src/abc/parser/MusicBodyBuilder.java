@@ -53,7 +53,47 @@ public class MusicBodyBuilder implements BodyListener {
 
     @Override
     public void exitSection(BodyParser.SectionContext ctx) {
-
+    //section: (sectionelement+ sectionend? (endofline+ | EOF)) | ((voicepart endofline+)* (voicepart sectionend
+    //    (endofline+ | EOF))+) | (voicepart (endofline+ | EOF))+;
+        List<SectionElement> elements = new ArrayList<>();
+        List<VoicePartElement> voicePartElements = new ArrayList<>();
+        //for (BodyParser.VoicepartelementContext s : ctx.voicepartelement()) {
+        Map<Voice, List<VoicePartElement>> sortedVoiceParts = new HashMap<>();
+        List<Voice> voices = new ArrayList<>();
+        //if the section contains voiceparts, add them to sortedVoiceParts
+        if (ctx.voicepart() != null) {
+            for (BodyParser.VoicepartContext vpc : ctx.voicepart()) {
+                assert stack.peek().getType().equals(Music.Components.VOICEPART);
+                VoicePart voicePart = (VoicePart) stack.pop();
+                if (!voices.contains(voicePart.getVoice())) {
+                    voices.add(voicePart.getVoice());
+                    sortedVoiceParts.put(voicePart.getVoice(), new ArrayList<>());
+                }
+                sortedVoiceParts.get(voicePart.getVoice()).addAll(voicePart.getElements());
+            }
+        }
+        //if the section contains voicepartelements (rather than voiceparts), add them to elements
+        if (ctx.sectionelement() != null && !ctx.sectionelement().isEmpty()) {
+            for (BodyParser.SectionelementContext sec : ctx.sectionelement()) {
+                for (BodyParser.VoicepartelementContext vpec : sec.voicepartelement()) {
+                    assert (stack.peek().getType().equals(Music.Components.LINE) || stack.peek().getType().equals
+                            (Music.Components.REPEAT) || stack.peek().getType().equals(Music.Components
+                            .PARTIALREPEAT));
+                    VoicePartElement element = (VoicePartElement) stack.pop();
+                    voicePartElements.add(0, element);
+                }
+            }
+            elements.addAll(simplifyVoicePartElements(voicePartElements));
+        }
+        //either all elements should be VoiceParts or all elements should be VoicePartElements in a given Section
+        assert (sortedVoiceParts.isEmpty() || elements.isEmpty());
+        if (!sortedVoiceParts.isEmpty()) {
+            for (Voice v : voices) {
+                elements.add(0, new VoicePart(v, simplifyVoicePartElements(sortedVoiceParts.get(v))));
+            }
+        }
+        //}
+        stack.push(new Section(elements));
     }
 
     @Override
@@ -70,40 +110,41 @@ public class MusicBodyBuilder implements BodyListener {
      */
     @Override
     public void exitSectionelement(BodyParser.SectionelementContext ctx) {
-        List<SectionElement> elements = new ArrayList<>();
-        //for (BodyParser.VoicepartelementContext s : ctx.voicepartelement()) {
-            Map<Voice, List<VoicePartElement>> sortedVoiceParts = new HashMap<>();
-            List<Voice> voices = new ArrayList<>();
-            //if the section contains voiceparts, add them to sortedVoiceParts
-            if (ctx.voicepart() != null) {
-                for (BodyParser.VoicepartContext vpc : ctx.voicepart()) {
-                    assert stack.peek().getType().equals(Music.Components.VOICEPART);
-                    VoicePart voicePart = (VoicePart) stack.pop();
-                    if (!voices.contains(voicePart.getVoice())) {
-                        voices.add(voicePart.getVoice());
-                        sortedVoiceParts.put(voicePart.getVoice(), new ArrayList<>());
-                    }
-                    sortedVoiceParts.get(voicePart.getVoice()).addAll(voicePart.getElements());
-                }
-            }
-            //if the section contains voicepartelements (rather than voiceparts), add them to elements
-            if (ctx.voicepartelement() != null) {
-                for (BodyParser.VoicepartelementContext vpec : ctx.voicepartelement()) {
-                    assert (stack.peek().getType().equals(Music.Components.LINE) || stack.peek().getType().equals
-                            (Music.Components.REPEAT) || stack.peek().getType().equals(Music.Components.PARTIALREPEAT));
-                    VoicePartElement element = (VoicePartElement) stack.pop();
-                    elements.add(0, element);
-                }
-            }
-            //either all elements should be VoiceParts or all elements should be VoicePartElements in a given Section
-            assert (sortedVoiceParts.isEmpty() || elements.isEmpty());
-            if (!sortedVoiceParts.isEmpty()) {
-                for (Voice v : voices) {
-                    elements.add(0, new VoicePart(v, simplifyVoicePartElements(sortedVoiceParts.get(v))));
-                }
-            }
-        //}
-        stack.push(new Section(elements));
+//        //sectionelement: BARLINE? (SECTIONBEGINBAR? (voicepartelement endofline+)* voicepartelement);
+//        List<SectionElement> elements = new ArrayList<>();
+//        //for (BodyParser.VoicepartelementContext s : ctx.voicepartelement()) {
+//            Map<Voice, List<VoicePartElement>> sortedVoiceParts = new HashMap<>();
+//            List<Voice> voices = new ArrayList<>();
+//            //if the section contains voiceparts, add them to sortedVoiceParts
+//            if (ctx.voicepart() != null) {
+//                for (BodyParser.VoicepartContext vpc : ctx.voicepart()) {
+//                    assert stack.peek().getType().equals(Music.Components.VOICEPART);
+//                    VoicePart voicePart = (VoicePart) stack.pop();
+//                    if (!voices.contains(voicePart.getVoice())) {
+//                        voices.add(voicePart.getVoice());
+//                        sortedVoiceParts.put(voicePart.getVoice(), new ArrayList<>());
+//                    }
+//                    sortedVoiceParts.get(voicePart.getVoice()).addAll(voicePart.getElements());
+//                }
+//            }
+//            //if the section contains voicepartelements (rather than voiceparts), add them to elements
+//            if (ctx.voicepartelement() != null) {
+//                for (BodyParser.VoicepartelementContext vpec : ctx.voicepartelement()) {
+//                    assert (stack.peek().getType().equals(Music.Components.LINE) || stack.peek().getType().equals
+//                            (Music.Components.REPEAT) || stack.peek().getType().equals(Music.Components.PARTIALREPEAT));
+//                    VoicePartElement element = (VoicePartElement) stack.pop();
+//                    elements.add(0, element);
+//                }
+//            }
+//            //either all elements should be VoiceParts or all elements should be VoicePartElements in a given Section
+//            assert (sortedVoiceParts.isEmpty() || elements.isEmpty());
+//            if (!sortedVoiceParts.isEmpty()) {
+//                for (Voice v : voices) {
+//                    elements.add(0, new VoicePart(v, simplifyVoicePartElements(sortedVoiceParts.get(v))));
+//                }
+//            }
+//        //}
+//        stack.push(new Section(elements));
     }
 
     @Override
@@ -127,6 +168,7 @@ public class MusicBodyBuilder implements BodyListener {
             VoicePartElement element = (VoicePartElement) stack.pop();
             elements.add(0, element);
         }
+
         stack.push(new VoicePart(new Voice(voice), elements));
     }
 
@@ -242,13 +284,18 @@ public class MusicBodyBuilder implements BodyListener {
             assert stack.peek().getType().equals(Music.Components.PARTIALREPEAT);
             Repeat ending = (Repeat) stack.pop();
             assert ending.getRepeatedLines() == null;
-            List<Measure> nthending = new ArrayList<>();
 
+            List<Measure> nthending = new ArrayList<>();
             for (RepeatElement endingElement : ending.getEndings()) {
-                assert endingElement.getType().equals(Music.Components.MEASURE);
-                nthending.add((Measure) endingElement);
+                if (endingElement.getType().equals(Music.Components.LINE)) {
+                    endings.add(0, (Line) endingElement);
+                } else if (endingElement.getType().equals(Music.Components.MEASURE)){
+                    nthending.add((Measure) endingElement);
+                }
             }
-            endings.add(0, new Line(nthending));
+            if (!nthending.isEmpty()) {
+                endings.add(0, new Line(nthending));
+            }
         }
 
         stack.push(new PartialRepeat(null, endings, PartialRepeat.RepeatFragment.ENDING));
@@ -491,16 +538,6 @@ public class MusicBodyBuilder implements BodyListener {
         stack.push(new Tuplet(spec, elements));
     }
 
-//    @Override
-//    public void enterTupletspec(BodyParser.TupletspecContext ctx) {
-//
-//    }
-//
-//    @Override
-//    public void exitTupletspec(BodyParser.TupletspecContext ctx) {
-//
-//    }
-
     @Override
     public void enterChord(BodyParser.ChordContext ctx) {
 
@@ -556,7 +593,6 @@ public class MusicBodyBuilder implements BodyListener {
 
     @Override
     public void exitSectionend(BodyParser.SectionendContext ctx) {
-        //TODO push object to flag section end for higher level operations to assemble sections
     }
 
     @Override
@@ -674,7 +710,6 @@ public class MusicBodyBuilder implements BodyListener {
                         "a Line");
             }
         }
-
         return new Line(measures);
     }
 

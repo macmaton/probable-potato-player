@@ -31,11 +31,11 @@ public class RepeatTest extends TestBase {
         setup();
 
         Body b1 = parseBody(r1.toString());
-        Section s1 = (Section) b1.getSections().get(0);
+        Section s1 = b1.getSections().get(0);
         Repeat test1 = (Repeat) s1.getElements().get(0);
 
         Body b2 = parseBody(r3.toString());
-        Section s2 = (Section) b2.getSections().get(0);
+        Section s2 = b2.getSections().get(0);
         Repeat test2 = (Repeat) s2.getElements().get(0);
 
         assert r1.equals(test1);

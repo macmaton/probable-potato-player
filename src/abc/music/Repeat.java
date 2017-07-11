@@ -85,12 +85,13 @@ public class Repeat implements VoicePartElement {
         if (this.endings != null) {
             result.append(" |[1 ");
             result.append(endings.get(0));
-        }
-        result.append(" :|");
+            result.append(" :|");
             for (int i = 1; i < endings.size(); i++) {
                 result.append("[" + (i+1));
                 result.append(endings.get(i).toString());
             }
+        }
+        result.append(" :|");
         return result.toString();
     }
 

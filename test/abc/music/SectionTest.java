@@ -10,7 +10,7 @@ public class SectionTest extends TestBase {
     public void setup() {
         s1 = createSection();
         s2 = createSection();
-        s3 = createSection(createLine());
+        s3 = createSection(createVoicePart());
     }
 
     @Test
@@ -31,10 +31,10 @@ public class SectionTest extends TestBase {
         setup();
 
         Body b1 = parseBody(s1.toString());
-        Section test1 = (Section) b1.getSections().get(0);
+        Section test1 = b1.getSections().get(0);
 
         Body b2 = parseBody(s3.toString());
-        Section test2 = (Section) b2.getSections().get(0);
+        Section test2 = b2.getSections().get(0);
 
         assert s1.equals(test1);
         assert s3.equals(test2);
