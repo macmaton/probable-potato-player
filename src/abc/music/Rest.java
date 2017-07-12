@@ -12,6 +12,10 @@ public class Rest implements TupletElement {
         this.length = new NoteLength();
     }
 
+    public NoteLength getLength() {
+        return length;
+    }
+
     @Override
     public int hashCode() {
         return length.hashCode();

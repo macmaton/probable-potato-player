@@ -14,7 +14,7 @@ voicepart: fieldvoice WHITESPACE? SECTIONBEGINBAR? (voicepartelement endofline+)
 voicepartelement: repeatfull | repeatendingline | repeatstart | repeatend | line;
 repeatstart: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)?;
 repeatend: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? repeatending+;
-repeatfull: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? repeatending+;
+repeatfull: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (repeatending+ | REPEATENDBAR);
 repeatendingline: /*(measure BARLINE WHITESPACE?)* */repeatending+;
 repeatending: NTHREPEAT WHITESPACE* (measure BARLINE WHITESPACE?)* (measure REPEATENDBAR WHITESPACE?);
 line: WHITESPACE* ((measure BARLINE WHITESPACE?)+ measure? | measure WHITESPACE*) ;
@@ -29,7 +29,7 @@ octave: '\'' | ',';
 notelength: NUMBER? ('/' NUMBER?)?;
 tuplet: TUPLETSPEC tupletelement+;
 //tupletspec: '(' NUMBER;
-chord: '[' note+? ']' notelength;
+chord: '[' note+? ']' /*notelength*/;
 
 //midtunefield: fieldvoice;
 fieldvoice: 'V:' WHITESPACE? text endofline;

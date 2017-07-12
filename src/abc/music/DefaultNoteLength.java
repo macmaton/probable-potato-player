@@ -28,7 +28,7 @@ public class DefaultNoteLength implements HeaderField {
     }
 
     public double getDefaultNoteLength() {
-        return numerator / denominator;
+        return (double) numerator / (double) denominator;
     }
 
     public boolean isSpecified() {

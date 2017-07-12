@@ -37,6 +37,12 @@ public class Section implements BodyElement {
         StringBuilder result = new StringBuilder("\n");
         for (BodyElement e : elements) {
             result.append(e.toString());
+            if (e.getType().equals(Components.VOICEPART) && elements.indexOf(e) != elements.size()-1) {
+                if (result.lastIndexOf("|") != result.length()-1) {
+                    result.append("|");
+                }
+                result.append("]");
+            }
             result.append("\n");
         }
         result.deleteCharAt(result.length()-1);

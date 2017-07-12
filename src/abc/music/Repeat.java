@@ -48,6 +48,14 @@ public class Repeat implements VoicePartElement {
         }
     }
 
+    public boolean hasEndings() {
+        if (endings != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public int hashCode() {
         int result = repeatedLines != null ? repeatedLines.hashCode() : 0;

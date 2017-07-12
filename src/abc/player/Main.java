@@ -2,17 +2,13 @@ package abc.player;
 
 import abc.music.Body;
 import abc.music.Header;
-import abc.music.NoteLength;
 import abc.parser.*;
-import abc.sound.Pitch;
 import abc.sound.SequencePlayer;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,6 +45,14 @@ public class Main {
         MusicBodyBuilder bb = (MusicBodyBuilder) bodyListener;
         Body body = (Body) bb.getBody();
         System.out.println(body.toString());
+
+        PlayerBuilder playerBuilder = new PlayerBuilder(header, body, 12);
+        SequencePlayer player = playerBuilder.getPlayer();
+        try {
+            player.play();
+        } catch (MidiUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
@@ -98,40 +102,5 @@ public class Main {
         body = parser.body();
 
         return body;
-    }
-
-    private SequencePlayer buildPlayer(Header header, Body body) {
-        try {
-            int ticksPerBeat = 12;
-            SequencePlayer player = new SequencePlayer(header.getTempo().getBeatsPerMinute(), ticksPerBeat);
-
-            //TODO: work through body to create and add pitches to player
-            //player.addNote(buildPitch(parsed, key).toMidiNote(), startTick, getNoteTicks(parsed, header,
-            // ticksPerBeat);
-
-
-
-        } catch (MidiUnavailableException e) {
-            //TODO: useful error message?
-            e.printStackTrace();
-        } catch (InvalidMidiDataException e) {
-            e.printStackTrace();
-        }
-        throw new NotImplementedException();
-    }
-
-    private int getNoteTicks(NoteLength parsed, Header header, int ticksPerBeat) {
-        //numTicks = ticksPerBeat * (NoteLength * DefaultNoteLength / BeatLength)
-        double working = parsed.getNoteLength() * header.getLength().getDefaultNoteLength();
-        working = working/header.getTempo().getBeatLength().getNoteLength();
-        int numTicks = (int) (working*ticksPerBeat);
-        return numTicks;
-    }
-
-    private Pitch buildPitch(abc.music.Pitch parsed, abc.music.Key key) {
-        abc.music.Pitch actual = key.getPitch(parsed);
-        Pitch pitch = new Pitch(actual.getBaseNoteChar());
-        pitch.transpose(actual.getSemitonesUp());
-        return pitch;
     }
 }

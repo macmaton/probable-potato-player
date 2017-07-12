@@ -64,9 +64,9 @@ public class Chord implements TupletElement {
             result.append(n.toString());
         }
         result.append("]");
-        if (length != null) {
-            result.append(length.toString());
-        }
+//        if (length != null) {
+//            result.append(length.toString());
+//        }
         return result.toString();
     }
 
