@@ -546,13 +546,14 @@ public class MusicBodyBuilder implements BodyListener {
     @Override
     public void exitChord(BodyParser.ChordContext ctx) {
         assert stack.peek().getType().equals(Music.Components.NOTELENGTH);
-        NoteLength length = (NoteLength) stack.pop();
+        //NoteLength length = (NoteLength) stack.pop();
 
         List<Note> notes = new ArrayList<>();
         for (BodyParser.NoteContext n : ctx.note()) {
             assert stack.peek().getType().equals(Music.Components.NOTE);
             notes.add(0, (Note) stack.pop());
         }
+        NoteLength length = notes.get(0).getLength();
         stack.push(new Chord(notes, length));
     }
 

@@ -3,14 +3,17 @@
 package abc.parser;
 // Do not edit this .java file! Edit the .g4 file and re-run Antlr.
 
-import org.antlr.v4.runtime.atn.*;
-import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.atn.ATN;
+import org.antlr.v4.runtime.atn.ATNDeserializer;
+import org.antlr.v4.runtime.atn.ParserATNSimulator;
+import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class BodyParser extends Parser {
@@ -2003,9 +2006,6 @@ public class BodyParser extends Parser {
   }
 
   public static class ChordContext extends ParserRuleContext {
-    public NotelengthContext notelength() {
-      return getRuleContext(NotelengthContext.class,0);
-    }
     public List<NoteContext> note() {
       return getRuleContexts(NoteContext.class);
     }
@@ -2057,8 +2057,6 @@ public class BodyParser extends Parser {
       } while ( _alt!=1 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
       setState(364);
       match(T__4);
-      setState(365);
-      notelength();
       }
     }
     catch (RecognitionException re) {
@@ -2100,20 +2098,20 @@ public class BodyParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(367);
+      setState(366);
       match(T__5);
-      setState(369);
+      setState(368);
       switch ( getInterpreter().adaptivePredict(_input,67,_ctx) ) {
       case 1:
         {
-        setState(368);
+        setState(367);
         match(WHITESPACE);
         }
         break;
       }
-      setState(371);
+      setState(370);
       text();
-      setState(372);
+      setState(371);
       endofline();
       }
     }
@@ -2153,17 +2151,17 @@ public class BodyParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(376);
+      setState(375);
       switch (_input.LA(1)) {
       case T__6:
         {
-        setState(374);
+        setState(373);
         comment();
         }
         break;
       case NEWLINE:
         {
-        setState(375);
+        setState(374);
         match(NEWLINE);
         }
         break;
@@ -2212,23 +2210,23 @@ public class BodyParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(378);
+      setState(377);
       match(T__6);
-      setState(382);
+      setState(381);
       _errHandler.sync(this);
       _la = _input.LA(1);
       while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BASENOTE) | (1L << NUMBER) | (1L << WHITESPACE) | (1L << CHAR))) != 0)) {
         {
         {
-        setState(379);
+        setState(378);
         text();
         }
         }
-        setState(384);
+        setState(383);
         _errHandler.sync(this);
         _la = _input.LA(1);
       }
-      setState(385);
+      setState(384);
       match(NEWLINE);
       }
     }
@@ -2282,7 +2280,7 @@ public class BodyParser extends Parser {
       int _alt;
       enterOuterAlt(_localctx, 1);
       {
-      setState(404); 
+      setState(403); 
       _errHandler.sync(this);
       _alt = 1;
       do {
@@ -2290,13 +2288,13 @@ public class BodyParser extends Parser {
         case 1:
           {
           {
-          setState(390);
+          setState(389);
           _errHandler.sync(this);
           _la = _input.LA(1);
           while (_la==BASENOTE || _la==WHITESPACE) {
             {
             {
-            setState(387);
+            setState(386);
             _la = _input.LA(1);
             if ( !(_la==BASENOTE || _la==WHITESPACE) ) {
             _errHandler.recoverInline(this);
@@ -2305,11 +2303,11 @@ public class BodyParser extends Parser {
             }
             }
             }
-            setState(392);
+            setState(391);
             _errHandler.sync(this);
             _la = _input.LA(1);
           }
-          setState(394); 
+          setState(393); 
           _errHandler.sync(this);
           _alt = 1;
           do {
@@ -2317,7 +2315,7 @@ public class BodyParser extends Parser {
             case 1:
               {
               {
-              setState(393);
+              setState(392);
               _la = _input.LA(1);
               if ( !(_la==NUMBER || _la==CHAR) ) {
               _errHandler.recoverInline(this);
@@ -2330,18 +2328,18 @@ public class BodyParser extends Parser {
             default:
               throw new NoViableAltException(this);
             }
-            setState(396); 
+            setState(395); 
             _errHandler.sync(this);
             _alt = getInterpreter().adaptivePredict(_input,71,_ctx);
           } while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
-          setState(401);
+          setState(400);
           _errHandler.sync(this);
           _alt = getInterpreter().adaptivePredict(_input,72,_ctx);
           while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
             if ( _alt==1 ) {
               {
               {
-              setState(398);
+              setState(397);
               _la = _input.LA(1);
               if ( !(_la==BASENOTE || _la==WHITESPACE) ) {
               _errHandler.recoverInline(this);
@@ -2351,7 +2349,7 @@ public class BodyParser extends Parser {
               }
               } 
             }
-            setState(403);
+            setState(402);
             _errHandler.sync(this);
             _alt = getInterpreter().adaptivePredict(_input,72,_ctx);
           }
@@ -2361,7 +2359,7 @@ public class BodyParser extends Parser {
         default:
           throw new NoViableAltException(this);
         }
-        setState(406); 
+        setState(405); 
         _errHandler.sync(this);
         _alt = getInterpreter().adaptivePredict(_input,73,_ctx);
       } while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -2379,7 +2377,7 @@ public class BodyParser extends Parser {
   }
 
   public static final String _serializedATN =
-    "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\27\u019b\4\2\t"+
+    "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\27\u019a\4\2\t"+
       "\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n"+
       "\4\13\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21"+
       "\4\22\t\22\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30"+
@@ -2411,19 +2409,19 @@ public class BodyParser extends Parser {
       "\u014f\n\22\3\22\3\22\7\22\u0153\n\22\f\22\16\22\u0156\13\22\3\23"+
       "\3\23\3\24\5\24\u015b\n\24\3\24\3\24\5\24\u015f\n\24\5\24\u0161\n"+
       "\24\3\25\3\25\6\25\u0165\n\25\r\25\16\25\u0166\3\26\3\26\6\26\u016b"+
-      "\n\26\r\26\16\26\u016c\3\26\3\26\3\26\3\27\3\27\5\27\u0174\n\27\3"+
-      "\27\3\27\3\27\3\30\3\30\5\30\u017b\n\30\3\31\3\31\7\31\u017f\n\31"+
-      "\f\31\16\31\u0182\13\31\3\31\3\31\3\32\7\32\u0187\n\32\f\32\16\32"+
-      "\u018a\13\32\3\32\6\32\u018d\n\32\r\32\16\32\u018e\3\32\7\32\u0192"+
-      "\n\32\f\32\16\32\u0195\13\32\6\32\u0197\n\32\r\32\16\32\u0198\3\32"+
-      "\3\u016c\2\33\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62"+
-      "\2\5\3\2\3\4\4\2\f\f\26\26\4\2\25\25\27\27\u01cf\2\67\3\2\2\2\4\u0080"+
-      "\3\2\2\2\6\u0083\3\2\2\2\b\u0095\3\2\2\2\n\u00ae\3\2\2\2\f\u00b0\3"+
-      "\2\2\2\16\u00c9\3\2\2\2\20\u00d8\3\2\2\2\22\u00f0\3\2\2\2\24\u00f4"+
-      "\3\2\2\2\26\u010d\3\2\2\2\30\u0128\3\2\2\2\32\u013a\3\2\2\2\34\u0144"+
+      "\n\26\r\26\16\26\u016c\3\26\3\26\3\27\3\27\5\27\u0173\n\27\3\27\3"+
+      "\27\3\27\3\30\3\30\5\30\u017a\n\30\3\31\3\31\7\31\u017e\n\31\f\31"+
+      "\16\31\u0181\13\31\3\31\3\31\3\32\7\32\u0186\n\32\f\32\16\32\u0189"+
+      "\13\32\3\32\6\32\u018c\n\32\r\32\16\32\u018d\3\32\7\32\u0191\n\32"+
+      "\f\32\16\32\u0194\13\32\6\32\u0196\n\32\r\32\16\32\u0197\3\32\3\u016c"+
+      "\2\33\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\2\5\3"+
+      "\2\3\4\4\2\f\f\26\26\4\2\25\25\27\27\u01ce\2\67\3\2\2\2\4\u0080\3"+
+      "\2\2\2\6\u0083\3\2\2\2\b\u0095\3\2\2\2\n\u00ae\3\2\2\2\f\u00b0\3\2"+
+      "\2\2\16\u00c9\3\2\2\2\20\u00d8\3\2\2\2\22\u00f0\3\2\2\2\24\u00f4\3"+
+      "\2\2\2\26\u010d\3\2\2\2\30\u0128\3\2\2\2\32\u013a\3\2\2\2\34\u0144"+
       "\3\2\2\2\36\u0146\3\2\2\2 \u014b\3\2\2\2\"\u014e\3\2\2\2$\u0157\3"+
-      "\2\2\2&\u015a\3\2\2\2(\u0162\3\2\2\2*\u0168\3\2\2\2,\u0171\3\2\2\2"+
-      ".\u017a\3\2\2\2\60\u017c\3\2\2\2\62\u0196\3\2\2\2\64\66\7\n\2\2\65"+
+      "\2\2\2&\u015a\3\2\2\2(\u0162\3\2\2\2*\u0168\3\2\2\2,\u0170\3\2\2\2"+
+      ".\u0179\3\2\2\2\60\u017b\3\2\2\2\62\u0195\3\2\2\2\64\66\7\n\2\2\65"+
       "\64\3\2\2\2\669\3\2\2\2\67\65\3\2\2\2\678\3\2\2\28;\3\2\2\29\67\3"+
       "\2\2\2:<\5\4\3\2;:\3\2\2\2<=\3\2\2\2=;\3\2\2\2=>\3\2\2\2>\3\3\2\2"+
       "\2?A\5\6\4\2@?\3\2\2\2AB\3\2\2\2B@\3\2\2\2BC\3\2\2\2CE\3\2\2\2DF\7"+
@@ -2526,27 +2524,27 @@ public class BodyParser extends Parser {
       "\u0164\3\2\2\2\u0166\u0167\3\2\2\2\u0167)\3\2\2\2\u0168\u016a\7\6"+
       "\2\2\u0169\u016b\5\36\20\2\u016a\u0169\3\2\2\2\u016b\u016c\3\2\2\2"+
       "\u016c\u016d\3\2\2\2\u016c\u016a\3\2\2\2\u016d\u016e\3\2\2\2\u016e"+
-      "\u016f\7\7\2\2\u016f\u0170\5&\24\2\u0170+\3\2\2\2\u0171\u0173\7\b"+
-      "\2\2\u0172\u0174\7\26\2\2\u0173\u0172\3\2\2\2\u0173\u0174\3\2\2\2"+
-      "\u0174\u0175\3\2\2\2\u0175\u0176\5\62\32\2\u0176\u0177\5.\30\2\u0177"+
-      "-\3\2\2\2\u0178\u017b\5\60\31\2\u0179\u017b\7\n\2\2\u017a\u0178\3"+
-      "\2\2\2\u017a\u0179\3\2\2\2\u017b/\3\2\2\2\u017c\u0180\7\t\2\2\u017d"+
-      "\u017f\5\62\32\2\u017e\u017d\3\2\2\2\u017f\u0182\3\2\2\2\u0180\u017e"+
-      "\3\2\2\2\u0180\u0181\3\2\2\2\u0181\u0183\3\2\2\2\u0182\u0180\3\2\2"+
-      "\2\u0183\u0184\7\n\2\2\u0184\61\3\2\2\2\u0185\u0187\t\3\2\2\u0186"+
-      "\u0185\3\2\2\2\u0187\u018a\3\2\2\2\u0188\u0186\3\2\2\2\u0188\u0189"+
-      "\3\2\2\2\u0189\u018c\3\2\2\2\u018a\u0188\3\2\2\2\u018b\u018d\t\4\2"+
-      "\2\u018c\u018b\3\2\2\2\u018d\u018e\3\2\2\2\u018e\u018c\3\2\2\2\u018e"+
-      "\u018f\3\2\2\2\u018f\u0193\3\2\2\2\u0190\u0192\t\3\2\2\u0191\u0190"+
-      "\3\2\2\2\u0192\u0195\3\2\2\2\u0193\u0191\3\2\2\2\u0193\u0194\3\2\2"+
-      "\2\u0194\u0197\3\2\2\2\u0195\u0193\3\2\2\2\u0196\u0188\3\2\2\2\u0197"+
-      "\u0198\3\2\2\2\u0198\u0196\3\2\2\2\u0198\u0199\3\2\2\2\u0199\63\3"+
-      "\2\2\2L\67=BEJPSV\\`hkntwz~\u0080\u0083\u0086\u008c\u0090\u0097\u009a"+
-      "\u00a0\u00a4\u00ae\u00b4\u00b8\u00be\u00c0\u00c5\u00c9\u00cf\u00d1"+
-      "\u00d6\u00dc\u00e0\u00e6\u00e8\u00ed\u00f2\u00f8\u00fe\u0102\u0108"+
-      "\u010d\u0113\u0117\u011a\u0120\u0123\u0128\u012f\u0134\u013a\u013e"+
-      "\u0142\u0144\u014b\u014e\u0154\u015a\u015e\u0160\u0166\u016c\u0173"+
-      "\u017a\u0180\u0188\u018e\u0193\u0198";
+      "\u016f\7\7\2\2\u016f+\3\2\2\2\u0170\u0172\7\b\2\2\u0171\u0173\7\26"+
+      "\2\2\u0172\u0171\3\2\2\2\u0172\u0173\3\2\2\2\u0173\u0174\3\2\2\2\u0174"+
+      "\u0175\5\62\32\2\u0175\u0176\5.\30\2\u0176-\3\2\2\2\u0177\u017a\5"+
+      "\60\31\2\u0178\u017a\7\n\2\2\u0179\u0177\3\2\2\2\u0179\u0178\3\2\2"+
+      "\2\u017a/\3\2\2\2\u017b\u017f\7\t\2\2\u017c\u017e\5\62\32\2\u017d"+
+      "\u017c\3\2\2\2\u017e\u0181\3\2\2\2\u017f\u017d\3\2\2\2\u017f\u0180"+
+      "\3\2\2\2\u0180\u0182\3\2\2\2\u0181\u017f\3\2\2\2\u0182\u0183\7\n\2"+
+      "\2\u0183\61\3\2\2\2\u0184\u0186\t\3\2\2\u0185\u0184\3\2\2\2\u0186"+
+      "\u0189\3\2\2\2\u0187\u0185\3\2\2\2\u0187\u0188\3\2\2\2\u0188\u018b"+
+      "\3\2\2\2\u0189\u0187\3\2\2\2\u018a\u018c\t\4\2\2\u018b\u018a\3\2\2"+
+      "\2\u018c\u018d\3\2\2\2\u018d\u018b\3\2\2\2\u018d\u018e\3\2\2\2\u018e"+
+      "\u0192\3\2\2\2\u018f\u0191\t\3\2\2\u0190\u018f\3\2\2\2\u0191\u0194"+
+      "\3\2\2\2\u0192\u0190\3\2\2\2\u0192\u0193\3\2\2\2\u0193\u0196\3\2\2"+
+      "\2\u0194\u0192\3\2\2\2\u0195\u0187\3\2\2\2\u0196\u0197\3\2\2\2\u0197"+
+      "\u0195\3\2\2\2\u0197\u0198\3\2\2\2\u0198\63\3\2\2\2L\67=BEJPSV\\`"+
+      "hkntwz~\u0080\u0083\u0086\u008c\u0090\u0097\u009a\u00a0\u00a4\u00ae"+
+      "\u00b4\u00b8\u00be\u00c0\u00c5\u00c9\u00cf\u00d1\u00d6\u00dc\u00e0"+
+      "\u00e6\u00e8\u00ed\u00f2\u00f8\u00fe\u0102\u0108\u010d\u0113\u0117"+
+      "\u011a\u0120\u0123\u0128\u012f\u0134\u013a\u013e\u0142\u0144\u014b"+
+      "\u014e\u0154\u015a\u015e\u0160\u0166\u016c\u0172\u0179\u017f\u0187"+
+      "\u018d\u0192\u0197";
   public static final ATN _ATN =
     new ATNDeserializer().deserialize(_serializedATN.toCharArray());
   static {
