@@ -587,15 +587,6 @@ public class MusicBodyBuilder implements BodyListener {
     }
 
     @Override
-    public void enterSectionend(BodyParser.SectionendContext ctx) {
-
-    }
-
-    @Override
-    public void exitSectionend(BodyParser.SectionendContext ctx) {
-    }
-
-    @Override
     public void enterText(BodyParser.TextContext ctx) {
 
     }

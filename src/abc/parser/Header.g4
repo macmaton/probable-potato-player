@@ -5,12 +5,11 @@
  */
 grammar Header;
 import Configuration;
-//TODO: COLON IS RESERVED FOR HEADER FIELD DEMARKATION IN THIS IMPLEMENTATION.  TEXT MUST ALLOW ALL UTF-8 CHARACTERS
+//TODO: COLON IS RESERVED FOR HEADER FIELD DEMARKATION IN THIS IMPLEMENTATION.  TEXT SHOULD ALLOW ALL UTF-8 CHARACTERS
 root: header;
 header: fieldindex ENDOFLINE* fieldtitle otherfields* fieldkey body;
-fieldindex: INDEXMARKER NUMBER ENDOFLINE;
+fieldindex: INDEXMARKER NUMBER? ENDOFLINE;
 fieldtitle: TITLEMARKER TEXT ENDOFLINE;
-//fieldkey: KEYMARKER ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G') (('#' | 'b')?) ('m'?) ENDOFLINE;
 fieldkey: KEYMARKER ('C' | 'Am' | 'G' | 'D' | 'A' | 'E' | 'B' | 'F#' | 'C#' | 'Em' | 'Bm' | 'F#m' | 'C#m' | 'G#m' | 'D#m' | 'A#m'
                              | 'F' | 'Bb' | 'Eb' | 'Ab' | 'Db' | 'Gb' | 'Cb' | 'Dm' | 'Gm' | 'Cm' | 'Fm' | 'Bbm' |
                              'Ebm' | 'Abm') ENDOFLINE;

@@ -152,6 +152,55 @@ class TestBase {
         return new Body(sections);
     }
 
+    Header createHeader(Index index) {
+        return new Header(index, new Title("Title"), new Key(Key.Keys.AMAJOR));
+    }
+
+    Header createHeader(Title title) {
+        return new Header(new Index(0), title, new Key(Key.Keys.AMAJOR));
+    }
+
+    Header createHeader(Key key) {
+        return new Header(new Index(0), new Title("Title"), key);
+    }
+
+    Header createHeader(Meter meter) {
+        return new Header(new Index(0), new Title("Title"), new Key(Key.Keys.AMAJOR), meter, null, null, null,
+                null);
+    }
+
+    Header createHeader(DefaultNoteLength length) {
+        return new Header(new Index(0), new Title("Title"), new Key(Key.Keys.AMAJOR), null, length, null, null,
+                null);
+    }
+
+    Header createHeader(DefaultNoteLength length, Meter meter) {
+        return new Header(new Index(0), new Title("Title"), new Key(Key.Keys.AMAJOR), meter, length, null, null,
+                null);
+    }
+
+    Header createHeader(Tempo tempo) {
+        return new Header(new Index(0), new Title("Title"), new Key(Key.Keys.AMAJOR), null, null, tempo, null,
+                null);
+    }
+
+    Header createHeader(Tempo tempo, DefaultNoteLength length) {
+        return new Header(new Index(0), new Title("Title"), new Key(Key.Keys.AMAJOR), null, length, tempo, null,
+                null);
+    }
+
+    Header createHeader(Composer composer) {
+        return new Header(new Index(0), new Title("Title"), new Key(Key.Keys.AMAJOR), null, null, null, composer,
+                null);
+    }
+
+    Header createHeader(Voice voice) {
+        List<Voice> voices = new ArrayList<>();
+        voices.add(voice);
+        return new Header(new Index(0), new Title("Title"), new Key(Key.Keys.AMAJOR), null, null, null, null,
+                voices);
+    }
+
     Header parseHeader(String toParse) {
         ANTLRInputStream stream = new ANTLRInputStream(toParse);
 

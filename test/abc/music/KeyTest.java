@@ -2,7 +2,7 @@ package abc.music;
 
 import org.junit.Test;
 
-public class KeyTest {
+public class KeyTest extends TestBase {
     private Key k1;
     private Key k2;
     private Key k3;
@@ -29,8 +29,11 @@ public class KeyTest {
     @Test
     public void testToString() {
         setup();
-        assert k1.toString().equals("K: Bbm");
-        assert k3.toString().equals("K: G");
+        Header h1 = parseHeader(createHeader(k1).toString() + "\n");
+        Header h2 = parseHeader(createHeader(k3).toString() + "\n");
+
+        assert k1.equals(h1.getKey());
+        assert k3.equals(h2.getKey());
     }
 
     //TODO: test that flats/sharps are being correctly assigned (esp flats)

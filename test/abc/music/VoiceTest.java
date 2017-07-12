@@ -2,7 +2,7 @@ package abc.music;
 
 import org.junit.Test;
 
-public class VoiceTest {
+public class VoiceTest extends TestBase {
 
     private Voice v1;
     private Voice v2;
@@ -31,7 +31,12 @@ public class VoiceTest {
     @Test
     public void testToString() {
         setup();
-        assert v1.toString().equals("V: test");
+
+        Header h1 = parseHeader(createHeader(v1).toString() + "\n");
+        Header h2 = parseHeader(createHeader(v3).toString() + "\n");
+
+        assert v1.equals(h1.getVoices().get(0));
+        assert v3.equals(h2.getVoices().get(0));
     }
 
     @Test(expected = AssertionError.class)

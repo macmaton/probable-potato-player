@@ -2,11 +2,10 @@ package abc.music;
 
 import org.junit.Test;
 
-public class TitleTest {
+public class TitleTest extends TestBase {
     private Title t1;
     private Title t2;
     private Title t3;
-    private Title t4;
 
     public void setup() {
         t1 = new Title("Fur Elise");
@@ -30,7 +29,11 @@ public class TitleTest {
     @Test
     public void testToString() {
         setup();
-        assert t3.toString().equals("T: Concerto No. 5 in D minor");
+        Header h1 = parseHeader(createHeader(t1).toString() + "\n");
+        Header h2 = parseHeader(createHeader(t3).toString() + "\n");
+
+        assert t1.equals(h1.getTitle());
+        assert t3.equals(h2.getTitle());
     }
 
     @Test(expected = AssertionError.class)

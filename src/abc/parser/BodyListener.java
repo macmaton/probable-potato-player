@@ -251,16 +251,6 @@ public interface BodyListener extends ParseTreeListener {
    */
   void exitComment(BodyParser.CommentContext ctx);
   /**
-   * Enter a parse tree produced by {@link BodyParser#sectionend}.
-   * @param ctx the parse tree
-   */
-  void enterSectionend(BodyParser.SectionendContext ctx);
-  /**
-   * Exit a parse tree produced by {@link BodyParser#sectionend}.
-   * @param ctx the parse tree
-   */
-  void exitSectionend(BodyParser.SectionendContext ctx);
-  /**
    * Enter a parse tree produced by {@link BodyParser#text}.
    * @param ctx the parse tree
    */

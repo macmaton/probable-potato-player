@@ -1,6 +1,8 @@
 package abc.music;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * An immutable data type representing the header of a piece in abc notation
@@ -15,7 +17,7 @@ public class Header implements Music {
     private final Meter meter;
     private final DefaultNoteLength length;
     private final Tempo tempo;
-    private final Voice[] voices;
+    private final List<Voice> voices;
 
     public Index getIndex() {
         return index;
@@ -45,13 +47,12 @@ public class Header implements Music {
         return tempo;
     }
 
-    //TODO: refactor Voice[] to List<Voice>
-    public Voice[] getVoices() {
+    public List<Voice> getVoices() {
         return voices;
     }
 
     public Header(Index index, Title title, Key key, Meter meter, DefaultNoteLength length, Tempo tempo, Composer
-            composer, Voice[] voices) {
+            composer, List<Voice> voices) {
         this.index = index;
         this.title = title;
         this.key = key;
@@ -75,7 +76,11 @@ public class Header implements Music {
         } else {
             this.tempo = new Tempo(this.length);
         }
-        this.voices = voices;
+        if (voices != null) {
+            this.voices = Collections.unmodifiableList(new ArrayList<>(voices));
+        } else {
+            this.voices = voices;
+        }
 
         checkRep();
     }
@@ -87,38 +92,33 @@ public class Header implements Music {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Header that = (Header) obj;
+
+        if (!index.equals(that.index)) return false;
+        if (!title.equals(that.title)) return false;
+        if (!key.equals(that.key)) return false;
+        if (composer != null ? !composer.equals(that.composer) : that.composer != null) return false;
+        if (meter != null ? !meter.equals(that.meter) : that.meter != null) return false;
+        if (length != null ? !length.equals(that.length) : that.length != null) return false;
+        if (tempo != null ? !tempo.equals(that.tempo) : that.tempo != null) return false;
+        return voices != null ? voices.equals(that.voices) : that.voices == null;
+    }
+
+    @Override
     public int hashCode() {
         int result = index.hashCode();
         result = 31 * result + title.hashCode();
         result = 31 * result + key.hashCode();
         result = 31 * result + (composer != null ? composer.hashCode() : 0);
-        result = 31 * result + (length != null ? length.hashCode() : 0);
         result = 31 * result + (meter != null ? meter.hashCode() : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
         result = 31 * result + (tempo != null ? tempo.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(voices);
+        result = 31 * result + (voices != null ? voices.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        } else if (obj.getClass() != this.getClass()) {
-            return false;
-        } else {
-            Header that = (Header) obj;
-            return this.index.equals(that.index)
-                    && this.title.equals(that.title)
-                    && this.key.equals(that.key)
-                    && this.composer.equals(that.composer)
-                    && this.meter.equals(that.meter)
-                    && this.length.equals(that.length)
-                    && this.tempo.equals(that.tempo)
-                    && Arrays.equals(this.voices, that.voices);
-        }
     }
 
     @Override
@@ -164,7 +164,7 @@ public class Header implements Music {
         assert this.meter != null;
         assert this.tempo != null;
         if (this.voices != null) {
-            assert this.voices.length > 0;
+            assert this.voices.size() > 0;
             for (Voice v : this.voices) {
                 assert v != null;
             }

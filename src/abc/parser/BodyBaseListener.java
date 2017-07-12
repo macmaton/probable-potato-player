@@ -307,18 +307,6 @@ public class BodyBaseListener implements BodyListener {
    *
    * <p>The default implementation does nothing.</p>
    */
-  @Override public void enterSectionend(BodyParser.SectionendContext ctx) { }
-  /**
-   * {@inheritDoc}
-   *
-   * <p>The default implementation does nothing.</p>
-   */
-  @Override public void exitSectionend(BodyParser.SectionendContext ctx) { }
-  /**
-   * {@inheritDoc}
-   *
-   * <p>The default implementation does nothing.</p>
-   */
   @Override public void enterText(BodyParser.TextContext ctx) { }
   /**
    * {@inheritDoc}

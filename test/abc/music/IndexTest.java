@@ -2,7 +2,7 @@ package abc.music;
 
 import org.junit.Test;
 
-public class IndexTest {
+public class IndexTest extends TestBase {
     private Index x1;
     private Index x2;
     private Index x3;
@@ -31,7 +31,10 @@ public class IndexTest {
     @Test
     public void testToString() {
         setup();
-		assert x1.toString().equals("X: 23");
-		assert x4.toString().equals("X: ");
+        Header h1 = parseHeader(createHeader(x1).toString() + "\n");
+        Header h4 = parseHeader(createHeader(x4).toString() + "\n");
+
+		assert x1.equals(h1.getIndex());
+		assert x4.equals(h4.getIndex());
     }
 }

@@ -23,15 +23,12 @@ public class Index implements HeaderField {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof Index) {
-            Index that = (Index) obj;
-            return this.index.equals(that.index);
-        } else {
-            return false;
-        }
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Index that = (Index) obj;
+
+        return index != null ? index.equals(that.index) : that.index == null;
     }
 
     @Override

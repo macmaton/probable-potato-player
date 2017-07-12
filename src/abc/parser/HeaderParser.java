@@ -253,8 +253,8 @@ public class HeaderParser extends Parser {
 
   public static class FieldindexContext extends ParserRuleContext {
     public TerminalNode INDEXMARKER() { return getToken(HeaderParser.INDEXMARKER, 0); }
-    public TerminalNode NUMBER() { return getToken(HeaderParser.NUMBER, 0); }
     public TerminalNode ENDOFLINE() { return getToken(HeaderParser.ENDOFLINE, 0); }
+    public TerminalNode NUMBER() { return getToken(HeaderParser.NUMBER, 0); }
     public FieldindexContext(ParserRuleContext parent, int invokingState) {
       super(parent, invokingState);
     }
@@ -272,14 +272,22 @@ public class HeaderParser extends Parser {
   public final FieldindexContext fieldindex() throws RecognitionException {
     FieldindexContext _localctx = new FieldindexContext(_ctx, getState());
     enterRule(_localctx, 4, RULE_fieldindex);
+    int _la;
     try {
       enterOuterAlt(_localctx, 1);
       {
       setState(45);
       match(INDEXMARKER);
-      setState(46);
-      match(NUMBER);
       setState(47);
+      _la = _input.LA(1);
+      if (_la==NUMBER) {
+        {
+        setState(46);
+        match(NUMBER);
+        }
+      }
+
+      setState(49);
       match(ENDOFLINE);
       }
     }
@@ -318,11 +326,11 @@ public class HeaderParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(49);
-      match(TITLEMARKER);
-      setState(50);
-      match(TEXT);
       setState(51);
+      match(TITLEMARKER);
+      setState(52);
+      match(TEXT);
+      setState(53);
       match(ENDOFLINE);
       }
     }
@@ -361,16 +369,16 @@ public class HeaderParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(53);
+      setState(55);
       match(KEYMARKER);
-      setState(54);
+      setState(56);
       _la = _input.LA(1);
       if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29))) != 0)) ) {
       _errHandler.recoverInline(this);
       } else {
         consume();
       }
-      setState(55);
+      setState(57);
       match(ENDOFLINE);
       }
     }
@@ -420,47 +428,47 @@ public class HeaderParser extends Parser {
     OtherfieldsContext _localctx = new OtherfieldsContext(_ctx, getState());
     enterRule(_localctx, 10, RULE_otherfields);
     try {
-      setState(63);
+      setState(65);
       switch (_input.LA(1)) {
       case COMPOSERMARKER:
         enterOuterAlt(_localctx, 1);
         {
-        setState(57);
+        setState(59);
         fieldcomposer();
         }
         break;
       case LENGTHMARKER:
         enterOuterAlt(_localctx, 2);
         {
-        setState(58);
+        setState(60);
         fieldlength();
         }
         break;
       case METERMARKER:
         enterOuterAlt(_localctx, 3);
         {
-        setState(59);
+        setState(61);
         fieldmeter();
         }
         break;
       case TEMPOMARKER:
         enterOuterAlt(_localctx, 4);
         {
-        setState(60);
+        setState(62);
         fieldtempo();
         }
         break;
       case VOICEMARKER:
         enterOuterAlt(_localctx, 5);
         {
-        setState(61);
+        setState(63);
         fieldvoice();
         }
         break;
       case COMMENT:
         enterOuterAlt(_localctx, 6);
         {
-        setState(62);
+        setState(64);
         match(COMMENT);
         }
         break;
@@ -503,11 +511,11 @@ public class HeaderParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(65);
-      match(COMPOSERMARKER);
-      setState(66);
-      match(TEXT);
       setState(67);
+      match(COMPOSERMARKER);
+      setState(68);
+      match(TEXT);
+      setState(69);
       match(ENDOFLINE);
       }
     }
@@ -548,16 +556,16 @@ public class HeaderParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(69);
+      setState(71);
       match(LENGTHMARKER);
-      setState(70);
+      setState(72);
       _la = _input.LA(1);
       if ( !(_la==NUMBER || _la==FRACTION) ) {
       _errHandler.recoverInline(this);
       } else {
         consume();
       }
-      setState(71);
+      setState(73);
       match(ENDOFLINE);
       }
     }
@@ -598,11 +606,11 @@ public class HeaderParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(73);
-      match(METERMARKER);
-      setState(74);
-      meter();
       setState(75);
+      match(METERMARKER);
+      setState(76);
+      meter();
+      setState(77);
       match(ENDOFLINE);
       }
     }
@@ -641,11 +649,11 @@ public class HeaderParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(77);
-      match(TEMPOMARKER);
-      setState(78);
-      match(TEMPO);
       setState(79);
+      match(TEMPOMARKER);
+      setState(80);
+      match(TEMPO);
+      setState(81);
       match(ENDOFLINE);
       }
     }
@@ -689,32 +697,32 @@ public class HeaderParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(81);
-      match(VOICEMARKER);
       setState(83);
+      match(VOICEMARKER);
+      setState(85);
       _la = _input.LA(1);
       if (_la==NUMBER) {
         {
-        setState(82);
+        setState(84);
         match(NUMBER);
         }
       }
 
-      setState(88);
+      setState(90);
       _errHandler.sync(this);
       _la = _input.LA(1);
       while (_la==TEXT) {
         {
         {
-        setState(85);
+        setState(87);
         match(TEXT);
         }
         }
-        setState(90);
+        setState(92);
         _errHandler.sync(this);
         _la = _input.LA(1);
       }
-      setState(91);
+      setState(93);
       match(ENDOFLINE);
       }
     }
@@ -752,7 +760,7 @@ public class HeaderParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(93);
+      setState(95);
       _la = _input.LA(1);
       if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__30) | (1L << FRACTION))) != 0)) ) {
       _errHandler.recoverInline(this);
@@ -816,29 +824,29 @@ public class HeaderParser extends Parser {
       int _alt;
       enterOuterAlt(_localctx, 1);
       {
-      setState(107);
+      setState(109);
       _errHandler.sync(this);
-      _alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+      _alt = getInterpreter().adaptivePredict(_input,8,_ctx);
       while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
         if ( _alt==1 ) {
           {
           {
-          setState(96);
+          setState(98);
           _la = _input.LA(1);
           if (_la==VOICEMARKER) {
             {
-            setState(95);
+            setState(97);
             match(VOICEMARKER);
             }
           }
 
-          setState(101);
+          setState(103);
           _errHandler.sync(this);
           _la = _input.LA(1);
           while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER) | (1L << BARLINE) | (1L << TEXT))) != 0)) {
             {
             {
-            setState(98);
+            setState(100);
             _la = _input.LA(1);
             if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER) | (1L << BARLINE) | (1L << TEXT))) != 0)) ) {
             _errHandler.recoverInline(this);
@@ -847,36 +855,36 @@ public class HeaderParser extends Parser {
             }
             }
             }
-            setState(103);
+            setState(105);
             _errHandler.sync(this);
             _la = _input.LA(1);
           }
-          setState(104);
+          setState(106);
           match(ENDOFLINE);
           }
           } 
         }
-        setState(109);
+        setState(111);
         _errHandler.sync(this);
-        _alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+        _alt = getInterpreter().adaptivePredict(_input,8,_ctx);
       }
       {
-      setState(111);
+      setState(113);
       _la = _input.LA(1);
       if (_la==VOICEMARKER) {
         {
-        setState(110);
+        setState(112);
         match(VOICEMARKER);
         }
       }
 
-      setState(116);
+      setState(118);
       _errHandler.sync(this);
       _la = _input.LA(1);
       while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER) | (1L << BARLINE) | (1L << TEXT))) != 0)) {
         {
         {
-        setState(113);
+        setState(115);
         _la = _input.LA(1);
         if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER) | (1L << BARLINE) | (1L << TEXT))) != 0)) ) {
         _errHandler.recoverInline(this);
@@ -885,21 +893,21 @@ public class HeaderParser extends Parser {
         }
         }
         }
-        setState(118);
+        setState(120);
         _errHandler.sync(this);
         _la = _input.LA(1);
       }
-      setState(120);
+      setState(122);
       _la = _input.LA(1);
       if (_la==ENDOFLINE) {
         {
-        setState(119);
+        setState(121);
         match(ENDOFLINE);
         }
       }
 
       }
-      setState(122);
+      setState(124);
       match(EOF);
       }
     }
@@ -915,38 +923,39 @@ public class HeaderParser extends Parser {
   }
 
   public static final String _serializedATN =
-    "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\62\177\4\2\t\2"+
-      "\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4"+
-      "\13\t\13\4\f\t\f\4\r\t\r\4\16\t\16\3\2\3\2\3\3\3\3\7\3!\n\3\f\3\16"+
-      "\3$\13\3\3\3\3\3\7\3(\n\3\f\3\16\3+\13\3\3\3\3\3\3\3\3\4\3\4\3\4\3"+
-      "\4\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\5\7B\n"+
-      "\7\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\13\3\13\3\13"+
-      "\3\13\3\f\3\f\5\fV\n\f\3\f\7\fY\n\f\f\f\16\f\\\13\f\3\f\3\f\3\r\3"+
-      "\r\3\16\5\16c\n\16\3\16\7\16f\n\16\f\16\16\16i\13\16\3\16\7\16l\n"+
-      "\16\f\16\16\16o\13\16\3\16\5\16r\n\16\3\16\7\16u\n\16\f\16\16\16x"+
-      "\13\16\3\16\5\16{\n\16\3\16\3\16\3\16\2\2\17\2\4\6\b\n\f\16\20\22"+
-      "\24\26\30\32\2\6\3\2\3 \3\2*+\5\2\3\3!!++\4\2**/\60\u0080\2\34\3\2"+
-      "\2\2\4\36\3\2\2\2\6/\3\2\2\2\b\63\3\2\2\2\n\67\3\2\2\2\fA\3\2\2\2"+
-      "\16C\3\2\2\2\20G\3\2\2\2\22K\3\2\2\2\24O\3\2\2\2\26S\3\2\2\2\30_\3"+
-      "\2\2\2\32m\3\2\2\2\34\35\5\4\3\2\35\3\3\2\2\2\36\"\5\6\4\2\37!\7-"+
-      "\2\2 \37\3\2\2\2!$\3\2\2\2\" \3\2\2\2\"#\3\2\2\2#%\3\2\2\2$\"\3\2"+
-      "\2\2%)\5\b\5\2&(\5\f\7\2\'&\3\2\2\2(+\3\2\2\2)\'\3\2\2\2)*\3\2\2\2"+
-      "*,\3\2\2\2+)\3\2\2\2,-\5\n\6\2-.\5\32\16\2.\5\3\2\2\2/\60\7\"\2\2"+
-      "\60\61\7*\2\2\61\62\7-\2\2\62\7\3\2\2\2\63\64\7#\2\2\64\65\7\60\2"+
-      "\2\65\66\7-\2\2\66\t\3\2\2\2\678\7$\2\289\t\2\2\29:\7-\2\2:\13\3\2"+
-      "\2\2;B\5\16\b\2<B\5\20\t\2=B\5\22\n\2>B\5\24\13\2?B\5\26\f\2@B\7."+
-      "\2\2A;\3\2\2\2A<\3\2\2\2A=\3\2\2\2A>\3\2\2\2A?\3\2\2\2A@\3\2\2\2B"+
-      "\r\3\2\2\2CD\7%\2\2DE\7\60\2\2EF\7-\2\2F\17\3\2\2\2GH\7&\2\2HI\t\3"+
-      "\2\2IJ\7-\2\2J\21\3\2\2\2KL\7\'\2\2LM\5\30\r\2MN\7-\2\2N\23\3\2\2"+
-      "\2OP\7(\2\2PQ\7,\2\2QR\7-\2\2R\25\3\2\2\2SU\7)\2\2TV\7*\2\2UT\3\2"+
-      "\2\2UV\3\2\2\2VZ\3\2\2\2WY\7\60\2\2XW\3\2\2\2Y\\\3\2\2\2ZX\3\2\2\2"+
-      "Z[\3\2\2\2[]\3\2\2\2\\Z\3\2\2\2]^\7-\2\2^\27\3\2\2\2_`\t\4\2\2`\31"+
-      "\3\2\2\2ac\7)\2\2ba\3\2\2\2bc\3\2\2\2cg\3\2\2\2df\t\5\2\2ed\3\2\2"+
-      "\2fi\3\2\2\2ge\3\2\2\2gh\3\2\2\2hj\3\2\2\2ig\3\2\2\2jl\7-\2\2kb\3"+
-      "\2\2\2lo\3\2\2\2mk\3\2\2\2mn\3\2\2\2nq\3\2\2\2om\3\2\2\2pr\7)\2\2"+
-      "qp\3\2\2\2qr\3\2\2\2rv\3\2\2\2su\t\5\2\2ts\3\2\2\2ux\3\2\2\2vt\3\2"+
-      "\2\2vw\3\2\2\2wz\3\2\2\2xv\3\2\2\2y{\7-\2\2zy\3\2\2\2z{\3\2\2\2{|"+
-      "\3\2\2\2|}\7\2\2\3}\33\3\2\2\2\r\")AUZbgmqvz";
+    "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\62\u0081\4\2\t"+
+      "\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n"+
+      "\4\13\t\13\4\f\t\f\4\r\t\r\4\16\t\16\3\2\3\2\3\3\3\3\7\3!\n\3\f\3"+
+      "\16\3$\13\3\3\3\3\3\7\3(\n\3\f\3\16\3+\13\3\3\3\3\3\3\3\3\4\3\4\5"+
+      "\4\62\n\4\3\4\3\4\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7"+
+      "\3\7\3\7\5\7D\n\7\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n"+
+      "\3\13\3\13\3\13\3\13\3\f\3\f\5\fX\n\f\3\f\7\f[\n\f\f\f\16\f^\13\f"+
+      "\3\f\3\f\3\r\3\r\3\16\5\16e\n\16\3\16\7\16h\n\16\f\16\16\16k\13\16"+
+      "\3\16\7\16n\n\16\f\16\16\16q\13\16\3\16\5\16t\n\16\3\16\7\16w\n\16"+
+      "\f\16\16\16z\13\16\3\16\5\16}\n\16\3\16\3\16\3\16\2\2\17\2\4\6\b\n"+
+      "\f\16\20\22\24\26\30\32\2\6\3\2\3 \3\2*+\5\2\3\3!!++\4\2**/\60\u0083"+
+      "\2\34\3\2\2\2\4\36\3\2\2\2\6/\3\2\2\2\b\65\3\2\2\2\n9\3\2\2\2\fC\3"+
+      "\2\2\2\16E\3\2\2\2\20I\3\2\2\2\22M\3\2\2\2\24Q\3\2\2\2\26U\3\2\2\2"+
+      "\30a\3\2\2\2\32o\3\2\2\2\34\35\5\4\3\2\35\3\3\2\2\2\36\"\5\6\4\2\37"+
+      "!\7-\2\2 \37\3\2\2\2!$\3\2\2\2\" \3\2\2\2\"#\3\2\2\2#%\3\2\2\2$\""+
+      "\3\2\2\2%)\5\b\5\2&(\5\f\7\2\'&\3\2\2\2(+\3\2\2\2)\'\3\2\2\2)*\3\2"+
+      "\2\2*,\3\2\2\2+)\3\2\2\2,-\5\n\6\2-.\5\32\16\2.\5\3\2\2\2/\61\7\""+
+      "\2\2\60\62\7*\2\2\61\60\3\2\2\2\61\62\3\2\2\2\62\63\3\2\2\2\63\64"+
+      "\7-\2\2\64\7\3\2\2\2\65\66\7#\2\2\66\67\7\60\2\2\678\7-\2\28\t\3\2"+
+      "\2\29:\7$\2\2:;\t\2\2\2;<\7-\2\2<\13\3\2\2\2=D\5\16\b\2>D\5\20\t\2"+
+      "?D\5\22\n\2@D\5\24\13\2AD\5\26\f\2BD\7.\2\2C=\3\2\2\2C>\3\2\2\2C?"+
+      "\3\2\2\2C@\3\2\2\2CA\3\2\2\2CB\3\2\2\2D\r\3\2\2\2EF\7%\2\2FG\7\60"+
+      "\2\2GH\7-\2\2H\17\3\2\2\2IJ\7&\2\2JK\t\3\2\2KL\7-\2\2L\21\3\2\2\2"+
+      "MN\7\'\2\2NO\5\30\r\2OP\7-\2\2P\23\3\2\2\2QR\7(\2\2RS\7,\2\2ST\7-"+
+      "\2\2T\25\3\2\2\2UW\7)\2\2VX\7*\2\2WV\3\2\2\2WX\3\2\2\2X\\\3\2\2\2"+
+      "Y[\7\60\2\2ZY\3\2\2\2[^\3\2\2\2\\Z\3\2\2\2\\]\3\2\2\2]_\3\2\2\2^\\"+
+      "\3\2\2\2_`\7-\2\2`\27\3\2\2\2ab\t\4\2\2b\31\3\2\2\2ce\7)\2\2dc\3\2"+
+      "\2\2de\3\2\2\2ei\3\2\2\2fh\t\5\2\2gf\3\2\2\2hk\3\2\2\2ig\3\2\2\2i"+
+      "j\3\2\2\2jl\3\2\2\2ki\3\2\2\2ln\7-\2\2md\3\2\2\2nq\3\2\2\2om\3\2\2"+
+      "\2op\3\2\2\2ps\3\2\2\2qo\3\2\2\2rt\7)\2\2sr\3\2\2\2st\3\2\2\2tx\3"+
+      "\2\2\2uw\t\5\2\2vu\3\2\2\2wz\3\2\2\2xv\3\2\2\2xy\3\2\2\2y|\3\2\2\2"+
+      "zx\3\2\2\2{}\7-\2\2|{\3\2\2\2|}\3\2\2\2}~\3\2\2\2~\177\7\2\2\3\177"+
+      "\33\3\2\2\2\16\")\61CW\\diosx|";
   public static final ATN _ATN =
     new ATNDeserializer().deserialize(_serializedATN.toCharArray());
   static {

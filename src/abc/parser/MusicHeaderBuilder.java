@@ -53,8 +53,7 @@ public class MusicHeaderBuilder implements HeaderListener {
         Meter meter = null;
         DefaultNoteLength length = null;
         Tempo tempo = null;
-        List<Voice> voiceList = new ArrayList<>();
-        Voice[] voices = null;
+        List<Voice> voices = new ArrayList<>();
 
         while (!stack.isEmpty()) {
             Music field = stack.peek();
@@ -81,12 +80,15 @@ public class MusicHeaderBuilder implements HeaderListener {
                     tempo = (Tempo) stack.pop();
                     break;
                 case VOICE:
-                    voiceList.add(0, (Voice) stack.pop());
+                    voices.add(0, (Voice) stack.pop());
                     break;
+                default:
+                    //should not reach here
+                    throw new IllegalArgumentException("Stack contains a non-header field.");
             }
-            if (voiceList.size() > 0) {
-                voices = voiceList.toArray(new Voice[voiceList.size()]);
-            }
+        }
+        if (voices == null || voices.isEmpty()) {
+            voices = null;
         }
         stack.push(new Header(index, title, key, meter, length, tempo, composer, voices));
     }
@@ -99,8 +101,9 @@ public class MusicHeaderBuilder implements HeaderListener {
     @Override
     public void exitFieldindex(HeaderParser.FieldindexContext ctx) {
         Integer index;
-        if (ctx.getChild(1).getText().trim().length() > 0) {
-            index = Integer.parseInt(ctx.getChild(1).getText());
+        if (ctx.getChildCount() > 2) {
+            String raw = ctx.NUMBER().getText().trim();
+            index = Integer.parseInt(raw);
         } else {
             index = null;
         }
@@ -203,7 +206,12 @@ public class MusicHeaderBuilder implements HeaderListener {
 
     @Override
     public void exitFieldvoice(HeaderParser.FieldvoiceContext ctx) {
-        stack.push(new Voice(ctx.getChild(1).getText().trim()));
+        //must have at least 3 children to have a non-empty voice name: 'V:', [voicename], '\n'
+        if (ctx.children.size() > 2) {
+            stack.push(new Voice(ctx.getChild(1).getText().trim()));
+        } else {
+            stack.push(new Voice(""));
+        }
     }
 
     @Override

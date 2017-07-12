@@ -2,7 +2,7 @@ package abc.music;
 
 import org.junit.Test;
 
-public class MeterTest {
+public class MeterTest extends TestBase{
     private Meter m1;
     private Meter m2;
     private Meter m3;
@@ -29,8 +29,11 @@ public class MeterTest {
     @Test
     public void testToString() {
         setup();
-        assert m1.toString().equals("M: 4/4");
-        assert m3.toString().equals("");
+        Header h1 = parseHeader(createHeader(m1).toString() + "\n");
+        Header h2 = parseHeader(createHeader(m3).toString() + "\n");
+
+        assert m1.equals(h1.getMeter());
+        assert m3.equals(h2.getMeter());
     }
 
     @Test(expected = AssertionError.class)
