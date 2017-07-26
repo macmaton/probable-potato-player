@@ -18,7 +18,7 @@ public class PlayerBuilder {
     //The last tick played (may be later than starting tick if notes overlap)
     private int lastTick = 0;
 
-    public PlayerBuilder(Header header, Body body, int ticksPerBeat) {
+    PlayerBuilder(Header header, Body body, int ticksPerBeat) {
         this.header = header;
         this.body = body;
         this.ticksPerBeat = ticksPerBeat;

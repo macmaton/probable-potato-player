@@ -1,6 +1,11 @@
 package abc.sound;
 
 import javax.sound.midi.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.MessageFormat;
 
 /**
@@ -113,6 +118,34 @@ public class SequencePlayer {
 
         // start playing!
         sequencer.start();
+    }
+    
+    public File toFile(String name) {
+    	int[] allowedFileTypes = MidiSystem.getMidiFileTypes();
+    	File file = new File(name);
+    	
+    	try {
+			MidiSystem.write(sequencer.getSequence(), allowedFileTypes[0], file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return file;
+    }
+    
+    public ByteArrayOutputStream toStream() {
+    	int[] allowedFileTypes = MidiSystem.getMidiFileTypes();
+    	ByteArrayOutputStream result = new ByteArrayOutputStream();
+    	
+    	try {
+			MidiSystem.write(sequencer.getSequence(), allowedFileTypes[0], result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return result;
     }
 
     /**
