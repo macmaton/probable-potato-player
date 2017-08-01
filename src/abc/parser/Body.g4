@@ -39,7 +39,7 @@ comment: '%' text* NEWLINE;
 
 text: ((BASENOTE | WHITESPACE)* (CHAR|NUMBER)+ (BASENOTE | WHITESPACE)*)+;
 
-NEWLINE: '\n' | '\r''\n'? | '\r';
+NEWLINE: '\r\n' | '\r' | '\n';
 TUPLETSPEC: '(' NUMBER;
 BASENOTE: ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g');
 ACCIDENTAL: '^' | '^^' | '_' | '__' | '=';

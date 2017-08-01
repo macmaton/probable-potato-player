@@ -42,5 +42,5 @@ TEXT: CHAR+;
 
 fragment
 WHITESPACE: ' ' | '\t';
-NEWLINE: '\n' | '\r''\n'?;
+NEWLINE: '\r\n' | '\r' | '\n';
 CHAR: ~[:\n];
