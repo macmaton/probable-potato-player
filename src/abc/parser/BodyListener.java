@@ -71,6 +71,16 @@ public interface BodyListener extends ParseTreeListener {
    */
   void exitRepeatstart(BodyParser.RepeatstartContext ctx);
   /**
+   * Enter a parse tree produced by {@link BodyParser#repeatendnoendings}.
+   * @param ctx the parse tree
+   */
+  void enterRepeatendnoendings(BodyParser.RepeatendnoendingsContext ctx);
+  /**
+   * Exit a parse tree produced by {@link BodyParser#repeatendnoendings}.
+   * @param ctx the parse tree
+   */
+  void exitRepeatendnoendings(BodyParser.RepeatendnoendingsContext ctx);
+  /**
    * Enter a parse tree produced by {@link BodyParser#repeatend}.
    * @param ctx the parse tree
    */

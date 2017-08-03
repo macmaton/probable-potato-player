@@ -92,6 +92,18 @@ public class BodyBaseListener implements BodyListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterRepeatendnoendings(BodyParser.RepeatendnoendingsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRepeatendnoendings(BodyParser.RepeatendnoendingsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterRepeatend(BodyParser.RepeatendContext ctx) { }
 	/**
 	 * {@inheritDoc}

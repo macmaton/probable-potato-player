@@ -1,27 +1,15 @@
 package abc.player;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
+import abc.music.Body;
+import abc.music.Header;
+import abc.parser.*;
+import abc.sound.SequencePlayer;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import abc.music.Body;
-import abc.music.Header;
-import abc.parser.BodyLexer;
-import abc.parser.BodyListener;
-import abc.parser.BodyParser;
-import abc.parser.HeaderLexer;
-import abc.parser.HeaderListener;
-import abc.parser.HeaderParser;
-import abc.parser.MusicBodyBuilder;
-import abc.parser.MusicHeaderBuilder;
-import abc.sound.SequencePlayer;
+import java.io.*;
 
 public class AbcMidiFactory {
 

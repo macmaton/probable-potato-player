@@ -8,15 +8,16 @@ import Configuration;
 
 body: NEWLINE* section+;
 section: (sectionelement+ SECTIONENDBAR? WHITESPACE* (endofline+ EOF? | EOF)) | ((voicepart endofline+)* (voicepart
-SECTIONENDBAR (endofline+ EOF? | EOF))) | (voicepart (endofline+ EOF? | EOF))+;
+SECTIONENDBAR endofline+)+ (voicepart SECTIONENDBAR (endofline+ EOF? | EOF))) | (voicepart (endofline+ EOF? | EOF))+;
 sectionelement: BARLINE? (SECTIONBEGINBAR? (voicepartelement endofline+)* voicepartelement);
 voicepart: fieldvoice WHITESPACE? SECTIONBEGINBAR? (voicepartelement endofline+)* voicepartelement;
-voicepartelement: repeatfull | repeatendingline | repeatstart | repeatend | line;
+voicepartelement: repeatfull | repeatendnoendings | repeatendingline | repeatstart | repeatend | line;
 repeatstart: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)?;
+repeatendnoendings: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? REPEATENDBAR;
 repeatend: (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? repeatending+;
 repeatfull: REPEATBEGINBAR (measure BARLINE WHITESPACE?)* measure (BARLINE WHITESPACE?)? (repeatending+ | REPEATENDBAR);
 repeatendingline: /*(measure BARLINE WHITESPACE?)* */repeatending+;
-repeatending: NTHREPEAT WHITESPACE* (measure BARLINE WHITESPACE?)* (measure REPEATENDBAR WHITESPACE?);
+repeatending: NTHREPEAT WHITESPACE* (measure BARLINE WHITESPACE?)* (measure REPEATENDBAR? WHITESPACE?);
 line: WHITESPACE* ((measure BARLINE WHITESPACE?)+ measure? | measure WHITESPACE*) ;
 measure: WHITESPACE* (measureelement WHITESPACE*)+;
 //TODO: adjust parsing of tuplets to allow tuplet BARLINE as well as tuplet WHITESPACE (fur elise)
@@ -34,7 +35,7 @@ chord: '[' note+? ']' /*notelength*/;
 //midtunefield: fieldvoice;
 fieldvoice: 'V:' WHITESPACE? text endofline;
 
-endofline: (comment | NEWLINE);
+endofline: BARLINE? (comment | NEWLINE);
 comment: '%' text* NEWLINE;
 
 text: ((BASENOTE | WHITESPACE)* (CHAR|NUMBER)+ (BASENOTE | WHITESPACE)*)+;
