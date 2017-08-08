@@ -69,7 +69,7 @@ public class Meter implements HeaderField {
     @Override
     public String toString() {
         if (isSpecified) {
-            return "M: " + beatsPerMeasure + "/" + noteValue;
+            return beatsPerMeasure + "/" + noteValue;
         } else {
             return "";
         }

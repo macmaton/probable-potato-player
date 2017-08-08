@@ -46,6 +46,7 @@ public class VoicePart implements SectionElement {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("\n");
+        result.append("V: ");
         result.append(voice.toString());
         for (VoicePartElement e : elements) {
             result.append('\n');

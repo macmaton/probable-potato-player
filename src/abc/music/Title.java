@@ -36,7 +36,7 @@ public class Title implements HeaderField {
 
     @Override
     public String toString() {
-        return "T: " + title;
+        return title;
     }
 
     private void checkRep() {

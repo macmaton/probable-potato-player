@@ -29,6 +29,11 @@ public class AbcMidiFactory {
     	SequencePlayer player = getSequencePlayer(input);
     	return player.toStream();
     }
+    
+    public static ByteArrayOutputStream getStream(PlayerBuilder playerBuilder) {
+    	SequencePlayer player = playerBuilder.getPlayer();
+    	return player.toStream();
+    }
 
     private static ParseTree parse(InputStream input) {
     	
@@ -69,23 +74,24 @@ public class AbcMidiFactory {
     
     static SequencePlayer getSequencePlayer(InputStream input) {
     
+        return getPlayerBuilder(input).getPlayer();
+    }
+    
+    public static PlayerBuilder getPlayerBuilder(InputStream input) {
         ParseTree headerTree = parse(input).getChild(0);
         ParseTreeWalker walker = new ParseTreeWalker();
         HeaderListener headerListener = new MusicHeaderBuilder();
         walker.walk(headerListener, headerTree);
         MusicHeaderBuilder hb = (MusicHeaderBuilder) headerListener;
         Header header = (Header) hb.getHeader();
-        System.out.println(header.toString());
 
         ParseTree bodyTree = getBodyParseTree(headerTree);
         BodyListener bodyListener = new MusicBodyBuilder();
         walker.walk(bodyListener, bodyTree);
         MusicBodyBuilder bb = (MusicBodyBuilder) bodyListener;
         Body body = (Body) bb.getBody();
-        System.out.println(body.toString());
 
-        PlayerBuilder playerBuilder = new PlayerBuilder(header, body, 12);
-        return playerBuilder.getPlayer();
+        return new PlayerBuilder(header, body, 12);
     }
     
     static FileInputStream fileToStream(String filePath) {

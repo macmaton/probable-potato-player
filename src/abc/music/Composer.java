@@ -52,7 +52,7 @@ public class Composer implements HeaderField {
         if (!isSpecified) {
             return "";
         } else {
-            return "C: " + composer;
+            return composer;
         }
     }
 

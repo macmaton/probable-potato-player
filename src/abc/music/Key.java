@@ -84,7 +84,11 @@ public class Key implements HeaderField {
         return result;
     }
 
-    @Override
+    public Keys getKey() {
+		return key;
+	}
+
+	@Override
     public int hashCode() {
         int result = key.hashCode();
         result = 31 * result + keyNotes.hashCode();
@@ -120,7 +124,7 @@ public class Key implements HeaderField {
             minor = "m";
         }
 
-        return "K: " + baseNote + modifier + minor;
+        return baseNote + modifier + minor;
     }
 
     private void checkRep() {

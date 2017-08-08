@@ -37,7 +37,7 @@ public class Voice implements HeaderField {
 
     @Override
     public String toString() {
-        return "V: " + name;
+        return name;
     }
 
     private void checkRep() {

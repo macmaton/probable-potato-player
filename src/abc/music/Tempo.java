@@ -76,7 +76,7 @@ public class Tempo implements HeaderField {
         if (!isSpecified) {
             return "";
         } else {
-            return "Q: " + beatLength.getNumerator() + "/" + beatLength.getDenominator() + "=" + beatsPerMinute;
+            return beatLength.getNumerator() + "/" + beatLength.getDenominator() + "=" + beatsPerMinute;
         }
     }
 

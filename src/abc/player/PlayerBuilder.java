@@ -34,6 +34,10 @@ public class PlayerBuilder {
     public SequencePlayer getPlayer() {
         return player;
     }
+    
+    public Header getHeader() {
+    	return header;
+    }
 
     private void buildPlayer() {
         for (Section section : body.getSections()) {

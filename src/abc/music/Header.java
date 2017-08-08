@@ -123,33 +123,42 @@ public class Header implements Music {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder(index.toString());
+        StringBuilder result = new StringBuilder("X: ");
+        result.append(index.toString());
         result.append('\n');
+        result.append("T: ");
         result.append(title.toString());
         result.append('\n');
+        
         if (!composer.toString().isEmpty()) {
+        	result.append("C: ");
             result.append(composer.toString());
             result.append('\n');
         }
         if (!meter.toString().isEmpty()) {
+        	result.append("M: ");
             result.append(meter.toString());
             result.append('\n');
         }
         if (!length.toString().isEmpty()) {
+        	result.append("L: ");
             result.append(length.toString());
             result.append('\n');
         }
         if (!tempo.toString().isEmpty()) {
+        	result.append("Q: ");
             result.append(tempo.toString());
             result.append('\n');
         }
         if (voices != null) {
             for (Voice v : voices) {
+            	result.append("V: ");
                 result.append(v.toString());
                 result.append('\n');
             }
         }
-
+        
+        result.append("K: ");
         result.append(key.toString());
 
         return result.toString();

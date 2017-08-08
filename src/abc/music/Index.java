@@ -15,6 +15,10 @@ public class Index implements HeaderField {
     public Index(Integer index) {
         this.index = index;
     }
+    
+    public Integer getIndex() {
+    	return index;
+    }
 
     @Override
     public int hashCode() {
@@ -34,9 +38,9 @@ public class Index implements HeaderField {
     @Override
     public String toString() {
         if (index != null) {
-            return "X: " + index.toString();
+            return index.toString();
         } else {
-            return "X: ";
+            return "";
         }
     }
 
