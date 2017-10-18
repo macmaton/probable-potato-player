@@ -38,6 +38,10 @@ public class PlayerBuilder {
     public Header getHeader() {
     	return header;
     }
+    
+    public Body getBody() {
+    	return body;
+    }
 
     private void buildPlayer() {
         for (Section section : body.getSections()) {
