@@ -2,5 +2,9 @@
 .DS_Store
 .idea/
 *.iml
+*.iws
+*.ipr
 *.midi
 .project
+.classpath
+.settings/
